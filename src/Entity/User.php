@@ -33,29 +33,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $avatar = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
-
     /**
      * @var Collection<int, note>
      */
     #[ORM\OneToMany(targetEntity: note::class, mappedBy: 'user')]
     private Collection $note;
-
-    /**
-     * @var Collection<int, note>
-     */
-    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'users')]
-    private Collection $favori;
-
-    /**
-     * @var Collection<int, Note>
-     */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'favori')]
-    private Collection $notes;
 
     /**
      * @var Collection<int, file>
@@ -66,8 +48,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->note = new ArrayCollection();
-        $this->favori = new ArrayCollection();
-        $this->notes = new ArrayCollection();
         $this->file = new ArrayCollection();
     }
 
@@ -146,30 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): static
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, note>
      */
@@ -198,38 +154,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, note>
-     */
-    public function getFavori(): Collection
-    {
-        return $this->favori;
-    }
-
-    public function addFavori(note $favori): static
-    {
-        if (!$this->favori->contains($favori)) {
-            $this->favori->add($favori);
-        }
-
-        return $this;
-    }
-
-    public function removeFavori(note $favori): static
-    {
-        $this->favori->removeElement($favori);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Note>
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
     }
 
     /**

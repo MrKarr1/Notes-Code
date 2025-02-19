@@ -31,38 +31,11 @@ class Note
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_favori = null;
+
     #[ORM\ManyToOne(inversedBy: 'note')]
     private ?User $user = null;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favori')]
-    private Collection $users;
-
-    /**
-     * @var Collection<int, user>
-     */
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'notes')]
-    private Collection $favori;
-
-    /**
-     * @var Collection<int, Note>
-     */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'note_tag')]
-    private Collection $notes;
-
-    /**
-     * @var Collection<int, Tag>
-     */
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'note_tag')]
-    private Collection $tags;
-
-    /**
-     * @var Collection<int, File>
-     */
-    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'note')]
-    private Collection $files;
 
     /**
      * @var Collection<int, file>
@@ -70,14 +43,33 @@ class Note
     #[ORM\ManyToMany(targetEntity: file::class, inversedBy: 'notes')]
     private Collection $file;
 
+    /**
+     * @var Collection<int, File>
+     */
+    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'note')]
+    private Collection $files;
+
+    #[ORM\ManyToOne(inversedBy: 'note')]
+    private ?Langage $langage = null;
+
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'note')]
+    private Collection $tags;
+
+    /**
+     * @var Collection<int, tag>
+     */
+    #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'notes')]
+    private Collection $tag;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
-        $this->favori = new ArrayCollection();
-        $this->notes = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-        $this->files = new ArrayCollection();
         $this->file = new ArrayCollection();
+        $this->files = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->tag = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +137,18 @@ class Note
         return $this;
     }
 
+    public function isFavori(): ?bool
+    {
+        return $this->is_favori;
+    }
+
+    public function setIsFavori(?bool $is_favori): static
+    {
+        $this->is_favori = $is_favori;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -158,79 +162,45 @@ class Note
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, file>
      */
-    public function getUsers(): Collection
+    public function getFile(): Collection
     {
-        return $this->users;
+        return $this->file;
     }
 
-    public function addUser(User $user): static
+    public function addFile(file $file): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addFavori($this);
+        if (!$this->file->contains($file)) {
+            $this->file->add($file);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeFile(file $file): static
     {
-        if ($this->users->removeElement($user)) {
-            $user->removeFavori($this);
-        }
+        $this->file->removeElement($file);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection<int, File>
      */
-    public function getFavori(): Collection
+    public function getFiles(): Collection
     {
-        return $this->favori;
+        return $this->files;
     }
 
-    public function addFavori(user $favori): static
+    public function getLangage(): ?Langage
     {
-        if (!$this->favori->contains($favori)) {
-            $this->favori->add($favori);
-        }
-
-        return $this;
+        return $this->langage;
     }
 
-    public function removeFavori(user $favori): static
+    public function setLangage(?Langage $langage): static
     {
-        $this->favori->removeElement($favori);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Note>
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): static
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes->add($note);
-            $note->addNoteTag($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): static
-    {
-        if ($this->notes->removeElement($note)) {
-            $note->removeNoteTag($this);
-        }
+        $this->langage = $langage;
 
         return $this;
     }
@@ -247,7 +217,7 @@ class Note
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
-            $tag->addNoteTag($this);
+            $tag->addNote($this);
         }
 
         return $this;
@@ -256,44 +226,17 @@ class Note
     public function removeTag(Tag $tag): static
     {
         if ($this->tags->removeElement($tag)) {
-            $tag->removeNoteTag($this);
+            $tag->removeNote($this);
         }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, File>
+     * @return Collection<int, tag>
      */
-    public function getFiles(): Collection
+    public function getTag(): Collection
     {
-        return $this->files;
-    }
-
-    public function addFile(File $file): static
-    {
-        if (!$this->files->contains($file)) {
-            $this->files->add($file);
-            $file->addNote($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(File $file): static
-    {
-        if ($this->files->removeElement($file)) {
-            $file->removeNote($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, file>
-     */
-    public function getFile(): Collection
-    {
-        return $this->file;
+        return $this->tag;
     }
 }

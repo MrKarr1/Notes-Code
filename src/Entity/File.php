@@ -21,11 +21,8 @@ class File
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    /**
-     * @var Collection<int, note>
-     */
-    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'files')]
-    private Collection $note;
+    #[ORM\ManyToOne(inversedBy: 'file')]
+    private ?User $user = null;
 
     /**
      * @var Collection<int, Note>
@@ -33,13 +30,16 @@ class File
     #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'file')]
     private Collection $notes;
 
-    #[ORM\ManyToOne(inversedBy: 'file')]
-    private ?User $user = null;
+    /**
+     * @var Collection<int, note>
+     */
+    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'files')]
+    private Collection $note;
 
     public function __construct()
     {
-        $this->note = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,26 +71,14 @@ class File
         return $this;
     }
 
-    /**
-     * @return Collection<int, note>
-     */
-    public function getNote(): Collection
+    public function getUser(): ?User
     {
-        return $this->note;
+        return $this->user;
     }
 
-    public function addNote(note $note): static
+    public function setUser(?User $user): static
     {
-        if (!$this->note->contains($note)) {
-            $this->note->add($note);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(note $note): static
-    {
-        $this->note->removeElement($note);
+        $this->user = $user;
 
         return $this;
     }
@@ -103,15 +91,30 @@ class File
         return $this->notes;
     }
 
-    public function getUser(): ?User
+    public function addNote(Note $note): static
     {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->addFile($this);
+        }
 
         return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            $note->removeFile($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, note>
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
     }
 }

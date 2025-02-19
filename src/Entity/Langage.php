@@ -22,14 +22,14 @@ class Langage
     private ?string $technical_name = null;
 
     /**
-     * @var Collection<int, tag>
+     * @var Collection<int, note>
      */
-    #[ORM\OneToMany(targetEntity: tag::class, mappedBy: 'langage')]
-    private Collection $tag;
+    #[ORM\OneToMany(targetEntity: note::class, mappedBy: 'langage')]
+    private Collection $note;
 
     public function __construct()
     {
-        $this->tag = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,29 +62,29 @@ class Langage
     }
 
     /**
-     * @return Collection<int, tag>
+     * @return Collection<int, note>
      */
-    public function getTag(): Collection
+    public function getNote(): Collection
     {
-        return $this->tag;
+        return $this->note;
     }
 
-    public function addTag(tag $tag): static
+    public function addNote(note $note): static
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
-            $tag->setLangage($this);
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
+            $note->setLangage($this);
         }
 
         return $this;
     }
 
-    public function removeTag(tag $tag): static
+    public function removeNote(note $note): static
     {
-        if ($this->tag->removeElement($tag)) {
+        if ($this->note->removeElement($note)) {
             // set the owning side to null (unless already changed)
-            if ($tag->getLangage() === $this) {
-                $tag->setLangage(null);
+            if ($note->getLangage() === $this) {
+                $note->setLangage(null);
             }
         }
 

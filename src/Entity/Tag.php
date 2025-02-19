@@ -22,14 +22,18 @@ class Tag
      * @var Collection<int, note>
      */
     #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'tags')]
-    private Collection $note_tag;
+    private Collection $note;
 
-    #[ORM\ManyToOne(inversedBy: 'tag')]
-    private ?Langage $langage = null;
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'tag')]
+    private Collection $notes;
 
     public function __construct()
     {
-        $this->note_tag = new ArrayCollection();
+        $this->note = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,36 +56,32 @@ class Tag
     /**
      * @return Collection<int, note>
      */
-    public function getNoteTag(): Collection
+    public function getNote(): Collection
     {
-        return $this->note_tag;
+        return $this->note;
     }
 
-    public function addNoteTag(note $noteTag): static
+    public function addNote(note $note): static
     {
-        if (!$this->note_tag->contains($noteTag)) {
-            $this->note_tag->add($noteTag);
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
         }
 
         return $this;
     }
 
-    public function removeNoteTag(note $noteTag): static
+    public function removeNote(note $note): static
     {
-        $this->note_tag->removeElement($noteTag);
+        $this->note->removeElement($note);
 
         return $this;
     }
 
-    public function getLangage(): ?Langage
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->langage;
-    }
-
-    public function setLangage(?Langage $langage): static
-    {
-        $this->langage = $langage;
-
-        return $this;
+        return $this->notes;
     }
 }
