@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\File;
+use App\Entity\Folder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<File>
+ * @extends ServiceEntityRepository<Folder>
  */
-class FileRepository extends ServiceEntityRepository
+class FolderRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, File::class);
+        parent::__construct($registry, Folder::class);
     }
 
     //    /**
-    //     * @return File[] Returns an array of File objects
+    //     * @return Folder[] Returns an array of Folder objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class FileRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?File
+    //    public function findOneBySomeField($value): ?Folder
     //    {
     //        return $this->createQueryBuilder('f')
     //            ->andWhere('f.exampleField = :val')

@@ -40,15 +40,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $note;
 
     /**
-     * @var Collection<int, file>
+     * @var Collection<int, folder>
      */
-    #[ORM\OneToMany(targetEntity: file::class, mappedBy: 'user')]
-    private Collection $file;
+    #[ORM\OneToMany(targetEntity: folder::class, mappedBy: 'user')]
+    private Collection $folder;
 
     public function __construct()
     {
         $this->note = new ArrayCollection();
-        $this->file = new ArrayCollection();
+        $this->folder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,29 +157,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, file>
+     * @return Collection<int, folder>
      */
-    public function getFile(): Collection
+    public function getFolder(): Collection
     {
-        return $this->file;
+        return $this->folder;
     }
 
-    public function addFile(file $file): static
+    public function addFolder(folder $folder): static
     {
-        if (!$this->file->contains($file)) {
-            $this->file->add($file);
-            $file->setUser($this);
+        if (!$this->folder->contains($folder)) {
+            $this->folder->add($folder);
+            $folder->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFile(file $file): static
+    public function removeFolder(folder $folder): static
     {
-        if ($this->file->removeElement($file)) {
+        if ($this->folder->removeElement($folder)) {
             // set the owning side to null (unless already changed)
-            if ($file->getUser() === $this) {
-                $file->setUser(null);
+            if ($folder->getUser() === $this) {
+                $folder->setUser(null);
             }
         }
 

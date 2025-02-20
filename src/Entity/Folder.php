@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\FileRepository;
+use App\Repository\FolderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FileRepository::class)]
-class File
+#[ORM\Entity(repositoryClass: FolderRepository::class)]
+class Folder
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,25 +21,25 @@ class File
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'file')]
+    #[ORM\ManyToOne(inversedBy: 'folder')]
     private ?User $user = null;
-
-    /**
-     * @var Collection<int, Note>
-     */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'file')]
-    private Collection $notes;
 
     /**
      * @var Collection<int, note>
      */
-    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'files')]
+    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'folders')]
     private Collection $note;
+
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'folder')]
+    private Collection $notes;
 
     public function __construct()
     {
-        $this->notes = new ArrayCollection();
         $this->note = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,37 +84,34 @@ class File
     }
 
     /**
-     * @return Collection<int, Note>
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): static
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes->add($note);
-            $note->addFile($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): static
-    {
-        if ($this->notes->removeElement($note)) {
-            $note->removeFile($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, note>
      */
     public function getNote(): Collection
     {
         return $this->note;
+    }
+
+    public function addNote(note $note): static
+    {
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(note $note): static
+    {
+        $this->note->removeElement($note);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
     }
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<main class="register">
+		<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
+
+		   {{ include('user/_form.html.twig') }}
+		<p>Pas encore inscrit ?</p>
+		<a href="{{ path('app_register') }}">S'inscrire</a>
+	</main>
+{% endblock %}

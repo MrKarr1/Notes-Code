@@ -18,7 +18,7 @@ class Langage
     #[ORM\Column(length: 50)]
     private ?string $display_name = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $technical_name = null;
 
     /**

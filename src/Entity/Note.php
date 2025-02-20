@@ -37,18 +37,6 @@ class Note
     #[ORM\ManyToOne(inversedBy: 'note')]
     private ?User $user = null;
 
-    /**
-     * @var Collection<int, file>
-     */
-    #[ORM\ManyToMany(targetEntity: file::class, inversedBy: 'notes')]
-    private Collection $file;
-
-    /**
-     * @var Collection<int, File>
-     */
-    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'note')]
-    private Collection $files;
-
     #[ORM\ManyToOne(inversedBy: 'note')]
     private ?Langage $langage = null;
 
@@ -64,12 +52,24 @@ class Note
     #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'notes')]
     private Collection $tag;
 
+    /**
+     * @var Collection<int, Folder>
+     */
+    #[ORM\ManyToMany(targetEntity: Folder::class, mappedBy: 'note')]
+    private Collection $folders;
+
+    /**
+     * @var Collection<int, folder>
+     */
+    #[ORM\ManyToMany(targetEntity: folder::class, inversedBy: 'notes')]
+    private Collection $folder;
+
     public function __construct()
     {
-        $this->file = new ArrayCollection();
-        $this->files = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        $this->folders = new ArrayCollection();
+        $this->folder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,38 +161,6 @@ class Note
         return $this;
     }
 
-    /**
-     * @return Collection<int, file>
-     */
-    public function getFile(): Collection
-    {
-        return $this->file;
-    }
-
-    public function addFile(file $file): static
-    {
-        if (!$this->file->contains($file)) {
-            $this->file->add($file);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(file $file): static
-    {
-        $this->file->removeElement($file);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, File>
-     */
-    public function getFiles(): Collection
-    {
-        return $this->files;
-    }
-
     public function getLangage(): ?Langage
     {
         return $this->langage;
@@ -238,5 +206,40 @@ class Note
     public function getTag(): Collection
     {
         return $this->tag;
+    }
+
+    /**
+     * @return Collection<int, Folder>
+     */
+    public function getFolders(): Collection
+    {
+        return $this->folders;
+    }
+
+    public function addFolder(Folder $folder): static
+    {
+        if (!$this->folders->contains($folder)) {
+            $this->folders->add($folder);
+            $folder->addNote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFolder(Folder $folder): static
+    {
+        if ($this->folders->removeElement($folder)) {
+            $folder->removeNote($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, folder>
+     */
+    public function getFolder(): Collection
+    {
+        return $this->folder;
     }
 }
