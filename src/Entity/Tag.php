@@ -19,20 +19,13 @@ class Tag
     private ?string $name = null;
 
     /**
-     * @var Collection<int, note>
-     */
-    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'tags')]
-    private Collection $note;
-
-    /**
      * @var Collection<int, Note>
      */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'tag')]
+    #[ORM\ManyToMany(targetEntity: Note::class, inversedBy: 'tags')]
     private Collection $notes;
 
     public function __construct()
     {
-        $this->note = new ArrayCollection();
         $this->notes = new ArrayCollection();
     }
 
@@ -54,34 +47,29 @@ class Tag
     }
 
     /**
-     * @return Collection<int, note>
-     */
-    public function getNote(): Collection
-    {
-        return $this->note;
-    }
-
-    public function addNote(note $note): static
-    {
-        if (!$this->note->contains($note)) {
-            $this->note->add($note);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(note $note): static
-    {
-        $this->note->removeElement($note);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Note>
      */
     public function getNotes(): Collection
     {
         return $this->notes;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            $note->removeTag($this);
+        }
+
+        return $this;
     }
 }

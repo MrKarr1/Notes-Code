@@ -47,29 +47,15 @@ class Note
     private Collection $tags;
 
     /**
-     * @var Collection<int, tag>
-     */
-    #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'notes')]
-    private Collection $tag;
-
-    /**
      * @var Collection<int, Folder>
      */
     #[ORM\ManyToMany(targetEntity: Folder::class, mappedBy: 'note')]
     private Collection $folders;
 
-    /**
-     * @var Collection<int, folder>
-     */
-    #[ORM\ManyToMany(targetEntity: folder::class, inversedBy: 'notes')]
-    private Collection $folder;
-
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->tag = new ArrayCollection();
         $this->folders = new ArrayCollection();
-        $this->folder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,14 +187,6 @@ class Note
     }
 
     /**
-     * @return Collection<int, tag>
-     */
-    public function getTag(): Collection
-    {
-        return $this->tag;
-    }
-
-    /**
      * @return Collection<int, Folder>
      */
     public function getFolders(): Collection
@@ -233,13 +211,5 @@ class Note
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, folder>
-     */
-    public function getFolder(): Collection
-    {
-        return $this->folder;
     }
 }

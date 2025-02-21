@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<main class="account">
+		{% if user.avatar %}
+			<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
+		{% else %}
+			<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+		{% endif %}
+
+		<button class="icone">
+			<a href="">
+				<i class="fa-solid fa-gear"></i>
+			</a>
+		</button>
+		<h3>{{ user.username }}</h3>
+		<h3>{{ user.email }}</h3>
+		<button class="btn">
+            <a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+		</button>
+        	<button class="btn">
+            <a href="{{ path('app_tag_add') }}">Créer un Tag</a>
+		</button>
+        	<button class="btn">
+            <a href="{{ path('app_folder_add') }}">Créer une Note</a>
+		</button>
+		<button id="favori">Favori</button>
+		<button id="dossier">Dossier</button>
+		<button id="note">Notes</button>
+		<div class="favori"></div>
+		<thead>
+			<th>Titre</th>
+			<th>Tag</th>
+			<th>Dossier</th>
+			<th>Langage</th>
+			<th>Date</th>
+			<th>Action</th>
+		</thead>
+        <br>
+		{% for note in user.note %}
+			{% if note.favori %}
+				<tbody>
+					<tr>
+						<td class="name">{{note.name}}</td>
+						<td class="tag">
+							{% for tag in note.tags %}
+								<span>{{tag.name}}</span>
+							{% endfor %}
+						</td>
+						<td class="forder">
+							{% for file in note.folder %}
+								<span>{{folder.name}}</span>
+							{% endfor %}
+						</td>
+                        <td class="langage">{{ note.langage.displayName }}</td>
+						<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+						<td class="action"></td>
+					</tr>
+				</tbody>
+			{% endif %}
+		{% endfor %}
+		<div class="dossier"></div>
+		<div class="note"></div>
+
+	</main>
+{% endblock %}

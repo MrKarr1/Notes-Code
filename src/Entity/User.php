@@ -36,14 +36,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, note>
      */
-    #[ORM\OneToMany(targetEntity: note::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'user')]
     private Collection $note;
 
     /**
      * @var Collection<int, folder>
      */
-    #[ORM\OneToMany(targetEntity: folder::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Folder::class, mappedBy: 'user')]
     private Collection $folder;
+
+    #[ORM\Column(length: 50)]
+    private ?string $username = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
 
     public function __construct()
     {
@@ -182,6 +188,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $folder->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getusername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setusername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

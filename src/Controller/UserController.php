@@ -4,82 +4,94 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-// use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+
 
 #[Route('/user')]
 final class UserController extends AbstractController
 {
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher, Security $security): Response
     {
+        if ($this->getUser()) return $this->redirectToRoute('app_account');
+        // si l'utilisateur est déjà connecté, on le redirige vers son compte
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('avatar')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory_user'),
+                    $newFilename
+                );
+                $user->setAvatar($newFilename);
+            }
+            $plainPassword = $form->get('plainPassword')->getData();
+            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_account');
         }
 
         return $this->render('user/register.html.twig', [
-            'user' => $user,
             'form' => $form,
         ]);
     }
-    // #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
-    // public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
-    // {
-    //     $user = new User();
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $plainPassword = $form->get('plainPassword')->getData();
-
-    //         $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-    //         $entityManager->persist($user);
-    //         $entityManager->flush();
-
-    //         return $security->login($user, 'form_login', 'main');
-    //     }
-
-    //     return $this->render('user/register.html.twig', [
-    //         'user' => $form,
-    //     ]);
-    // }
-
-
-    #[route(path:'/login', name:'app_login')]
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {return $this->redirectToRoute('app_account');}
+        if ($this->getUser()) return $this->redirectToRoute('app_account');
+        // si l'utilisateur est déjà connecté, on le redirige vers son compte
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('user/login.html.twig', [
-            'last_username' => $lastUsername, 
+            'last_username' => $lastUsername,
             'error' => $error
         ]);
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route('/account', name: 'app_account')]
+    public function account(): Response
+    {
+        // méthode pour afficher le compte
+        $user = $this->getUser();
+        if (!$user) return $this->redirectToRoute('app_login');
+        // si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
 
-    // #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    // public function show(User $user): Response
-    // {
-    //     return $this->render('user/show.html.twig', [
-    //         'user' => $user,
-    //     ]);
-    // }
+
+        return $this->render('user/account.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #[Route(path: '/logout', name: 'app_logout')]
+    public function logout(): void {}
+    // method pour se deconnecter
+
+
+
+
+
+
+
 
     // #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response

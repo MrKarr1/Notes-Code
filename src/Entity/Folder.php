@@ -27,7 +27,7 @@ class Folder
     /**
      * @var Collection<int, note>
      */
-    #[ORM\ManyToMany(targetEntity: note::class, inversedBy: 'folders')]
+    #[ORM\ManyToMany(targetEntity: Note::class, inversedBy: 'folders')]
     private Collection $note;
 
     /**

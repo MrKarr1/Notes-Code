@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<h2>Ajouter une note</h2>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button class="btn">{{ button_label|default('Valider') }}</button>
+	{{ form_end(form) }}
+
+
+	<button class="btn" ><a href="{{ path('app_account') }}">Retour</a></button>
+{% endblock %}

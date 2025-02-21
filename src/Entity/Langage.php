@@ -24,7 +24,7 @@ class Langage
     /**
      * @var Collection<int, note>
      */
-    #[ORM\OneToMany(targetEntity: note::class, mappedBy: 'langage')]
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'langage')]
     private Collection $note;
 
     public function __construct()
