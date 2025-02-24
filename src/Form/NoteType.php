@@ -6,7 +6,6 @@ use App\Entity\Folder;
 use App\Entity\Langage;
 use App\Entity\Note;
 use App\Entity\Tag;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -30,7 +29,7 @@ class NoteType extends AbstractType
             ->add('code', TextareaType::class, [
                 'label' => 'Code de la Note'
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'Description de la Note: '
             ])
             ->add('img', FileType::class, [
@@ -61,12 +60,14 @@ class NoteType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false,
             ])
             ->add('folders', EntityType::class, [
                 'label' => 'Dossier :',
                 'class' => Folder::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }

@@ -30,16 +30,9 @@ class Folder
     #[ORM\ManyToMany(targetEntity: Note::class, inversedBy: 'folders')]
     private Collection $note;
 
-    /**
-     * @var Collection<int, Note>
-     */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'folder')]
-    private Collection $notes;
-
     public function __construct()
     {
         $this->note = new ArrayCollection();
-        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,11 +100,4 @@ class Folder
         return $this;
     }
 
-    /**
-     * @return Collection<int, Note>
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
 }

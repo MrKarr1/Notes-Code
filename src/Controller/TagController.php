@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Form\TagType;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +14,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TagController extends AbstractController
 {
 
-    #[Route('/new', name: 'app_tag_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_tag_add', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
+        if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
         $tag = new Tag();
+        $tag->setUser($this->getUser());
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 
@@ -26,10 +28,10 @@ final class TagController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('tag/new.html.twig', [
+        return $this->render('tag/add.html.twig', [
             'tag' => $tag,
             'form' => $form,
         ]);
@@ -38,6 +40,9 @@ final class TagController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
+        
+        if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 
@@ -56,6 +61,8 @@ final class TagController extends AbstractController
     #[Route('/{id}', name: 'app_tag_delete', methods: ['POST'])]
     public function delete(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
+        if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($tag);
             $entityManager->flush();

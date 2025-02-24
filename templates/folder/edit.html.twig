@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Edit Folder</h1>
+
+    {{ include('folder/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <button class="btn" ><a href="{{ path('app_account') }}">Retour</a></button>
+
+    {{ include('folder/_delete_form.html.twig') }}
+{% endblock %}

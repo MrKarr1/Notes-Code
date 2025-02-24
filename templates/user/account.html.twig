@@ -15,18 +15,25 @@
 		<h3>{{ user.username }}</h3>
 		<h3>{{ user.email }}</h3>
 		<button class="btn">
-            <a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+			<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
 		</button>
-        	<button class="btn">
-            <a href="{{ path('app_tag_add') }}">Créer un Tag</a>
+		<button class="btn">
+			<a href="{{ path('app_tag_add') }}">Créer un Tag</a>
 		</button>
-        	<button class="btn">
-            <a href="{{ path('app_folder_add') }}">Créer une Note</a>
+		<button class="btn">
+			<a href="{{ path('app_folder_add') }}">Créer un Dossier</a>
 		</button>
+		{% if app.user and is_granted('ROLE_ADMIN') %}
+			{# si l'utilisateur est connecté et a le rôle admin #}
+			<button class="btn">
+				<a href="{{ path('app_langage_add') }}">Créer un Langage</a>
+			</button>
+		{% endif %}
+
 		<button id="favori">Favori</button>
 		<button id="dossier">Dossier</button>
 		<button id="note">Notes</button>
-		<div class="favori"></div>
+		<div class="favori" id="div_favori"></div>
 		<thead>
 			<th>Titre</th>
 			<th>Tag</th>
@@ -35,27 +42,42 @@
 			<th>Date</th>
 			<th>Action</th>
 		</thead>
-        <br>
+		<br>
 		{% for note in user.note %}
 			{% if note.favori %}
 				<tbody>
 					<tr>
 						<td class="name">{{note.name}}</td>
 						<td class="tag">
-							{% for tag in note.tags %}
-								<span>{{tag.name}}</span>
-							{% endfor %}
+							{# {% if note.tags %}
+								{% for tag in note.tags %}
+									<span>{{tag.name}}</span>
+								{% endfor %}
+							{% else %} #}
+								<span>Pas de Tag</span>
+							{# {% endif %} #}
 						</td>
-						<td class="forder">
-							{% for file in note.folder %}
-								<span>{{folder.name}}</span>
-							{% endfor %}
+						<td class="folder">
+							{# {% if note.folders is %}
+								<span>{{folders.name}}</span>
+							{% else %} #}
+								<span>Pas de dossier</span>
+							{# {% endif %} #}
 						</td>
-                        <td class="langage">{{ note.langage.displayName }}</td>
+				
+						<td class="langage">{{ note.langage.displayName }}</td>
 						<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
-						<td class="action"></td>
+						<td class="action">
+							<form method="post" action="{{ path('app_note_delete', {'id': note.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ note.id) }}">
+								<button class="btn">Supprimer</button>
+							</form>
+						</td>
 					</tr>
 				</tbody>
+						<pre>
+							{{ dump(note) }}
+						</pre>
 			{% endif %}
 		{% endfor %}
 		<div class="dossier"></div>
