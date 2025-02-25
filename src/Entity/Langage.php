@@ -18,11 +18,11 @@ class Langage
     #[ORM\Column(length: 50)]
     private ?string $display_name = null;
 
-    #[ORM\Column(length: 50, unique: true)]
+    #[ORM\Column(length: 50)]
     private ?string $technical_name = null;
 
     /**
-     * @var Collection<int, note>
+     * @var Collection<int, Note>
      */
     #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'langage')]
     private Collection $note;
@@ -62,14 +62,14 @@ class Langage
     }
 
     /**
-     * @return Collection<int, note>
+     * @return Collection<int, Note>
      */
     public function getNote(): Collection
     {
         return $this->note;
     }
 
-    public function addNote(note $note): static
+    public function addNote(Note $note): static
     {
         if (!$this->note->contains($note)) {
             $this->note->add($note);
@@ -79,7 +79,7 @@ class Langage
         return $this;
     }
 
-    public function removeNote(note $note): static
+    public function removeNote(Note $note): static
     {
         if ($this->note->removeElement($note)) {
             // set the owning side to null (unless already changed)

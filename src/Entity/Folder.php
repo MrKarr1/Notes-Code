@@ -22,17 +22,18 @@ class Folder
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'folder')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     /**
-     * @var Collection<int, note>
+     * @var Collection<int, Note>
      */
-    #[ORM\ManyToMany(targetEntity: Note::class, inversedBy: 'folders')]
-    private Collection $note;
+    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'folder')]
+    private Collection $notes;
 
     public function __construct()
     {
-        $this->note = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,27 +78,29 @@ class Folder
     }
 
     /**
-     * @return Collection<int, note>
+     * @return Collection<int, Note>
      */
-    public function getNote(): Collection
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function addNote(note $note): static
+    public function addNote(Note $note): static
     {
-        if (!$this->note->contains($note)) {
-            $this->note->add($note);
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->addFolder($this);
         }
 
         return $this;
     }
 
-    public function removeNote(note $note): static
+    public function removeNote(Note $note): static
     {
-        $this->note->removeElement($note);
+        if ($this->notes->removeElement($note)) {
+            $note->removeFolder($this);
+        }
 
         return $this;
     }
-
 }

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Folder;
 use App\Form\FolderType;
-use App\Repository\FolderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

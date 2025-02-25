@@ -1,13 +1,47 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Edit Note{% endblock %}
+{% set nav = true %}
+{% block title %}{{note.name}}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Note</h1>
 
-    {{ include('note/_form.html.twig', {'button_label': 'Update'}) }}
+	<h1>{{note.name}}</h1>
 
-    <a href="{{ path('app_note_index') }}">back to list</a>
+	{{ form_start(form) }}
+	{{ form_row(form.name) }}
+	{{ form_row(form.code) }}
+	{# Affiche l'éditeur Monaco ici #}
+	{{ form_row(form.description) }}
+	{{ form_row(form.img) }}
+	{{ form_row(form.is_favori) }}
+	{{ form_row(form.langage) }}
+	{{ form_row(form.tag) }}
+	{{ form_row(form.folder) }}
+	<button class="btn" type="submit">Modifier</button>
+	{{ form_end(form) }}
 
-    {{ include('note/_delete_form.html.twig') }}
+
+	<button class="btn">
+		<a href="{{ path('app_account') }}">Retour</a>
+	</button>
+
+	{{ include('note/_delete_form.html.twig') }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js">
+
+
+		require.config({
+paths: {
+'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs'
+}
+});
+
+require(['vs/editor/editor.main'], function () {
+monaco.editor.create(document.getElementById('{{ form.code.vars.id }}'), {
+value: `{{ form.code.vars.value|json_encode|raw }}`, // Valeur initiale
+language: '{{ note.langage.technicalName|lower }}', // Langage par défaut (tu peux le personnaliser)
+theme: 'vs-dark', // Thème sombre
+readOnly: false // Permet la modification
+});
+});
+	</script>
 {% endblock %}

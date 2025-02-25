@@ -1,0 +1,58 @@
+<header>
+	{% if app.user.avatar %}
+		<img src="{{ asset('img/avatar/'~ app.user.avatar) }}" alt="l'avatar de {{ app.user.username }}">
+	{% else %}
+		<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+	{% endif %}
+	<p>{{ app.user.username }}</p>
+	<button class="btn">
+		<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+	</button>
+	<input type="text" id="folder-search" placeholder="Rechercher">
+	<nav>
+		<button class="btn"  id="favori">Favori</button>
+		<button class="btn" id="dossier">Dossier</button>
+		<button class="btn" id="note">Notes</button>
+		<div class="favori" id="div_favori">
+			<thead>
+				<th>Titre</th>
+			</thead>
+			<br>
+			{% for note in app.user.note %}
+				{% if note.favori %}
+					<tbody>
+						<tr>
+							<a href="{{ path('app_note_show', {'id': note.id}) }}">
+								<td class="name">{{note.name}}</td>
+							</a>
+						</tr>
+					</tbody>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="tag" id="div_tag">
+			<thead>
+				<th>Titre</th>
+			</thead>
+			<br>
+			{% for tags in app.user.tag %}
+				<tbody>
+					<tr>
+						<td class="name">{{tags.name}}</td>
+					</tr>
+				</tbody>
+		{% endfor %}
+	</div>
+	<div class="favori" id="div_favori">
+		<thead>
+			<th>Titre</th>
+		</thead>
+		<br>
+		{% for folders in app.user.folder %}
+			<tbody>
+				<tr>
+					<td class="name">{{folders.name}}</td>
+				</tr>
+			</tbody>
+	{% endfor %}
+</div></nav></header>

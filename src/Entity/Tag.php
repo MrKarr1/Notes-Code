@@ -18,15 +18,15 @@ class Tag
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, note>
-     */
-    #[ORM\ManyToMany(targetEntity: Note::class, inversedBy: 'tags')]
-    private Collection $notes;
-
     #[ORM\ManyToOne(inversedBy: 'tag')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'tag')]
+    private Collection $notes;
 
     public function __construct()
     {
@@ -50,8 +50,20 @@ class Tag
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, note>
+     * @return Collection<int, Note>
      */
     public function getNotes(): Collection
     {
@@ -73,18 +85,6 @@ class Tag
         if ($this->notes->removeElement($note)) {
             $note->removeTag($this);
         }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }

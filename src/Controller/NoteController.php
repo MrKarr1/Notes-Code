@@ -46,7 +46,7 @@ final class NoteController extends AbstractController
 
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->render('note/add.html.twig', [
             'note' => $note,
             'form' => $form,
@@ -56,7 +56,8 @@ final class NoteController extends AbstractController
     #[Route('/{id}', name: 'app_note_show', methods: ['GET'])]
     public function show(Note $note): Response
     {
-        if($this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+        if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+        // si l'utilisateur n'est pas connecté il est redirigé vers la page d'accueil
         return $this->render('note/show.html.twig', [
             'note' => $note,
         ]);

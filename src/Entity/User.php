@@ -33,18 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    /**
-     * @var Collection<int, note>
-     */
-    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'user')]
-    private Collection $note;
-
-    /**
-     * @var Collection<int, folder>
-     */
-    #[ORM\OneToMany(targetEntity: Folder::class, mappedBy: 'user')]
-    private Collection $folder;
-
     #[ORM\Column(length: 50)]
     private ?string $username = null;
 
@@ -52,16 +40,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = null;
 
     /**
-     * @var Collection<int, tag>
+     * @var Collection<int, Folder>
      */
-    #[ORM\OneToMany(targetEntity: tag::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Folder::class, mappedBy: 'user')]
+    private Collection $folder;
+
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\OneToMany(targetEntity: Tag::class, mappedBy: 'user')]
     private Collection $tag;
+
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'user')]
+    private Collection $note;
 
     public function __construct()
     {
-        $this->note = new ArrayCollection();
         $this->folder = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,66 +139,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, note>
-     */
-    public function getNote(): Collection
-    {
-        return $this->note;
-    }
-
-    public function addNote(note $note): static
-    {
-        if (!$this->note->contains($note)) {
-            $this->note->add($note);
-            $note->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(note $note): static
-    {
-        if ($this->note->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getUser() === $this) {
-                $note->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, folder>
-     */
-    public function getFolder(): Collection
-    {
-        return $this->folder;
-    }
-
-    public function addFolder(folder $folder): static
-    {
-        if (!$this->folder->contains($folder)) {
-            $this->folder->add($folder);
-            $folder->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFolder(folder $folder): static
-    {
-        if ($this->folder->removeElement($folder)) {
-            // set the owning side to null (unless already changed)
-            if ($folder->getUser() === $this) {
-                $folder->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getusername(): ?string
     {
         return $this->username;
@@ -224,14 +164,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, tag>
+     * @return Collection<int, Folder>
+     */
+    public function getFolder(): Collection
+    {
+        return $this->folder;
+    }
+
+    public function addFolder(Folder $folder): static
+    {
+        if (!$this->folder->contains($folder)) {
+            $this->folder->add($folder);
+            $folder->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFolder(Folder $folder): static
+    {
+        if ($this->folder->removeElement($folder)) {
+            // set the owning side to null (unless already changed)
+            if ($folder->getUser() === $this) {
+                $folder->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
      */
     public function getTag(): Collection
     {
         return $this->tag;
     }
 
-    public function addTag(tag $tag): static
+    public function addTag(Tag $tag): static
     {
         if (!$this->tag->contains($tag)) {
             $this->tag->add($tag);
@@ -241,12 +211,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeTag(tag $tag): static
+    public function removeTag(Tag $tag): static
     {
         if ($this->tag->removeElement($tag)) {
             // set the owning side to null (unless already changed)
             if ($tag->getUser() === $this) {
                 $tag->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
+            $note->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->note->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getUser() === $this) {
+                $note->setUser(null);
             }
         }
 
