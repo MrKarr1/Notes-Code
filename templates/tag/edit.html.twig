@@ -3,7 +3,8 @@
 {% block title %}Edit Tag{% endblock %}
 
 {% block body %}
-    <h1>Edit Tag</h1>
+	{% include "include/nav.html.twig" %}
+    <h1>{{ tag.name }}</h1>
 
     {{ include('tag/_form.html.twig', {'button_label': 'Update'}) }}
 

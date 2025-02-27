@@ -10,7 +10,7 @@
 	</button>
 	<input type="text" id="folder-search" placeholder="Rechercher">
 	<nav>
-		<button class="btn"  id="favori">Favori</button>
+		<button class="btn" id="favori">Favori</button>
 		<button class="btn" id="dossier">Dossier</button>
 		<button class="btn" id="note">Notes</button>
 		<div class="favori" id="div_favori">
@@ -29,30 +29,35 @@
 					</tbody>
 				{% endif %}
 			{% endfor %}
+			<div class="tag" id="div_tag">
+				<thead>
+					<th>Titre</th>
+				</thead>
+				<br>
+				{% for tags in app.user.tag %}
+					<tbody>
+						<tr>
+							<td class="name">{{tags.name}}</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</div>
+			<div class="favori" id="div_favori">
+				<thead>
+					<th>Titre</th>
+				</thead>
+				<br>
+				{% for folders in app.user.folder %}
+					<tbody>
+						<tr>
+							<td class="name">{{folders.name}}</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</div>
 		</div>
-		<div class="tag" id="div_tag">
-			<thead>
-				<th>Titre</th>
-			</thead>
-			<br>
-			{% for tags in app.user.tag %}
-				<tbody>
-					<tr>
-						<td class="name">{{tags.name}}</td>
-					</tr>
-				</tbody>
-		{% endfor %}
-	</div>
-	<div class="favori" id="div_favori">
-		<thead>
-			<th>Titre</th>
-		</thead>
-		<br>
-		{% for folders in app.user.folder %}
-			<tbody>
-				<tr>
-					<td class="name">{{folders.name}}</td>
-				</tr>
-			</tbody>
-	{% endfor %}
-</div></nav></header>
+		<div class="dossier" id="div_dossier">dossier</div>
+		<div class="note" id="div_note">note</div>
+	</nav>
+</header>
+<script src="{{ asset('note.js') }}"></script>

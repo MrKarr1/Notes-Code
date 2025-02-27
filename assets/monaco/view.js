@@ -8,7 +8,7 @@ require(['vs/editor/editor.main'], function () {
     const noteCode = document.querySelector('#note-code').textContent;
     const noteLanguage = document.querySelector('#note-language').textContent;
 
-    monaco.editor.create(document.querySelector('#editor'), {
+    monaco.editor.create(document.querySelector('#monaco-editor'), {
         value: noteCode,
         language: noteLanguage,
         theme: 'vs-dark', // Thème sombre

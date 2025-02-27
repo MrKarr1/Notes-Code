@@ -6,7 +6,7 @@
             <a href="{{ path('app_home') }}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
             <form method="post">
                 {% if error %}
-                    <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <div class="error"><p>{{ error.messageKey|trans(error.messageData, 'security') }}</p></div>
                 {% endif %}
                 <label for="username">Email</label>
                 <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>

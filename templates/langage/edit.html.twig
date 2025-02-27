@@ -3,7 +3,8 @@
 
 
 {% block body %}
-    <h1>Edit Langage</h1>
+	{% include "include/nav.html.twig" %}
+    <h1>{{langage.name}}</h1>
 
 {{ form_start(form) }}
     {{ form_widget(form) }}

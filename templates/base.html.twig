@@ -1,6 +1,4 @@
-{% if nav is not defined %}
-    {% set nav = false %}
-{% endif %}
+
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -19,9 +17,6 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% if nav %}
-			{% include "include/nav.html.twig" %}
-		{% endif %}
 
 		{% block body %}{% endblock %}
 		{% include "include/footer.html.twig" %}

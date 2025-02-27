@@ -79,10 +79,11 @@
 				{% endif %}
 			{% endfor %}
 		</div>
-		<div class="dossier"></div>
-		<div class="note"></div>
+		<div class="dossier" id="div_dossier">dossier</div>
+		<div class="note" id="div_note">note</div>
 
 	</main>
+	<script src="{{ asset('note.js') }}"></script>
 {% endblock %}
 {# <pre>
 {{ dump(note) }}
