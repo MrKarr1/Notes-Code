@@ -4,42 +4,53 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="nav-laterale">
 		{% include "include/nav.html.twig" %}
 	</div>
-	<main class="show-note">
-		<h1>{{ note.name }}</h1>
-		{% if note.tag %}
-			{% for tag in note.tag %}
-				<span>{{tag.name}}</span>
-			{% endfor %}
-		{% else %}
-			<span>Pas de Tag</span>
-		{% endif %}
-		{% if note.folder %}
-			{% for folders in note.folder %}
-				<span>{{folders.name}}</span>
-			{% endfor %}
-		{% else %}
-			<span>Pas de dossier</span>
-		{% endif %}
-		<span>{{ note.langage.displayName }}</span>
-		<span>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</span>
-		<div id="note-code">{{ note.code }}</div>
-		<div id="note-language">{{ note.langage.technicalName|lower }}</div>
-		<div id="monaco-editor" class="monaco-editor"></div>
-		<p>{{note.description}}</p>
-
-		<button class="btn">
-			<a href="{{ path('app_account') }}">Retour</a>
-		</button>
-		<button class="btn">
-			<a href="{{ path('app_note_edit', {'id': note.id}) }}">Modifier</a>
-		</button>
-
-		{{ include('note/_delete_form.html.twig') }}
-
-	</main>
+	<div class="carte">
+		<main class="show-note">
+			<div class="user-EAS">
+				<h1>Nom:
+					{{ note.name }}</h1>
+				{% if note.tag %}
+					{% for tag in note.tag %}
+						<h3>Tag:
+							{{tag.name}}</h3>
+					{% endfor %}
+				{% else %}
+					<h3>Pas de Tag</h3>
+				{% endif %}
+				{% if note.folder %}
+					{% for folders in note.folder %}
+						<h3>Dossier:
+							{{folders.name}}</h3>
+					{% endfor %}
+				{% else %}
+					<h3>Pas de dossier</h3>
+				{% endif %}
+				<h3>Lanage:
+					{{ note.langage.displayName }}</h3>
+				<h3>Date de creation:
+					{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</h3>
+			</div>
+			<div class="btn-EAS">
+				<button class="btn icone">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+				<button class="btn icone">
+					<a href="{{ path('app_note_edit', {'id': note.id}) }}">Modifier</a>
+				</button>
+				{{ include('note/_delete_form.html.twig') }}
+			</div>
+			<div class="EAS-code-des">
+				<div id="note-code">{{ note.code }}</div>
+				<div id="note-language">{{ note.langage.technicalName|lower }}</div>
+				<div id="monaco-editor" class="monaco-editor"></div>
+				<p>{{note.description}}</p>
+			</div>
+		</main>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
 	<script src="{{ asset('monaco/view.js') }}"></script>
 {% endblock %}

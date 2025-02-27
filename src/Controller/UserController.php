@@ -57,8 +57,6 @@ final class UserController extends AbstractController
         $user = $this->getUser();
         if (!$user) return $this->redirectToRoute('app_login');
         // si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
-
-
         return $this->render('user/account.html.twig', [
             'user' => $user,
         ]);

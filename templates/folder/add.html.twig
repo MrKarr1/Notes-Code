@@ -8,5 +8,28 @@
 	<button class="btn">{{ button_label|default('Valider') }}</button>
 	{{ form_end(form) }}
 
-	<button class="btn" ><a href="{{ path('app_account') }}">Retour</a></button>
+	<button class="btn">
+		<a href="{{ path('app_account') }}">Retour</a>
+	</button>
+	<div class="note-table">
+		<div class="dossier" id="div-dossier">
+			<p>
+				<strong>Dossiers</strong>
+			</p>
+			<table>
+				<thead>
+					<td>Nom Dossier</td>
+				</thead>
+				{% for folder in folders %}
+					<tbody>
+						<tr>
+							<td class="name">
+								<span>{{folder.name}}</span>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock %}

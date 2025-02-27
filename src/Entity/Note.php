@@ -201,7 +201,10 @@ class Note
     {
         return $this->is_favori;
     }
-
+    public function getIsFavori(): ?bool
+    {
+        return $this->is_favori;
+    }
     public function setIsFavori(bool $is_favori): static
     {
         $this->is_favori = $is_favori;

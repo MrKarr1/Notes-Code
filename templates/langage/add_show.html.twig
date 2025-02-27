@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<h1>Ajouter Un Langage</h1>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button class="btn">{{ button_label|default('Valider') }}</button>
+	{{ form_end(form) }}
+	<div class="note-table">
+		<button class="btn">
+			<a href="{{ path('app_account') }}">Retour</a>
+		</button>
+		<div class="langage" id="div-langage">
+			<p>
+				<strong>Langages</strong>
+			</p>
+			<table>
+				<thead>
+					<td>Nom Langage</td>
+					<td>Nom Monaco Editor</td>
+					<td>Action</td>
+				</thead>
+				{% for langage in langages %}
+					<tbody>
+						<tr>
+							<td class="name">
+								<span>{{langage.displayName}}</span>
+							</td>
+							<td class="technicalName">
+								<span>{{langage.technicalName}}</span>
+							</td>
+							<td class="action">
+								{{ include('langage/_delete_form.html.twig') }}
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}

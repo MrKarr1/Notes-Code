@@ -2,28 +2,32 @@
 
 {% block body %}
 	{% include "include/nav.html.twig" %}
-	<main class="edit-note">
-		<h2>{{note.name}}</h2>
-		{{ form_start(form) }}
-		<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
-		<div id="note-language">{{ form.langage.vars.value }}</div>
-		<div id="note-id">{{ form.code.vars.id }}</div>
-		{{ form_row(form.name) }}
-		{{ form_row(form.code, {'attr': {'class': 'monaco-editor'}}) }}
-		{{ form_row(form.description) }}
-		{{ form_row(form.img) }}
-		{{ form_row(form.is_favori) }}
-		{{ form_row(form.langage) }}
-		{{ form_row(form.tag) }}
-		{{ form_row(form.folder) }}
-		<button class="btn">Valider</button>
-		{{ form_end(form) }}
-
-		<button class="btn">
-			<a href="{{ path('app_account') }}">Retour</a>
-		</button>
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
-		<script src="{{ asset('monaco/add-edit.js') }}"></script>
-	</main>
+	<div class="carte">
+		<main class="edit-note">
+			<div class="btn-EAS">
+				<button class="btn">
+					<a href="{{ path('app_note_show', {'id': note.id}) }}">Retour</a>
+				</button>
+			</div>
+			<div class="EAS-code-des">
+				<h2>{{note.name}}</h2>
+				{{ form_start(form) }}
+				<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
+				<div id="note-language">{{ form.langage.vars.value }}</div>
+				<div id="note-id">{{ form.code.vars.id }}</div>
+				{{ form_row(form.name) }}
+				{{ form_row(form.code, {'attr': {'class': 'monaco-editor'}}) }}
+				{{ form_row(form.description) }}
+				{{ form_row(form.img) }}
+				{{ form_row(form.is_favori) }}
+				{{ form_row(form.langage) }}
+				{{ form_row(form.tag) }}
+				{{ form_row(form.folder) }}
+				<button class="btn">Valider</button>
+				{{ form_end(form) }}
+			</div>
+		</main>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
+	<script src="{{ asset('monaco/add-edit.js') }}"></script>
 {% endblock %}

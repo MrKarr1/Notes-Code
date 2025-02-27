@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ final class TagController extends AbstractController
 {
 
     #[Route('/new', name: 'app_tag_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,TagRepository $tags): Response
     {
         
         if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
@@ -34,6 +35,7 @@ final class TagController extends AbstractController
         return $this->render('tag/add.html.twig', [
             'tag' => $tag,
             'form' => $form,
+            'tags' => $tags->findAll(),
         ]);
     }
 
@@ -49,7 +51,7 @@ final class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tag/edit.html.twig', [
@@ -68,7 +70,7 @@ final class TagController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
     }
 
     // #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]

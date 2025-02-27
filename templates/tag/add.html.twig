@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% include "include/nav.html.twig" %}
 	<h1>Create new Tag</h1>
 
 	{{ form_start(form) }}
@@ -13,4 +12,33 @@
 	<button class="btn">
 		<a href="{{ path('app_account') }}">Retour</a>
 	</button>
-{% endblock %}
+	<div class="note-table">
+		<div class="tag" id="div-tag">
+			<p>
+				<strong>Tags</strong>
+			</p>
+			<table>
+				<thead>
+					<td>Nom du Tag</td>
+					<td>Action</td>
+				</thead>
+				{% for tag in tags %}
+					<tbody>
+						<tr>
+							<td class="name">
+								<span>{{tag.name}}</span>
+							</td>
+							<td class="action">
+								{{ include('tag/_delete_form.html.twig') }}
+								<button class="btn icone">
+									<a href="{{ path('app_tag_edit', {'id': tag.id}) }}">
+										<i class="fa-solid fa-arrows-rotate"></i>
+									</a>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	{% endblock %}

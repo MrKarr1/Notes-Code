@@ -1,87 +1,225 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 	<main class="account">
-		{% if user.avatar %}
-			<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
-		{% else %}
-			<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
-		{% endif %}
-
-		<button class="icone">
-			<a href="">
-				<i class="fa-solid fa-gear"></i>
-			</a>
-		</button>
-		<h3>{{ user.username }}</h3>
-		<h3>{{ user.email }}</h3>
-		<button class="btn">
-			<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
-		</button>
-		<button class="btn">
-			<a href="{{ path('app_tag_add') }}">Créer un Tag</a>
-		</button>
-		<button class="btn">
-			<a href="{{ path('app_folder_add') }}">Créer un Dossier</a>
-		</button>
-		{% if app.user and is_granted('ROLE_ADMIN') %}
-			{# si l'utilisateur est connecté et a le rôle admin #}
-			<button class="btn">
-				<a href="{{ path('app_langage_add') }}">Créer un Langage</a>
-			</button>
-		{% endif %}
-
-		<button class="btn" id="favori">Favori</button>
-		<button class="btn" id="dossier">Dossier</button>
-		<button class="btn" id="note">Notes</button>
-		<div class="favori" id="div_favori">
-			<thead>
-				<th>Titre</th>
-				<th>Tag</th>
-				<th>Dossier</th>
-				<th>Langage</th>
-				<th>Date</th>
-				<th>Action</th>
-			</thead>
-			<br>
-			{% for note in user.note %}
-				{% if note.favori %}
-					<tbody>
-						<tr>
-							<a href="{{ path('app_note_show', {'id': note.id}) }}">
-								<td class="name">{{note.name}}</td>
+		<div class="accounts">
+			<div class="user-account">
+				<div class="users-account">
+					<a href="{{path('app_account')}}">
+						{% if user.avatar %}
+							<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
+						{% else %}
+							<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+						{% endif %}
+					</a>
+					<div class="btn-account">
+						<button class=" btn icone">
+							<a href="">
+								<i class="fa-solid fa-user-pen"></i>
 							</a>
-							<td class="tag">
-								{% if note.tag %}
-									{% for tag in note.tag %}
-										<span>{{tag.name}}</span>
-									{% endfor %}
-								{% else %}
-									<span>Pas de Tag</span>
-								{% endif %}
-							</td>
-							<td class="folder">
-								{% if note.folder %}
-									{% for folders in note.folder %}
-										<span>{{folders.name}}</span>
-									{% endfor %}
-								{% else %}
-									<span>Pas de dossier</span>
-								{% endif %}
-							</td>
+						</button>
+						<button class=" btn icone">
+							<a href="{{ path('app_logout') }}">
+								<i class="fa-solid fa-arrow-right-from-bracket"></i>
+							</a>
+						</button>
+					</div>
+					<div class="user-info-account">
+						<h3>{{ user.username }}</h3>
+					</div>
+				</div>
+				<div class="button">
+					<button class="btn">
+						<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+					</button>
+				</div>
+			</div>
 
-							<td class="langage">{{ note.langage.displayName }}</td>
-							<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
-							<td class="action">
-								{{ include('note/_delete_form.html.twig') }}
-							</td>
-						</tr>
-					</tbody>
+			<div class="action">
+				<button class="btn">
+					<a href="{{ path('app_tag_add') }}">Gérer les Tag</a>
+				</button>
+				<button class="btn">
+					<a href="{{ path('app_folder_add') }}">Gérer les Dossier</a>
+				</button>
+				{% if app.user and is_granted('ROLE_ADMIN') %}
+					{# si l'utilisateur est connecté et a le rôle admin #}
+					<button class="btn">
+						<a href="{{ path('app_langage_add') }}">Gérer les Langage</a>
+					</button>
 				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="dossier" id="div_dossier">dossier</div>
-		<div class="note" id="div_note">note</div>
+			</div>
+			<div class="note-table">
+				<div class="btn-table">
+					<button class="btn icone" id="favori">Favori</button>
+					<button class="btn icone" id="dossier">Dossier</button>
+					<button class="btn icone" id="note">Notes</button>
+				</div>
+				<div class="favori" id="div_favori">
+					<p>
+						<strong>Favori</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Nom Note</td>
+							<td>Tag</td>
+							<td>Dossier</td>
+							<td>Langage</td>
+							<td>Date</td>
+							<td>Action</td>
+						</thead>
+						{% for note in user.note %}
+							{% if note.favori %}
+								<tbody>
+									<tr>
+										<td class="name">
+											<a href="{{ path('app_note_show', {'id': note.id}) }}">
+												{{note.name}}
+											</a>
+										</td>
+										<td class="tag">
+											{% if note.tag %}
+												{% for tag in note.tag %}
+													<span>{{tag.name}}</span>
+												{% endfor %}
+											{% else %}
+												<span>Pas de Tag</span>
+											{% endif %}
+										</td>
+										<td class="folder">
+											{% if note.folder %}
+												{% for folders in note.folder %}
+													<span>{{folders.name}}</span>
+												{% endfor %}
+											{% else %}
+												<span>Pas de dossier</span>
+											{% endif %}
+										</td>
 
+										<td class="langage">{{ note.langage.displayName }}</td>
+										<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+										<td class="action">
+											{{ include('note/_delete_form.html.twig') }}
+											<button class="btn icone">
+												<a href="{{ path('app_note_edit', {'id': note.id}) }}">
+													<i class="fa-solid fa-arrows-rotate"></i>
+												</button>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							{% endif %}
+						{% endfor %}
+					</table>
+				</div>
+				<div class="dossier" id="div_dossier">
+					<p>
+						<strong>Dossiers</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Nom Dossier</td>
+							<td>Nom des notes</td>
+							<td>Date</td>
+							<td>Action</td>
+						</thead>
+						{% for folder in user.folder %}
+							<tbody>
+								<tr>
+									<td class="folder">
+										<span>{{folder.name}}</span>
+									</td>
+									<td class="name">
+										{% if folder.notes %}
+											{% for note in folder.notes %}
+												<span>
+													<a href="{{ path('app_note_show', {'id': note.id}) }}">
+														{{note.name}}
+													</a>
+												</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de note</span>
+										{% endif %}
+									</td>
+									<td class="created">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
+									<td class="action">
+										{{ include('folder/_delete_form.html.twig') }}
+									</td>
+								</tr>
+							</tbody>
+						{% endfor %}
+					</table>
+				</div>
+				<div class="note" id="div_note">
+					<p>
+						<strong>Notes</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Nom Note</td>
+							<td>Tag</td>
+							<td>Dossier</td>
+							<td>Langage</td>
+							<td>Date</td>
+							<td>Action</td>
+						</thead>
+						{% for note in user.note %}
+							<tbody>
+								<tr>
+									<td class="name">
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											{{note.name}}
+										</a>
+									</td>
+									<td class="tag">
+										{% if note.tag %}
+											{% for tag in note.tag %}
+												<span>{{tag.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de Tag</span>
+										{% endif %}
+									</td>
+									<td class="folder">
+										{% if note.folder %}
+											{% for folders in note.folder %}
+												<span>{{folders.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de dossier</span>
+										{% endif %}
+									</td>
+
+									<td class="langage">{{ note.langage.displayName }}</td>
+									<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+									<td class="action">
+										{{ include('note/_delete_form.html.twig') }}
+										{% if note.favori %}
+											<button class="btn icone">
+												<a href="{{ path('app_note_favori', {'id': note.id}) }}">
+													<i class="fa-solid fa-star"></i>
+												</a>
+											</button>
+										{% else %}
+											<button class="btn icone">
+												<a href="{{ path('app_note_favori', {'id': note.id}) }}">
+													<i class="fa-regular fa-star"></i>
+												</a>
+											</button>
+										{% endif %}
+										<button class="btn icone">
+											<a href="{{ path('app_note_edit', {'id': note.id}) }}">
+												<i class="fa-solid fa-arrows-rotate"></i>
+											</button>
+										</td>
+									</td>
+								</tr>
+							</tbody>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
 	</main>
 	<script src="{{ asset('note.js') }}"></script>
 {% endblock %}

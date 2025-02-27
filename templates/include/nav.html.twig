@@ -1,63 +1,121 @@
 <header>
-	{% if app.user.avatar %}
-		<img src="{{ asset('img/avatar/'~ app.user.avatar) }}" alt="l'avatar de {{ app.user.username }}">
-	{% else %}
-		<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
-	{% endif %}
-	<p>{{ app.user.username }}</p>
-	<button class="btn">
-		<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
-	</button>
-	<input type="text" id="folder-search" placeholder="Rechercher">
+
+	<div class="nav-user">
+		<a href="{{ path('app_account') }}">
+			{% if app.user.avatar %}
+				<img src="{{ asset('img/avatar/'~ app.user.avatar) }}" alt="l'avatar de {{ app.user.username }}">
+			{% else %}
+				<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+			{% endif %}
+		</a>
+		<p>{{ app.user.username }}</p>
+	</div>
+	<div class="nav-note">
+		<button class="btn icone">
+			<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+		</button>
+		<input type="text" id="folder-search" placeholder="Rechercher">
+	</div>
 	<nav>
-		<button class="btn" id="favori">Favori</button>
-		<button class="btn" id="dossier">Dossier</button>
-		<button class="btn" id="note">Notes</button>
-		<div class="favori" id="div_favori">
-			<thead>
-				<th>Titre</th>
-			</thead>
-			<br>
-			{% for note in app.user.note %}
-				{% if note.favori %}
-					<tbody>
-						<tr>
-							<a href="{{ path('app_note_show', {'id': note.id}) }}">
-								<td class="name">{{note.name}}</td>
-							</a>
-						</tr>
-					</tbody>
-				{% endif %}
-			{% endfor %}
-			<div class="tag" id="div_tag">
-				<thead>
-					<th>Titre</th>
-				</thead>
-				<br>
-				{% for tags in app.user.tag %}
-					<tbody>
-						<tr>
-							<td class="name">{{tags.name}}</td>
-						</tr>
-					</tbody>
-				{% endfor %}
+		<div class="note-table">
+			<div class="btn-table">
+				<button class="btn icone" id="favori">Favori</button>
+				<button class="btn icone" id="dossier">Dossier</button>
+				<button class="btn icone" id="note">Notes</button>
 			</div>
 			<div class="favori" id="div_favori">
-				<thead>
-					<th>Titre</th>
-				</thead>
-				<br>
-				{% for folders in app.user.folder %}
-					<tbody>
-						<tr>
-							<td class="name">{{folders.name}}</td>
-						</tr>
-					</tbody>
-				{% endfor %}
+				<p>
+					<strong>Favori</strong>
+				</p>
+				<table>
+					<thead>
+						<td>Nom</td>
+						<td>Tag</td>
+						<td>Dossier</td>
+					</thead>
+					{% for note in app.user.note %}
+						{% if note.favori %}
+							<tbody>
+								<tr>
+									<td class="name">
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											{{note.name}}
+										</a>
+									</td>
+									<td class="tag">
+										{% if note.tag %}
+											{% for tag in note.tag %}
+												<span>{{tag.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de Tag</span>
+										{% endif %}
+									</td>
+									<td class="folder">
+										{% if note.folder %}
+											{% for folders in note.folder %}
+												<span>{{folders.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de dossier</span>
+										{% endif %}
+									</td>
+								</tr>
+							</tbody>
+						{% endif %}
+					{% endfor %}
+				</table>
 			</div>
-		</div>
-		<div class="dossier" id="div_dossier">dossier</div>
-		<div class="note" id="div_note">note</div>
-	</nav>
-</header>
-<script src="{{ asset('note.js') }}"></script>
+			<div class="dossier" id="div_dossier">
+				<p>
+					<strong>Dossiers</strong>
+				</p>
+				<table>
+					<thead>
+						<td>Nom</td>
+						<td>Note</td>
+					</thead>
+					{% for folder in app.user.folder %}
+						<tbody>
+							<tr>
+								<td
+									class="name">
+									{# <a href="{{ path('app_folder_show', {'id': folder.id}) }}"></a> #}
+									{{folder.name}}
+								</td>
+								<td class="note">
+									{% for note in folder.notes %}
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											<span>{{note.name}}</span>
+										</a>
+									{% endfor %}
+								</td>
+							</tr>
+						</tbody>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="note" id="div_note">
+				<p>
+					<strong>Notes</strong>
+					<table>
+						<thead>
+							<td>Note</td>
+						</thead>
+						{% for note in app.user.note %}
+							<tbody>
+								<tr>
+									<td class="name">
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											{{note.name}}
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					{% endfor %}
+				</p>
+			</table>
+		</p>
+	</div>
+</div></div></nav></header><script src="{{ asset('note.js') }}"></script>

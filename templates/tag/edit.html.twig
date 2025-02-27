@@ -3,12 +3,15 @@
 {% block title %}Edit Tag{% endblock %}
 
 {% block body %}
-	{% include "include/nav.html.twig" %}
     <h1>{{ tag.name }}</h1>
 
-    {{ include('tag/_form.html.twig', {'button_label': 'Update'}) }}
+    	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button class="btn">{{ button_label|default('Save') }}</button>
+	{{ form_end(form) }}
 
-    <button class="btn" ><a href="{{ path('app_account') }}">Retour</a></button>
+
+    <button class="btn" ><a href="{{ path('app_tag_add') }}">Retour</a></button>
 
     {{ include('tag/_delete_form.html.twig') }}
 {% endblock %}
