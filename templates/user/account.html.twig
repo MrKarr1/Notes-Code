@@ -36,22 +36,22 @@
 
 			<div class="action">
 				<button class="btn">
-					<a href="{{ path('app_tag_add') }}">Gérer les Tag</a>
+					<a href="{{ path('app_tag_add') }}">Gérer les Tags</a>
 				</button>
 				<button class="btn">
-					<a href="{{ path('app_folder_add') }}">Gérer les Dossier</a>
+					<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
 				</button>
 				{% if app.user and is_granted('ROLE_ADMIN') %}
 					{# si l'utilisateur est connecté et a le rôle admin #}
 					<button class="btn">
-						<a href="{{ path('app_langage_add') }}">Gérer les Langage</a>
+						<a href="{{ path('app_langage_add') }}">Gérer les Langages</a>
 					</button>
 				{% endif %}
 			</div>
 			<div class="note-table">
 				<div class="btn-table">
 					<button class="btn icone" id="favori">Favori</button>
-					<button class="btn icone" id="dossier">Dossier</button>
+					<button class="btn icone" id="folder">Dossier</button>
 					<button class="btn icone" id="note">Notes</button>
 				</div>
 				<div class="favori" id="div_favori">
@@ -67,27 +67,27 @@
 							<td>Date</td>
 							<td>Action</td>
 						</thead>
-						{% for note in user.note %}
+						{% for note in user.note|slice(0, 35) %}
 							{% if note.favori %}
 								<tbody>
 									<tr>
-										<td class="name">
+										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
 												{{note.name}}
 											</a>
 										</td>
-										<td class="tag">
+										<td>
 											{% if note.tag %}
-												{% for tag in note.tag %}
+												{% for tag in note.tag|slice(0, 5) %}
 													<span>{{tag.name}}</span>
 												{% endfor %}
 											{% else %}
 												<span>Pas de Tag</span>
 											{% endif %}
 										</td>
-										<td class="folder">
+										<td>
 											{% if note.folder %}
-												{% for folders in note.folder %}
+												{% for folders in note.folder|slice(0, 5) %}
 													<span>{{folders.name}}</span>
 												{% endfor %}
 											{% else %}
@@ -95,8 +95,8 @@
 											{% endif %}
 										</td>
 
-										<td class="langage">{{ note.langage.displayName }}</td>
-										<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+										<td>{{ note.langage.displayName }}</td>
+										<td>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
 										<td class="action">
 											{{ include('note/_delete_form.html.twig') }}
 											<button class="btn icone">
@@ -111,7 +111,7 @@
 						{% endfor %}
 					</table>
 				</div>
-				<div class="dossier" id="div_dossier">
+				<div class="folder" id="div_folder">
 					<p>
 						<strong>Dossiers</strong>
 					</p>
@@ -125,12 +125,12 @@
 						{% for folder in user.folder %}
 							<tbody>
 								<tr>
-									<td class="folder">
+									<td>
 										<span>{{folder.name}}</span>
 									</td>
-									<td class="name">
+									<td>
 										{% if folder.notes %}
-											{% for note in folder.notes %}
+											{% for note in folder.notes|slice(0, 35) %}
 												<span>
 													<a href="{{ path('app_note_show', {'id': note.id}) }}">
 														{{note.name}}
@@ -141,7 +141,7 @@
 											<span>Pas de note</span>
 										{% endif %}
 									</td>
-									<td class="created">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
+									<td>{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
 									<td class="action">
 										{{ include('folder/_delete_form.html.twig') }}
 									</td>
@@ -166,23 +166,23 @@
 						{% for note in user.note %}
 							<tbody>
 								<tr>
-									<td class="name">
+									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}
 										</a>
 									</td>
-									<td class="tag">
+									<td>
 										{% if note.tag %}
-											{% for tag in note.tag %}
+											{% for tag in note.tag|slice(0, 5) %}
 												<span>{{tag.name}}</span>
 											{% endfor %}
 										{% else %}
 											<span>Pas de Tag</span>
 										{% endif %}
 									</td>
-									<td class="folder">
+									<td>
 										{% if note.folder %}
-											{% for folders in note.folder %}
+											{% for folders in note.folder|slice(0, 5) %}
 												<span>{{folders.name}}</span>
 											{% endfor %}
 										{% else %}
@@ -190,8 +190,8 @@
 										{% endif %}
 									</td>
 
-									<td class="langage">{{ note.langage.displayName }}</td>
-									<td class="created">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+									<td>{{ note.langage.displayName }}</td>
+									<td>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
 									<td class="action">
 										{{ include('note/_delete_form.html.twig') }}
 										{% if note.favori %}

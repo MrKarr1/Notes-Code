@@ -20,29 +20,28 @@
 		<div class="note-table">
 			<div class="btn-table">
 				<button class="btn icone" id="favori">Favori</button>
-				<button class="btn icone" id="dossier">Dossier</button>
+				<button class="btn icone" id="folder">Dossier</button>
 				<button class="btn icone" id="note">Notes</button>
 			</div>
 			<div class="favori" id="div_favori">
 				<p>
 					<strong>Favori</strong>
 				</p>
-				<table>
+				<table class="nav-table">
 					<thead>
 						<td>Nom</td>
 						<td>Tag</td>
 						<td>Dossier</td>
-					</thead>
-					{% for note in app.user.note %}
+					{% for note in app.user.note|slice(0, 15) %}
 						{% if note.favori %}
 							<tbody>
 								<tr>
-									<td class="name">
+									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}
 										</a>
 									</td>
-									<td class="tag">
+									<td>
 										{% if note.tag %}
 											{% for tag in note.tag %}
 												<span>{{tag.name}}</span>
@@ -51,7 +50,7 @@
 											<span>Pas de Tag</span>
 										{% endif %}
 									</td>
-									<td class="folder">
+									<td>
 										{% if note.folder %}
 											{% for folders in note.folder %}
 												<span>{{folders.name}}</span>
@@ -66,24 +65,23 @@
 					{% endfor %}
 				</table>
 			</div>
-			<div class="dossier" id="div_dossier">
+			<div class="folder" id="div_folder">
 				<p>
 					<strong>Dossiers</strong>
 				</p>
-				<table>
+				<table class="nav-table">
 					<thead>
 						<td>Nom</td>
 						<td>Note</td>
 					</thead>
-					{% for folder in app.user.folder %}
+					{% for folder in app.user.folder|slice(0, 15) %}
 						<tbody>
 							<tr>
-								<td
-									class="name">
+								<td>
 									{# <a href="{{ path('app_folder_show', {'id': folder.id}) }}"></a> #}
 									{{folder.name}}
 								</td>
-								<td class="note">
+								<td>
 									{% for note in folder.notes %}
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											<span>{{note.name}}</span>
@@ -98,14 +96,14 @@
 			<div class="note" id="div_note">
 				<p>
 					<strong>Notes</strong>
-					<table>
+					<table class="nav-table">
 						<thead>
 							<td>Note</td>
 						</thead>
-						{% for note in app.user.note %}
+						{% for note in app.user.note|slice(0, 15) %}
 							<tbody>
 								<tr>
-									<td class="name">
+									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}
 										</a>
@@ -118,4 +116,5 @@
 			</table>
 		</p>
 	</div>
-</div></div></nav></header><script src="{{ asset('note.js') }}"></script>
+	<script src="{{ asset('note.js') }}"></script>
+</div></div></nav></header>wrapper

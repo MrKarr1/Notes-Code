@@ -29,7 +29,7 @@ final class TagController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tag_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tag/add.html.twig', [
@@ -51,7 +51,7 @@ final class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tag_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tag/edit.html.twig', [
@@ -70,7 +70,7 @@ final class TagController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_tag_add', [], Response::HTTP_SEE_OTHER);
     }
 
     // #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]

@@ -1,44 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1>Create new Tag</h1>
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
+	</div>
+	<div class="carte manage">
+		<main class="manage-tag">
+			<div class="flex-button">
+				<button class="btn">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+			</div>
+			<h1>Gérer les Tags</h1>
 
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button class="btn">{{ button_label|default('Save') }}</button>
-	{{ form_end(form) }}
+			{{ form_start(form) }}
+			{{ form_row(form.name) }}
+			<div class="flex-button">
+				<button class="btn">{{ button_label|default('Valider') }}</button>
+			</div>
+			{{ form_end(form) }}
 
-
-	<button class="btn">
-		<a href="{{ path('app_account') }}">Retour</a>
-	</button>
-	<div class="note-table">
-		<div class="tag" id="div-tag">
-			<p>
-				<strong>Tags</strong>
-			</p>
-			<table>
-				<thead>
-					<td>Nom du Tag</td>
-					<td>Action</td>
-				</thead>
-				{% for tag in tags %}
-					<tbody>
-						<tr>
-							<td class="name">
-								<span>{{tag.name}}</span>
-							</td>
-							<td class="action">
-								{{ include('tag/_delete_form.html.twig') }}
-								<button class="btn icone">
-									<a href="{{ path('app_tag_edit', {'id': tag.id}) }}">
-										<i class="fa-solid fa-arrows-rotate"></i>
-									</a>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				{% endfor %}
-			</table>
-		</div>
-	{% endblock %}
+			<div class="note-table">
+				<div class="tag tag-add" id="div-tag">
+					<p>
+						<strong>Tags</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Nom du Tag</td>
+							<td>Action</td>
+						</thead>
+						{% for tag in tags %}
+							<tbody>
+								<tr>
+									<td>
+										<span>{{tag.name}}</span>
+									</td>
+									<td class="action">
+										{{ include('tag/_delete_form.html.twig') }}
+										<button class="btn icone">
+											<a href="{{ path('app_tag_edit', {'id': tag.id}) }}">
+												<i class="fa-solid fa-arrows-rotate"></i>
+											</a>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</main>
+	</div>
+{% endblock %}

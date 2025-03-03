@@ -24,18 +24,19 @@ class NoteType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Titre de la Note: ',
+                'label' => 'Titre de la Note : ',
             ])
             ->add('code', TextareaType::class, [
-                'label' => 'Code de la Note',
+                'label' => 'Code de la Note : ',
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description de la Note: ',
+                'label' => 'Description de la Note : ',
                 'required' => false,
+                'attr' => ['class' => 'description'],
             ])
             ->add('img', FileType::class, [
-                'label' => 'Image: ',
+                'label' => 'Image : ',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -53,19 +54,19 @@ class NoteType extends AbstractType
                 'required' => false,
             ])
             ->add('langage', EntityType::class, [
-                'label' => 'Langage :',
+                'label' => 'Langage : ',
                 'class' => Langage::class,
                 'choice_label' => 'display_name',
             ])
             ->add('tag', EntityType::class, [
-                'label' => 'Tag :',
+                'label' => 'Tag : ',
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
             ])
             ->add('folder', EntityType::class, [
-                'label' => 'Dossier :',
+                'label' => 'Dossier : ',
                 'class' => Folder::class,
                 'choice_label' => 'name',
                 'multiple' => true,

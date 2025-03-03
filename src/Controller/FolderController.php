@@ -31,7 +31,7 @@ final class FolderController extends AbstractController
             $entityManager->persist($folder);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('folder/add.html.twig', [
@@ -49,8 +49,27 @@ final class FolderController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
     }
+    
+    #[Route('/{id}/edit', name: 'app_folder_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(FolderType::class, $folder);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('folder/edit.html.twig', [
+            'folder' => $folder,
+            'form' => $form,
+        ]);
+    }
+
 
     // #[Route('/{id}', name: 'app_folder_show', methods: ['GET'])]
     // public function show(Folder $folder): Response
@@ -60,23 +79,6 @@ final class FolderController extends AbstractController
     //     ]);
     // }
 
-    // #[Route('/{id}/edit', name: 'app_folder_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
-    // {
-    //     $form = $this->createForm(FolderType::class, $folder);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_folder_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('folder/edit.html.twig', [
-    //         'folder' => $folder,
-    //         'form' => $form,
-    //     ]);
-    // }
 
 
 }

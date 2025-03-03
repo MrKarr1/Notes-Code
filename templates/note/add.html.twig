@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% include "include/nav.html.twig" %}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
+	</div>
+	<div class="carte">
 	<main class="add-note">
+				<div class="flex-button">
+				<button class="btn">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+			</div>
 		<h2>Ajouter une note</h2>
 		{{ form_start(form) }}
 		<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
@@ -19,10 +27,8 @@
 		<button class="btn">Valider</button>
 		{{ form_end(form) }}
 
-		<button class="btn">
-			<a href="{{ path('app_account') }}">Retour</a>
-		</button>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
 		<script src="{{ asset('monaco/add-edit.js') }}"></script>
 	</main>
+		</div>
 {% endblock %}
