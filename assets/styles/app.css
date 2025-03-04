@@ -253,6 +253,19 @@ img {
         }
     }
 
+    .action {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: first baseline;
+
+        .div-action {
+            flex-wrap: wrap;
+            padding-right: 25%;
+        }
+
+    }
+
     img {
         border-radius: 100%;
         max-width: 100px;
@@ -263,6 +276,29 @@ img {
         }
     }
 
+}
+
+.div-research {
+    position: relative;
+
+    input[type=text] {
+        display: block;
+        width: 200px;
+        margin-right: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        background-color: var(--fond-principal);
+        color: var(--texte-principal);
+    }
+
+    .icone {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: var(--texte-principal);
+    }
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -387,8 +423,9 @@ img {
                 gap: 20vh;
 
             }
-            .left{
-                
+
+            .left {
+
                 label {
                     display: flex;
                     margin-bottom: 5px;

@@ -35,19 +35,26 @@
 			</div>
 
 			<div class="action">
-				<button class="btn">
-					<a href="{{ path('app_tag_add') }}">Gérer les Tags</a>
-				</button>
-				<button class="btn">
-					<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
-				</button>
-				{% if app.user and is_granted('ROLE_ADMIN') %}
-					{# si l'utilisateur est connecté et a le rôle admin #}
+				<div class="div-action">
 					<button class="btn">
-						<a href="{{ path('app_langage_add') }}">Gérer les Langages</a>
+						<a href="{{ path('app_tag_add') }}">Gérer les Tags</a>
 					</button>
-				{% endif %}
+					<button class="btn">
+						<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
+					</button>
+					{% if app.user and is_granted('ROLE_ADMIN') %}
+						{# si l'utilisateur est connecté et a le rôle admin #}
+						<button class="btn">
+							<a href="{{ path('app_langage_add') }}">Gérer les Langages</a>
+						</button>
+					{% endif %}
+				</div>
+				<div class="div-research">
+					<input type="text" id="research" name="research" placeholder="Recherche">
+					<i class=" icone fa-solid fa-magnifying-glass"></i>
+				</div>
 			</div>
+
 			<div class="note-table">
 				<div class="btn-table">
 					<button class="btn icone" id="favori">Favori</button>
@@ -67,10 +74,10 @@
 							<td>Date</td>
 							<td>Action</td>
 						</thead>
-						{% for note in user.note|slice(0, 35) %}
-							{% if note.favori %}
-								<tbody>
-									<tr>
+						<tbody id="research-favori">
+							{% for note in user.note|slice(0, 35) %}
+								{% if note.favori %}
+									<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %} data-langage=" {{note.langage.displayName|lower}} data-date="{{note.createdAt ? note.createdAt|date('d m Y') : ''}}">
 										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
 												{{note.name}}
@@ -106,9 +113,9 @@
 											</a>
 										</td>
 									</tr>
-								</tbody>
-							{% endif %}
-						{% endfor %}
+								{% endif %}
+							{% endfor %}
+						</tbody>
 					</table>
 				</div>
 				<div class="folder" id="div_folder">
@@ -122,9 +129,11 @@
 							<td>Date</td>
 							<td>Action</td>
 						</thead>
-						{% for folder in user.folder %}
-							<tbody>
-								<tr>
+						<tbody id="research-folder">
+							{% for folder in user.folder %}
+								<tr data-name="{{folder.name|lower}}" 
+								data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" 
+								data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
 									<td>
 										<span>{{folder.name}}</span>
 									</td>
@@ -146,8 +155,8 @@
 										{{ include('folder/_delete_form.html.twig') }}
 									</td>
 								</tr>
-							</tbody>
-						{% endfor %}
+							{% endfor %}
+						</tbody>
 					</table>
 				</div>
 				<div class="note" id="div_note">
@@ -163,9 +172,9 @@
 							<td>Date</td>
 							<td>Action</td>
 						</thead>
-						{% for note in user.note %}
-							<tbody>
-								<tr>
+						<tbody id="research-note">
+							{% for note in user.note %}
+								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}" data-date="{{note.createdAt ? note.createdAt|date('d-m-Y') : ''}}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}
@@ -214,15 +223,18 @@
 										</td>
 									</td>
 								</tr>
-							</tbody>
-						{% endfor %}
+							{% endfor %}
+						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</main>
+
 	<script src="{{ asset('note.js') }}"></script>
+	<script>
+		search('research', 'research-favori');
+search('research', 'research-folder');
+search('research', 'research-note');
+	</script>
 {% endblock %}
-{# <pre>
-{{ dump(note) }}
-</pre> #}
