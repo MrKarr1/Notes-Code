@@ -26,6 +26,10 @@ class Contact
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+ 
+    #[ORM\Column(nullable: true)]
+    private ?int $sent_by = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +79,18 @@ class Contact
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getSentBy(): ?string
+    {
+        return $this->sent_by;
+    }
+
+    public function setSentBy(?string $sent_by): static
+    {
+        $this->sent_by = $sent_by;
 
         return $this;
     }

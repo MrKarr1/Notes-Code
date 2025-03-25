@@ -20,6 +20,7 @@
 					<p>
 						<strong>Dernier message</strong>
 					</p>
+					{{ dump(contacts) }}
 					<table>
 						<thead>
 							<td>Date</td>
@@ -28,7 +29,9 @@
 							<td>Action</td>
 						</thead>
 						{% for contact in contacts %}
-							<tbody>
+								{{ dump(contact) }}
+						  {% if contact.sent_by != app.user.id|string %}
+								<tbody>
 								<tr>
 									<td>
 										<span>{{contact.createdAt|date('d/m/Y')}}</span>
@@ -38,6 +41,7 @@
 									</td>
 									<td>
 										<span>{{ contact.message }}</span>
+									
 									</td>
 									<td>
 										{{ include('contact/_delete_form.html.twig') }}
@@ -45,6 +49,7 @@
 									</td>
 								</tr>
 							</tbody>
+						{% endif %}
 						{% endfor %}
 					</table>
 				</div>

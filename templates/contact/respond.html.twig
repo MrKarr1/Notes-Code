@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="carte manage" id="carte-contact">
+		<main class="manage-contact">
+			<div class="img-carte">
+				<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			</div>
+			<div class="flex-button">
+				<button class="btn">
+					<a href="{{ path('app_contact_show') }}">Retour</a>
+				</button>
+			</div>
+			<h1>Réponse</h1>
+			{{ form_start(form) }}
+			{{ form_errors(form) }}
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email) }}
+			{{ form_label(form.message) }}
+			{{ form_widget(form.message) }}
+			<div class="flex-button">
+				<button class="btn">{{ button_label|default('Valider') }}</button>
+			</div>
+			{{ form_end(form) }}
+			<div class="note-table">
+				<div class="contact contact-add" id="div-contact">
+					<p>
+						<strong>Le message</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Date</td>
+							<td>Email</td>
+							<td>Message</td>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<span>{{contact.createdAt|date('d/m/Y')}}</span>
+								</td>
+								<td>
+									<span>{{contact.email}}</span>
+								</td>
+								<td>
+									<span>{{ contact.message }}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+	</div>
+{% endblock %}
