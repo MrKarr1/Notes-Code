@@ -17,10 +17,13 @@
 			<h1>Message reçu</h1>
 			<div class="note-table">
 				<div class="contact contact-add" id="div-contact">
-					<p>
-						<strong>Dernier message</strong>
-					</p>
-					{{ dump(contacts) }}
+					<div id="message-container" class="message">
+						<p>
+							<strong>Message</strong>
+						</p>
+						<p id="message-content"></p>
+						<button class="btn" id="close-message">Fermer</button>
+					</div>
 					<table>
 						<thead>
 							<td>Date</td>
@@ -29,31 +32,40 @@
 							<td>Action</td>
 						</thead>
 						{% for contact in contacts %}
-								{{ dump(contact) }}
-						  {% if contact.sent_by != app.user.id|string %}
+							{# {{ dump(contact) }} #}
+							{% if contact.sentby != app.user.id %}
 								<tbody>
-								<tr>
-									<td>
-										<span>{{contact.createdAt|date('d/m/Y')}}</span>
-									</td>
-									<td>
-										<span>{{contact.email}}</span>
-									</td>
-									<td>
-										<span>{{ contact.message }}</span>
-									
-									</td>
-									<td>
-										{{ include('contact/_delete_form.html.twig') }}
-										<button class="btn icone"><a href="{{ path('app_respond', {'id': contact.id}) }}">Répondre</a></button>
-									</td>
-								</tr>
-							</tbody>
-						{% endif %}
+									<tr>
+										<td>
+											<span>{{contact.createdAt|date('d/m/Y')}}</span>
+										</td>
+										<td>
+											<span>{{contact.email}}</span>
+										</td>
+										<td>
+											<button class="btn btn-message" data-message="{{ contact.message }}">Voir le message</button>
+										</td>
+
+										<td>
+											<form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+												<button class="btn icone">
+													<i class="fa-solid fa-trash"></i>
+												</button>
+											</form>
+
+											<button class="btn icone">
+												<a href="{{ path('app_respond', {'id': contact.id}) }}">Répondre</a>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							{% endif %}
 						{% endfor %}
 					</table>
 				</div>
 			</div>
 		</main>
 	</div>
+	<script src="{{ asset('message.js') }}"></script>
 {% endblock %}

@@ -39,16 +39,20 @@
 										<td>
 											<span>{{contact.email}}</span>
 										</td>
-										<td>
-											<span>{{ contact.message }}</span>
+										<td class="span-message">
+											<button class="btn" id="btn-message">Voir le message</button>
 										</td>
 									</tr>
 								</tbody>
-							{% endfor %}
-						</table>
+								<div class="message">
+								<p class="message-content message-hidden">{{ contact.message }}</p>
+							</div>					
+						{% endfor %}
+							</table>	
 					</div>
 				</div>
 			{% endif %}
 		</main>
 	</div>
+	<script src="{{ asset('message.js') }}"></script>
 {% endblock %}

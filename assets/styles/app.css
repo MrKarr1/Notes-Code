@@ -125,7 +125,7 @@ img {
     .logins,
     .registers,
     .edits-users,
-    .mentions  {
+    .mentions {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -162,13 +162,15 @@ img {
             }
         }
     }
- 
+
 }
+
 .mention {
     margin-top: 1vh;
+
     .mentions {
         text-align: start;
-}
+    }
 }
 
 
@@ -334,13 +336,16 @@ img {
     margin-top: 1vh;
     margin-left: 25vh;
     margin-right: 5vh;
-    .img-carte{
+
+    .img-carte {
         text-align: center;
     }
 }
-#carte-contact{
+
+#carte-contact {
     margin-left: 0vh;
 }
+
 .show-note,
 .edit-note,
 .add-note {
@@ -505,6 +510,7 @@ img {
             background-color: var(--fond-principal);
             color: var(--texte-principal);
         }
+
         textarea {
             min-width: 50vh;
             min-height: 25vh;
@@ -519,8 +525,13 @@ img {
     .tag-add,
     .langage-add,
     .folder-add,
-    .contact-add  {
+    .contact-add {
         border-radius: 10px 10px 10px 10px;
+        
+    }
+    .message {
+        display: none;
+        
     }
 }
 
