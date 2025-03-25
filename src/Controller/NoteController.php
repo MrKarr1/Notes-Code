@@ -22,6 +22,7 @@ final class NoteController extends AbstractController
     #[Route('/new', name: 'app_note_add', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        // method pour créer une note
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
         // virifie si l'utilisateur est connecté
         $note = new Note();
@@ -56,6 +57,7 @@ final class NoteController extends AbstractController
     #[Route('/{id}', name: 'app_note_show', methods: ['GET'])]
     public function show(Note $note): Response
     {
+        // method pour afficher une note
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
         // si l'utilisateur n'est pas connecté il est redirigé vers la page d'accueil
         return $this->render('note/show.html.twig', [
@@ -66,6 +68,7 @@ final class NoteController extends AbstractController
     #[Route('/{id}/edit', name: 'app_note_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Note $note, EntityManagerInterface $entityManager): Response
     {
+        // method pour modifier une note
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
 
         $form = $this->createForm(NoteType::class, $note);
@@ -86,6 +89,7 @@ final class NoteController extends AbstractController
     #[Route('/{id}', name: 'app_note_delete', methods: ['POST'])]
     public function delete(Request $request, Note $note, EntityManagerInterface $entityManager): Response
     {
+        // method pour supprimer une note
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
 
 
@@ -99,6 +103,7 @@ final class NoteController extends AbstractController
     #[Route('/{id}/favori', name: 'app_note_favori', methods: ['GET'])]
     public function favori(Note $note, EntityManagerInterface $entityManager): Response
     {
+        // method pour mettre une note en favori
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
         $note->setIsFavori(!$note->getIsFavori());
         //  si la note est en favori elle est retiré et vice versa

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
+	</div>
+	<main class="edit-user">
+		<div class="edits-users">
+			<div class="flex-button">
+				<button class="btn">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+			</div>
+			{{ form_start(form) }}
+			{{ form_errors(form) }}
+			{{ form_label(form.username) }}
+			{{ form_widget(form.username) }}
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email) }}
+			{{ form_label(form.plainPassword) }}
+			{{ form_widget(form.plainPassword,{'required' : false}) }}
+			{{ form_label(form.avatar) }}
+			{{ form_widget(form.avatar) }}
+			<div class="flex-button">
+				<button class="btn">{{ button_label|default('Valider') }}</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</main>
+{% endblock %}

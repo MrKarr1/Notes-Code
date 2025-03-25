@@ -54,16 +54,8 @@ class UserType extends AbstractType
                         'mimeTypesMessage' => 'Image trop lourde',
                     ])
                 ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'Accepter les Conditions',
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter nos conditions.',
-                    ]),
-                ],
             ]);
+       
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -74,3 +66,14 @@ class UserType extends AbstractType
     }
     
 }
+
+
+// ->add('agreeTerms', CheckboxType::class, [
+//     'label' => 'Accepter les Conditions',
+//     'mapped' => false,
+//     'constraints' => [
+//         new IsTrue([
+//             'message' => 'Vous devez accepter nos conditions.',
+//         ]),
+//     ],
+// ]);

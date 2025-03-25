@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
+	</div>
+	<div class="carte manage">
+		<main class="manage-contact">
+			<div class="img-carte">
+				<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			</div>
+			<div class="flex-button">
+				<button class="btn">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+			</div>
+			<h1>Message reçu</h1>
+			<div class="note-table">
+				<div class="contact contact-add" id="div-contact">
+					<p>
+						<strong>Dernier message</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Date</td>
+							<td>Nom ou Mail</td>
+							<td>Message</td>
+							<td>Action</td>
+						</thead>
+						{% for contact in contacts %}
+							<tbody>
+								<tr>
+									<td>
+										<span>{{contact.createdAt|date('d/m/Y')}}</span>
+									</td>
+									<td>
+										<span>{{contact.email}}</span>
+									</td>
+									<td>
+										<span>{{ contact.message }}</span>
+									</td>
+									<td>
+										{{ include('contact/_delete_form.html.twig') }}
+										<button class="btn icone"><a href="{{ path('app_respond', {'id': contact.id}) }}">Répondre</a></button>
+									</td>
+								</tr>
+							</tbody>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</main>
+	</div>
+{% endblock %}

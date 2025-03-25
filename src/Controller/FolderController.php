@@ -20,6 +20,7 @@ final class FolderController extends AbstractController
     #[Route('/new', name: 'app_folder_add', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, FolderRepository $folders): Response
     {
+        // method pour créer un dossier
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
         $folder = new Folder();
         $folder->setUser($this->getUser());
@@ -44,6 +45,7 @@ final class FolderController extends AbstractController
     #[Route('/{id}', name: 'app_folder_delete', methods: ['POST'])]
     public function delete(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
     {
+        // metof pour supprimer un dossier
         if ($this->isCsrfTokenValid('delete' . $folder->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($folder);
             $entityManager->flush();
@@ -55,6 +57,7 @@ final class FolderController extends AbstractController
     #[Route('/{id}/edit', name: 'app_folder_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
     {
+        // method pour modifier un dossier
         $form = $this->createForm(FolderType::class, $folder);
         $form->handleRequest($request);
 

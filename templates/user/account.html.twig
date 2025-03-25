@@ -4,7 +4,7 @@
 		<div class="accounts">
 			<div class="user-account">
 				<div class="users-account">
-					<a href="{{path('app_account')}}">
+					<a href="{{ path('app_account') }}">
 						{% if user.avatar %}
 							<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
 						{% else %}
@@ -13,7 +13,7 @@
 					</a>
 					<div class="btn-account">
 						<button class=" btn icone">
-							<a href="">
+							<a href="{{ path('app_user_edit', {'id': user.id}) }}">
 								<i class="fa-solid fa-user-pen"></i>
 							</a>
 						</button>
@@ -42,10 +42,16 @@
 					<button class="btn">
 						<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
 					</button>
+							<button class="btn">
+						<a href="{{ path('app_contact') }}">Contact</a>
+					</button>
 					{% if app.user and is_granted('ROLE_ADMIN') %}
 						{# si l'utilisateur est connecté et a le rôle admin #}
 						<button class="btn">
 							<a href="{{ path('app_langage_add') }}">Gérer les Langages</a>
+						</button>
+						<button class="btn">
+							<a href="{{ path('app_contact_show') }}">Message de contact</a>
 						</button>
 					{% endif %}
 				</div>
@@ -75,9 +81,9 @@
 							<td>Action</td>
 						</thead>
 						<tbody id="research-favori">
-							{% for note in user.note|slice(0, 35) %}
+							{% for note in user.note %}
 								{% if note.favori %}
-									<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %} data-langage=" {{note.langage.displayName|lower}} data-date="{{note.createdAt ? note.createdAt|date('d m Y') : ''}}">
+									<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}">
 										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
 												{{note.name}}
@@ -131,9 +137,7 @@
 						</thead>
 						<tbody id="research-folder">
 							{% for folder in user.folder %}
-								<tr data-name="{{folder.name|lower}}" 
-								data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" 
-								data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
+								<tr data-name="{{folder.name|lower}}" data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
 									<td>
 										<span>{{folder.name}}</span>
 									</td>
@@ -174,7 +178,7 @@
 						</thead>
 						<tbody id="research-note">
 							{% for note in user.note %}
-								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}" data-date="{{note.createdAt ? note.createdAt|date('d-m-Y') : ''}}">
+								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}

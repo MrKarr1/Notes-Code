@@ -18,8 +18,9 @@ final class TagController extends AbstractController
     #[Route('/new', name: 'app_tag_add', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,TagRepository $tags): Response
     {
-        
+        // method pour créer un tag
         if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+        
         $tag = new Tag();
         $tag->setUser($this->getUser());
         $form = $this->createForm(TagType::class, $tag);
@@ -42,7 +43,7 @@ final class TagController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
-        
+        // method pour modifier un tag
         if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
 
         $form = $this->createForm(TagType::class, $tag);
@@ -63,6 +64,7 @@ final class TagController extends AbstractController
     #[Route('/{id}', name: 'app_tag_delete', methods: ['POST'])]
     public function delete(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
+        // method pour supprimer un tag
         if(!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
 
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->getPayload()->getString('_token'))) {

@@ -1,5 +1,12 @@
-<header>
-
+<div class="menu">
+	<button class="btn" id="btn-nav-block">
+		<i class="fa-solid fa-bars"></i>
+	</button>
+</div>
+<header class="nav_menu">
+	<button class="btn" id="btn-nav-none">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
 	<div class="nav-user">
 		<a href="{{ path('app_account') }}">
 			{% if app.user.avatar %}
@@ -36,10 +43,39 @@
 						<td>Tag</td>
 						<td>Dossier</td>
 					</thead>
-					<tbody>
+					<tbody id="research-favori">
 						{% for note in app.user.note|slice(0, 15) %}
 							{% if note.favori %}
-								<tr>
+								<tr data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}">
+									<td>
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											{{note.name}}
+										</a>
+									</td>
+									<td>
+										{% if note.tag %}
+											{% for tag in note.tag %}
+												<span>{{tag.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de Tag</span>
+										{% endif %}
+									</td>
+									<td>
+										{% if note.folder %}
+											{% for folders in note.folder %}
+												<span>{{folders.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de dossier</span>
+										{% endif %}
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+						{% for note in app.user.note|slice(15,500) %}
+							{% if note.favori %}
+								<tr class="none" data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											{{note.name}}
@@ -79,11 +115,24 @@
 					<td>Nom</td>
 					<td>Note</td>
 				</thead>
-				<tbody>
+				<tbody id="research-folder">
 					{% for folder in app.user.folder|slice(0, 15) %}
-						<tr>
+						<tr data-name="{{ folder.name }}" data-note="{% for note in folder.notes %}{{ note.name }}{% endfor %}">
 							<td>
-								{# <a href="{{ path('app_folder_show', {'id': folder.id}) }}"></a> #}
+								{{folder.name}}
+							</td>
+							<td>
+								{% for note in folder.notes %}
+									<a href="{{ path('app_note_show', {'id': note.id}) }}">
+										<span>{{note.name}}</span>
+									</a>
+								{% endfor %}
+							</td>
+						</tr>
+					{% endfor %}
+					{% for folder in app.user.folder|slice(16, 500) %}
+						<tr class="none" data-name="{{ folder.name }}" data-note="{% for note in folder.notes %}{{ note.name }}{% endfor %}">
+							<td>
 								{{folder.name}}
 							</td>
 							<td>
@@ -101,24 +150,25 @@
 		<div class="note" id="div_note">
 			<p>
 				<strong>Notes</strong>
-				<table class="nav-table">
-					<thead>
-						<td>Note</td>
-					</thead>
-					<tbody>
-						{% for note in app.user.note|slice(0, 15) %}
-							<tr>
-								<td>
-									<a href="{{ path('app_note_show', {'id': note.id}) }}">
-										{{note.name}}
-									</a>
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</p>
 			</p>
-		</table>
-	</p>
-</div>
-<script src="{{ asset('note.js') }}"></script></div></div></nav></header>wrapper
+			<table class="nav-table">
+				<thead>
+					<td>Note</td>
+				</thead>
+				<tbody id="research-note">
+					{% for note in app.user.note|slice(0, 15) %}
+						<tr data-name="{{ note.name }}">
+							<td>
+								<a href="{{ path('app_note_show', {'id': note.id}) }}">
+									{{note.name}}
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</p>
+		</p>
+	</table>
+</p></div></div></div></nav></header><script src="{{ asset('note.js') }}"></script><script>search('research', 'research-favori');
+search('research', 'research-folder');
+search('research', 'research-note');</script>

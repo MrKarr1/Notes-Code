@@ -18,6 +18,7 @@ final class UserController extends AbstractController
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
+        // méthode pour créer un utilisateur
         if ($this->getUser()) return $this->redirectToRoute('app_account');
         // si l'utilisateur est déjà connecté, on le redirige vers son compte
         $user = new User();
@@ -63,29 +64,44 @@ final class UserController extends AbstractController
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        // méthode pour modifier un utilisateur
+        $user = $this->getUser();
+        if (!$this->getUser()) return $this->redirectToRoute('app_home');
+        // si l'utilisateur n'est pas connecté, on le redirige vers home
 
+        
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('avatar')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory_user'),
+                    $newFilename
+                );
+                $user->setAvatar($newFilename);
+            }
+            $plainPassword = $form->get('plainPassword')->getData();
+         
+            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
 
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-    
+            return $this->redirectToRoute('app_account');
+        }
 
-
-    // #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    // {
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('user/edit.html.twig', [
-    //         'user' => $user,
-    //         'form' => $form,
-    //     ]);
-    // }
+        return $this->render('user/edit.html.twig', [
+            'user'=> $user,
+            'form' => $form,
+        ]);
+    }
 
     // #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     // public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
