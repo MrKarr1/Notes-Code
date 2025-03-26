@@ -11,6 +11,10 @@
 					<a href="{{ path('app_contact_show') }}">Retour</a>
 				</button>
 			</div>
+							{% for message in app.flashes('success') %}
+				<div class="flashes-message">{{ message }}
+				</div>
+			{% endfor %}
 			<h1>Réponse</h1>
 			{{ form_start(form) }}
 			{{ form_errors(form) }}
@@ -24,6 +28,13 @@
 			{{ form_end(form) }}
 			<div class="note-table">
 				<div class="contact contact-add" id="div-contact">
+					<div id="message-container" class="message-hidden">
+						<p>
+							<strong>Message</strong>
+						</p>
+						<p id="message-content"></p>
+						<button class="btn" id="close-message">Fermer</button>
+					</div>
 					<p>
 						<strong>Le message</strong>
 					</p>
@@ -41,8 +52,8 @@
 								<td>
 									<span>{{contact.email}}</span>
 								</td>
-								<td class="span-message">
-									<span>{{ contact.message }}</span>
+								<td>
+									<button class="btn btn-message" data-message="{{ contact.message }}">Voir le message</button>
 								</td>
 							</tr>
 						</tbody>
@@ -51,4 +62,5 @@
 			</div>
 		</main>
 	</div>
+	<script src="{{ asset('message.js') }}"></script>
 {% endblock %}

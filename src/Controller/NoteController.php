@@ -44,6 +44,7 @@ final class NoteController extends AbstractController
             }
             $entityManager->persist($note);
             $entityManager->flush();
+            $this->addFlash('success', 'Note crée avec succès');
 
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,6 +77,7 @@ final class NoteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Note modifié avec succès');
 
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -96,6 +98,7 @@ final class NoteController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $note->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($note);
             $entityManager->flush();
+            $this->addFlash('success', 'Note supprimé avec succès');
         }
 
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);

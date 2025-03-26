@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="nav-laterale">
-		{% include "include/nav.html.twig" %}
-	</div>
-	<div class="carte manage">
+	<div class="carte manage" id="carte-contact">
 		<main class="manage-contact">
 			<div class="img-carte">
 				<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
@@ -14,10 +11,14 @@
 					<a href="{{ path('app_account') }}">Retour</a>
 				</button>
 			</div>
+			{% for message in app.flashes('success') %}
+				<div class="flashes-message">{{ message }}
+				</div>
+			{% endfor %}
 			<h1>Message reçu</h1>
 			<div class="note-table">
 				<div class="contact contact-add" id="div-contact">
-					<div id="message-container" class="message">
+					<div id="message-container" class="message-hidden">
 						<p>
 							<strong>Message</strong>
 						</p>
@@ -32,7 +33,6 @@
 							<td>Action</td>
 						</thead>
 						{% for contact in contacts %}
-							{# {{ dump(contact) }} #}
 							{% if contact.sentby != app.user.id %}
 								<tbody>
 									<tr>
@@ -45,7 +45,6 @@
 										<td>
 											<button class="btn btn-message" data-message="{{ contact.message }}">Voir le message</button>
 										</td>
-
 										<td>
 											<form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">
 												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">

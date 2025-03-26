@@ -21,6 +21,13 @@
 			{% if app.user %}
 				<div class="note-table">
 					<div class="contact contact-add" id="div-contact">
+						<div id="message-container" class="message-hidden">
+							<p>
+								<strong>Message</strong>
+							</p>
+							<p id="message-content"></p>
+							<button class="btn" id="close-message">Fermer</button>
+						</div>
 						<p>
 							<strong>Dernier message</strong>
 						</p>
@@ -40,15 +47,15 @@
 											<span>{{contact.email}}</span>
 										</td>
 										<td class="span-message">
-											<button class="btn" id="btn-message">Voir le message</button>
+											<button class="btn btn-message" data-message="{{ contact.message }}">Voir le message</button>
 										</td>
 									</tr>
 								</tbody>
 								<div class="message">
-								<p class="message-content message-hidden">{{ contact.message }}</p>
-							</div>					
-						{% endfor %}
-							</table>	
+									<p class="message-content message-hidden">{{ contact.message }}</p>
+								</div>
+							{% endfor %}
+						</table>
 					</div>
 				</div>
 			{% endif %}

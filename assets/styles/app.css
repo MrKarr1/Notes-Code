@@ -67,8 +67,34 @@ a {
     padding: 5px;
 }
 
-img {
-    max-height: 150px;
+
+.img-account {
+ max-width: 10vh;
+    img {
+        width: auto;
+        /* Garde la largeur d'origine */
+        height: auto;
+        /* Garde la hauteur d'origine */
+        max-width: 100%;
+        /* Empêche l'image de dépasser son conteneur */
+        aspect-ratio: 1 / 1;
+        /* Force un rapport 1:1 (carré) */
+        object-fit: cover;
+        /* Coupe l'image pour éviter les déformations */
+        border-radius: 50%;
+        /* Rend l'image ronde */
+    }
+
+
+    &:hover {
+        border: 1px solid var(--fond-des-cartes);
+    }
+}
+
+.flashes-message{
+    background-color: var(--fond-principal);
+    max-width: 50%;
+    padding: 1vh;
     border-radius: 10px;
 }
 
@@ -292,16 +318,6 @@ img {
 
     }
 
-    img {
-        border-radius: 200vh;
-        max-width: 10vh;
-        max-height: 10vh;
-
-        &:hover {
-            border: 1px solid var(--fond-des-cartes);
-        }
-    }
-
 }
 
 .div-research {
@@ -343,7 +359,7 @@ img {
 }
 
 #carte-contact {
-    margin-left: 0vh;
+    margin-left: 5vh;
 }
 
 .show-note,
@@ -488,6 +504,7 @@ img {
     form {
         display: flex;
         flex-direction: column;
+        justify-content: center;
 
         div {
             display: flex;
@@ -514,6 +531,8 @@ img {
         textarea {
             min-width: 50vh;
             min-height: 25vh;
+            max-width: 50vh;
+            max-height: 25vh;
             padding: 1vh;
             border-radius: 5px;
             border: none;
@@ -527,11 +546,12 @@ img {
     .folder-add,
     .contact-add {
         border-radius: 10px 10px 10px 10px;
-        
+
     }
-    .message {
+
+    .message-hidden {
         display: none;
-        
+
     }
 }
 
@@ -572,7 +592,6 @@ header {
 
         img {
             max-height: 5vh;
-            border-radius: 100vh;
 
             &:hover {
                 border: 1px solid var(--fond-des-cartes);
@@ -646,8 +665,8 @@ footer {
     }
 
     img {
-        max-height: 50px;
-        border-radius: 15px;
+        max-height: 5vh;
+        border-radius: 20%;
     }
 }
 

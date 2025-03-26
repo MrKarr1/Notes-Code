@@ -29,6 +29,7 @@ final class LangageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($langage);
             $entityManager->flush();
+            $this->addFlash('success', 'Langage crée avec succès');
 
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -51,6 +52,7 @@ final class LangageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Langage modifié avec succès');
 
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,6 +71,7 @@ final class LangageController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $langage->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($langage);
             $entityManager->flush();
+            $this->addFlash('success', 'Langage supprimé avec succès');
         }
 
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);

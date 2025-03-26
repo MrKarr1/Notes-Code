@@ -31,7 +31,7 @@ final class FolderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($folder);
             $entityManager->flush();
-
+            $this->addFlash('success', 'Dossier crée avec succès');
             return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -49,6 +49,7 @@ final class FolderController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $folder->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($folder);
             $entityManager->flush();
+            $this->addFlash('success', 'Dossier supprimé avec succès');
         }
 
         return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
@@ -63,7 +64,7 @@ final class FolderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('success', 'Dossier modifié avec succès');
             return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
         }
 

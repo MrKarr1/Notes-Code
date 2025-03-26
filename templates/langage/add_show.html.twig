@@ -12,6 +12,10 @@
 					<a href="{{ path('app_account') }}">Retour</a>
 				</button>
 			</div>
+				{% for message in app.flashes('success') %}
+				<div class="flashes-message">{{ message }}
+				</div>
+			{% endfor %}
 			<h1>Gérer les  Langage</h1>
 			{{ form_start(form) }}
 			{{ form_widget(form) }}

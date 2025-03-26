@@ -8,13 +8,15 @@
 		<i class="fa-solid fa-xmark"></i>
 	</button>
 	<div class="nav-user">
-		<a href="{{ path('app_account') }}">
-			{% if app.user.avatar %}
-				<img src="{{ asset('img/avatar/'~ app.user.avatar) }}" alt="l'avatar de {{ app.user.username }}">
-			{% else %}
-				<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
-			{% endif %}
-		</a>
+		<div class="img-account">
+			<a href="{{ path('app_account') }}">
+				{% if app.user.avatar %}
+					<img src="{{ asset('img/avatar/'~ app.user.avatar) }}" alt="l'avatar de {{ app.user.username }}">
+				{% else %}
+					<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+				{% endif %}
+			</a>
+		</div>
 		<p>{{ app.user.username }}</p>
 	</div>
 	<div class="nav-note">

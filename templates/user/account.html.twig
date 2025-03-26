@@ -4,13 +4,15 @@
 		<div class="accounts">
 			<div class="user-account">
 				<div class="users-account">
-					<a href="{{ path('app_account') }}">
-						{% if user.avatar %}
-							<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
-						{% else %}
-							<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
-						{% endif %}
-					</a>
+					<div class="img-account">
+						<a href="{{ path('app_account') }}">
+							{% if user.avatar %}
+								<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
+							{% else %}
+								<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+							{% endif %}
+						</a>
+					</div>
 					<div class="btn-account">
 						<button class=" btn icone">
 							<a href="{{ path('app_user_edit', {'id': user.id}) }}">
@@ -33,7 +35,10 @@
 					</button>
 				</div>
 			</div>
-
+			{% for message in app.flashes('success') %}
+				<div class="flashes-message">{{ message }}
+				</div>
+			{% endfor %}
 			<div class="action">
 				<div class="div-action">
 					<button class="btn">
@@ -42,7 +47,7 @@
 					<button class="btn">
 						<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
 					</button>
-							<button class="btn">
+					<button class="btn">
 						<a href="{{ path('app_contact') }}">Contact</a>
 					</button>
 					{% if app.user and is_granted('ROLE_ADMIN') %}

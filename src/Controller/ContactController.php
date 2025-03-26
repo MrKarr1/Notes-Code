@@ -62,6 +62,7 @@ final class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($contact);
             $entityManager->flush();
+            $this->addFlash('success', 'Message envoyé avec succès');
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -95,6 +96,7 @@ final class ContactController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($contact);
             $entityManager->flush();
+            $this->addFlash('success', 'Message supprimé avec succès');
         }
 
         return $this->redirectToRoute('app_contact_show', [], Response::HTTP_SEE_OTHER);
@@ -124,6 +126,7 @@ final class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($responseContact);
             $entityManager->flush();
+            $this->addFlash('success', 'Message envoyé avec succès');
     
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }

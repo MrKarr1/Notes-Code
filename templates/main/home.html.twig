@@ -1,18 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Notes-Code{% endblock %}
+{% block title %}Notes-Code
+{% endblock %}
 
 {% block body %}
-<main class="home">
-<div class="info">
-<h1>Bienvenue sur Notes Code</h1>
-<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
-<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement vos snippets de code.</h3>
-</div>
-<div class="action">
-<button class="btn"><a href="{{ path('app_login') }}">Connexion</a></button>
-<button class="btn"><a href="{{ path('app_register') }}">S'inscrire</a></button>
-<button class="btn"><a href="{{ path('app_contact_no_user') }}">Contact</a></button>
-</div>
-</main>
+	<main class="home">
+		{% for message in app.flashes('success') %}
+			<div class="flashes-message">{{ message }}
+			</div>
+		{% endfor %}
+		<div class="info">
+			<h1>Bienvenue sur Notes Code</h1>
+			<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
+			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement vos snippets de code.</h3>
+		</div>
+		<div class="action">
+			<button class="btn">
+				<a href="{{ path('app_login') }}">Connexion</a>
+			</button>
+			<button class="btn">
+				<a href="{{ path('app_register') }}">S'inscrire</a>
+			</button>
+			<button class="btn">
+				<a href="{{ path('app_contact_no_user') }}">Contact</a>
+			</button>
+		</div>
+	</main>
 {% endblock %}
