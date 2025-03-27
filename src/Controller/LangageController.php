@@ -31,7 +31,7 @@ final class LangageController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Langage crée avec succès');
 
-            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_langage_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('langage/add_show.html.twig', [
@@ -42,7 +42,7 @@ final class LangageController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'app_langage_edit', methods: ['GET', 'POST'])]
+    #[Route('edit/{id}/', name: 'app_langage_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Langage $langage, EntityManagerInterface $entityManager): Response
     {
         // method pour modifier un langage reserver au admin
@@ -54,7 +54,7 @@ final class LangageController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Langage modifié avec succès');
 
-            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_langage_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('langage/edit.html.twig', [
@@ -74,6 +74,6 @@ final class LangageController extends AbstractController
             $this->addFlash('success', 'Langage supprimé avec succès');
         }
 
-        return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_langage_add', [], Response::HTTP_SEE_OTHER);
     }
 }

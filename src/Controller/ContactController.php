@@ -103,7 +103,7 @@ final class ContactController extends AbstractController
     }
 
 
-    #[Route('/{id}/respond', name: 'app_respond', methods: ['GET', 'POST'])]
+    #[Route('/respond/{id}', name: 'app_respond', methods: ['GET', 'POST'])]
     public function respond(Request $request, EntityManagerInterface $entityManager, Contact $contact): Response
     {
         // method pour répondre à un message si l'utilisateur est admin

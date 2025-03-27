@@ -18,7 +18,7 @@ class LangageType extends AbstractType
             ])
             
             ->add('technical_name', TextType::class, [
-                'label' => 'Nom utilisé par monaco : '
+                'label' => 'Nom utilisé par Monaco Editor : '
             ])
             
         ;

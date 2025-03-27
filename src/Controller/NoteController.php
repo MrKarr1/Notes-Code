@@ -55,7 +55,7 @@ final class NoteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_note_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'app_note_show', methods: ['GET'])]
     public function show(Note $note): Response
     {
         // method pour afficher une note
@@ -66,8 +66,8 @@ final class NoteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_note_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Note $note, EntityManagerInterface $entityManager): Response
+    #[Route('/edit/{id}', name: 'app_note_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Note $note, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // method pour modifier une note
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
@@ -76,6 +76,17 @@ final class NoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('img')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory_note'),
+                    $newFilename
+                );
+                $note->setImg($newFilename);
+            }
             $entityManager->flush();
             $this->addFlash('success', 'Note modifié avec succès');
 
@@ -103,7 +114,7 @@ final class NoteController extends AbstractController
 
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/{id}/favori', name: 'app_note_favori', methods: ['GET'])]
+    #[Route('/favori/{id}', name: 'app_note_favori', methods: ['GET'])]
     public function favori(Note $note, EntityManagerInterface $entityManager): Response
     {
         // method pour mettre une note en favori

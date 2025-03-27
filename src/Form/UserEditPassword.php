@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -16,11 +17,33 @@ class UserEditPassword extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-           
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de Passe',
+
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => 'Mot de Passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
+                    'row_attr' => [
+                        'class' => 'div-password',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmer le Mot de Passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
+                    'row_attr' => [
+                        'class' => 'div-password',
+                    ],
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'div-password',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
@@ -40,7 +63,4 @@ class UserEditPassword extends AbstractType
             'data_class' => User::class,
         ]);
     }
-    
 }
-
-

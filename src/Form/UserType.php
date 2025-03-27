@@ -7,12 +7,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\File;
 
 class UserType extends AbstractType
@@ -21,15 +24,54 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Nom d\'Utilisateur'
+                'label' => 'Nom d\'Utilisateur',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nom d\'utilisateur',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre nom doit comporter au moins {{ limit }} caractères',
+                        'max' => 50,
+                    ]),
+                ],
             ])
-            ->add('email', TextType::class, [
-                'label' => 'Adresse Email'
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse Email',
+                'invalid_message' => 'Email invalide',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un Email',
+                    ]),
+                    new Email(),
+                ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de Passe',
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => 'Mot de Passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
+                    'row_attr' => [
+                        'class' => 'div-password',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmer le Mot de Passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
+                    'row_attr' => [
+                        'class' => 'div-password', 
+                    ],
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'div-password',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
@@ -42,7 +84,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('avatar', FileType::class, [
-                'label' => 'Avatar',
+                'label' => 'Avatar (Optionnel)',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -55,7 +97,6 @@ class UserType extends AbstractType
                     ])
                 ],
             ]);
-       
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -64,7 +105,6 @@ class UserType extends AbstractType
             'data_class' => User::class,
         ]);
     }
-    
 }
 
 

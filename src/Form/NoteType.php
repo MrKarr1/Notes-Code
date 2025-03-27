@@ -29,6 +29,9 @@ class NoteType extends AbstractType
             ->add('code', TextareaType::class, [
                 'label' => 'Code de la Note : ',
                 'required' => true,
+                'row_attr' => [
+                    'class' => 'div-note',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description de la Note : ',

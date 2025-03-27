@@ -11,6 +11,10 @@
 						<p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
 					</div>
 				{% endif %}
+				{% for message in app.flashes('success') %}
+					<div class="flashes-message">{{ message }}
+					</div>
+				{% endfor %}
 				<label for="username">Email</label>
 				<input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
 				<label for="password">Mot de Passe</label>

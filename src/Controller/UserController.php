@@ -24,6 +24,7 @@ final class UserController extends AbstractController
         if ($this->getUser()) return $this->redirectToRoute('app_account');
         // si l'utilisateur est déjà connecté, on le redirige vers son compte
         $user = new User();
+        $user->setRoles(['ROLE_USER']);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -44,8 +45,9 @@ final class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre compte a bien été créé');
 
-            return $this->redirectToRoute('app_account');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/register.html.twig', [
@@ -66,7 +68,7 @@ final class UserController extends AbstractController
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // méthode pour modifier un utilisateur
@@ -102,7 +104,7 @@ final class UserController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/{id}/edit/password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
+    #[Route('/edit/password/{id}', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
     public function password(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         // méthode pour modifier le mots de passe de l' utilisateur
@@ -115,14 +117,15 @@ final class UserController extends AbstractController
         $form = $this->createForm(UserEditPassword::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $plainPassword = $form->get('plainPassword')->getData();
             $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-            return $this->redirectToRoute('app_account');
+
             $entityManager->persist($user);
             $entityManager->flush();
+
             $this->addFlash('success', 'Votre mots de passe a bien été modifié');
-         
+            return $this->redirectToRoute('app_account');
         }
 
         return $this->render('user/edit_password.html.twig', [

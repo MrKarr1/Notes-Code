@@ -13,7 +13,8 @@
 				</button>
 			</div>
 			<div class="EAS-code-des">
-				<h2>Modifier : {{note.name}}</h2>
+				<h2>Modifier :
+					{{note.name}}</h2>
 				{{ form_start(form) }}
 				<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
 				<div id="note-language">{{ form.langage.vars.value }}</div>
@@ -36,6 +37,14 @@
 					<button class="btn">Valider</button>
 				</div>
 				{{ form_end(form) }}
+			</div>
+			<div class="div-img-description">
+				<div class="div-img">
+					{% if note.img %}
+						<h3>Image Actuelle:</h3>
+						<img class="img-note" src="{{ asset('img/note/' ~ note.img) }}" alt="image de la note">
+					{% endif %}
+				</div>
 			</div>
 		</main>
 	</div>

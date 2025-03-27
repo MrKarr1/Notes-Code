@@ -55,7 +55,7 @@ final class FolderController extends AbstractController
         return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
     }
     
-    #[Route('/{id}/edit', name: 'app_folder_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_folder_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
     {
         // method pour modifier un dossier
