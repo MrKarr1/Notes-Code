@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Note;
 use App\Form\NoteType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,8 +60,6 @@ final class NoteController extends AbstractController
     public function show(Note $note): Response
     {
         // method pour afficher une note
-        if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
-        // si l'utilisateur n'est pas connecté il est redirigé vers la page d'accueil
         return $this->render('note/show.html.twig', [
             'note' => $note,
         ]);
@@ -114,6 +113,8 @@ final class NoteController extends AbstractController
 
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
     }
+
+
     #[Route('/favori/{id}', name: 'app_note_favori', methods: ['GET'])]
     public function favori(Note $note, EntityManagerInterface $entityManager): Response
     {
@@ -123,5 +124,15 @@ final class NoteController extends AbstractController
         //  si la note est en favori elle est retiré et vice versa
         $entityManager->flush();
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/recherche', name: 'app_research', methods: ['GET'])]
+    public function research(NoteRepository $noteRepository): Response
+    {
+        // method pour afficher les notes
+        return $this->render('note/research.html.twig', [
+            'notes' => $noteRepository->findAll(),
+        ]);
     }
 }

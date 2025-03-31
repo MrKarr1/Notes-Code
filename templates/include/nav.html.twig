@@ -1,5 +1,5 @@
 <div class="menu">
-	<button class="btn" id="btn-nav-block">
+	<button class="btn icone" id="btn-nav-block">
 		<i class="fa-solid fa-bars"></i>
 	</button>
 </div>
@@ -7,6 +7,7 @@
 	<button class="btn" id="btn-nav-none">
 		<i class="fa-solid fa-xmark"></i>
 	</button>
+	{% if app.user %}
 	<div class="nav-user">
 		<div class="img-account">
 			<a href="{{ path('app_account') }}">
@@ -47,7 +48,10 @@
 					<tbody id="research-favori">
 						{% for note in app.user.note|slice(0, 15) %}
 							{% if note.favori %}
-								<tr data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}">
+								<tr data-name="{{ note.name }}" 
+									data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" 
+									data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}"
+									data-langage="{{note.langage.displayName|lower}}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											<i class="fa-regular fa-file"></i> {{note.name}}
@@ -76,7 +80,11 @@
 						{% endfor %}
 						{% for note in app.user.note|slice(15,500) %}
 							{% if note.favori %}
-								<tr class="none" data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}">
+								<tr class="none" 
+									data-name="{{ note.name }}" 
+									data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" 
+									data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}"
+									data-langage="{{note.langage.displayName|lower}}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											<i class="fa-regular fa-file"></i> {{note.name}}
@@ -117,7 +125,10 @@
 				</thead>
 				<tbody id="research-note">
 					{% for note in app.user.note|slice(0, 15) %}
-						<tr data-name="{{ note.name }}">
+							<tr data-name="{{ note.name }}" 
+								data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" 
+								data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}"
+								data-langage="{{note.langage.displayName|lower}}">
 							<td>
 								<a href="{{ path('app_note_show', {'id': note.id}) }}">
 									<i class="fa-regular fa-file"></i> {{note.name}}
@@ -131,6 +142,19 @@
 	</div>
 </div>
 </nav>
+{% else %}
+	<div class="action-user">
+			<button class="btn">
+				<a href="{{ path('app_home') }}">Home</a>
+			</button>
+		<button class="btn">
+				<a href="{{ path('app_login') }}">Connexion</a>
+			</button>
+			<button class="btn">
+				<a href="{{ path('app_register') }}">S'inscrire</a>
+			</button>
+		</div>
+	{% endif %}
 </header>
 <script src="{{ asset('nav-research.js') }}"></script>
 <script src="{{ asset('nav.js') }}"></script>

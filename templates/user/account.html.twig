@@ -48,7 +48,7 @@
 						<a href="{{ path('app_folder_add') }}">Gérer les Dossiers</a>
 					</button>
 					<button class="btn">
-						<a href="{{ path('app_contact') }}">Contact</a>
+						<a href="{{ path('app_research') }}">Recherche Une Note</a>
 					</button>
 					{% if app.user and is_granted('ROLE_ADMIN') %}
 						{# si l'utilisateur est connecté et a le rôle admin #}
@@ -88,10 +88,11 @@
 						<tbody id="research-favori">
 							{% for note in user.note %}
 								{% if note.favori %}
-									<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}">
+									<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
 										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
-												<i class="fa-regular fa-file"></i> {{note.name}}
+												<i class="fa-regular fa-file"></i>
+												{{note.name}}
 											</a>
 										</td>
 										<td>
@@ -151,7 +152,8 @@
 											{% for note in folder.notes|slice(0, 35) %}
 												<span>
 													<a href="{{ path('app_note_show', {'id': note.id}) }}">
-														<i class="fa-regular fa-file"></i> {{note.name}}
+														<i class="fa-regular fa-file"></i>
+														{{note.name}}
 													</a>
 												</span>
 											{% endfor %}
@@ -186,7 +188,8 @@
 								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
 									<td>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
-											<i class="fa-regular fa-file"></i> {{note.name}}
+											<i class="fa-regular fa-file"></i>
+											{{note.name}}
 										</a>
 									</td>
 									<td>
@@ -242,8 +245,8 @@
 
 	<script src="{{ asset('note.js') }}"></script>
 	<script>
-	search('research', 'research-favori');
-	search('research', 'research-folder');
-	search('research', 'research-note');
+		search('research', 'research-favori');
+search('research', 'research-folder');
+search('research', 'research-note');
 	</script>
 {% endblock %}

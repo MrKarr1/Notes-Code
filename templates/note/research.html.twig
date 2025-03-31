@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block title %}Notes-Code
+{% endblock %}
+
+{% block body %}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
+	</div>
+	<div class="account {% if app.user %}margin-left{% endif %}">
+		<main class="accounts">
+			<div class="action">
+				<div class="div-research">
+					<input type="text" id="research-user" name="research" placeholder="Recherche">
+					<i class=" icone fa-solid fa-magnifying-glass"></i>
+				</div>
+			</div>
+			<div class="note-table">
+				<div class="note">
+					<p>
+						<strong>Notes</strong>
+					</p>
+					<table>
+						<thead>
+							<td>Nom Note</td>
+							<td>Tag</td>
+							<td>Langage</td>
+							<td>Date</td>
+						</thead>
+						<tbody id="research-note-user">
+							{% for note in notes %}
+								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+									<td>
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											<i class="fa-regular fa-file"></i>
+											{{note.name}}
+										</a>
+									</td>
+									<td>
+										{% if note.tag %}
+											{% for tag in note.tag|slice(0, 5) %}
+												<span>{{tag.name}}</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de Tag</span>
+										{% endif %}
+									</td>
+									<td>{{ note.langage.displayName }}</td>
+									<td>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+								</tr>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+</div>
+<script src="{{ asset('research.js') }}"></script>
+<script>
+	search('research-user', 'research-note-user');
+</script>{% endblock %}

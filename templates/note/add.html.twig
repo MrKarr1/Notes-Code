@@ -13,21 +13,18 @@
 				</button>
 			</div>
 			<div class="EAS-code-des">
-				<h2>Modifier : {{note.name}}</h2>
+				<h2>Ajouter Une Note</h2>
 				{{ form_start(form) }}
-				<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
-				<div id="note-language">{{ form.langage.vars.value }}</div>
-				<div id="note-id">{{ form.code.vars.id }}</div>
 				{{ form_row(form.name) }}
 				{{ form_row(form.code, {'attr': {'class': 'monaco-editor'}}) }}
 				{{ form_row(form.description) }}
 				<div class="flex">
-					<div class="right">
+					<div class="right-note">
 						{{ form_row(form.img) }}
 						{{ form_row(form.is_favori) }}
 						{{ form_row(form.langage) }}
 					</div>
-					<div class="left">
+					<div class="left-note">
 						{{ form_row(form.tag) }}
 						{{ form_row(form.folder) }}
 					</div>

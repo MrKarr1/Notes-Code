@@ -9,10 +9,16 @@
 			<div class="flashes-message">{{ message }}
 			</div>
 		{% endfor %}
+
 		<div class="info">
 			<h1>Bienvenue sur Notes Code</h1>
 			<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
-			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement vos snippets de code.</h3>
+			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement des snippets de code.</h3>
+		</div>
+		<div class="research-note">
+			<button class="btn">
+				<a href="{{ path('app_research') }}">Recherche Une Note</a>
+			</button>
 		</div>
 		<div class="action">
 			<button class="btn">

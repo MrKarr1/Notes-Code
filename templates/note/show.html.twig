@@ -33,14 +33,20 @@
 				<h3>Date de creation:
 					{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</h3>
 			</div>
-			<div class="btn-EAS">
-				<button class="btn icone">
-					<a href="{{ path('app_account') }}">Retour</a>
-				</button>
-				<button class="btn icone">
-					<a href="{{ path('app_note_edit', {'id': note.id}) }}">Modifier</a>
-				</button>
-				{{ include('note/_delete_form.html.twig') }}
+				<div class="btn-EAS">
+					{% if app.user %}
+					<button class="btn icone">
+						<a href="{{ path('app_account') }}">Retour</a>
+					</button>
+					<button class="btn icone">
+						<a href="{{ path('app_note_edit', {'id': note.id}) }}">Modifier</a>
+					</button>
+					{{ include('note/_delete_form.html.twig') }}
+				{% else %}
+					<button class="btn icone">
+						<a href="{{ path('app_research') }}">Retour</a>
+					</button>
+				{% endif %}
 			</div>
 			<div class="EAS-code-des">
 				<div id="note-code">{{ note.code }}</div>
