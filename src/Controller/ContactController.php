@@ -18,7 +18,7 @@ final class ContactController extends AbstractController
 {
 
     #[Route('/message', name: 'app_contact', methods: ['GET', 'POST'])]
-    public function new_message_user(Request $request, EntityManagerInterface $entityManager, ContactRepository $contact): Response
+    public function newMessageUser(Request $request, EntityManagerInterface $entityManager, ContactRepository $contact): Response
     {
         //method pour envoyer un message si l'utilisateur est connecté
         if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
@@ -52,7 +52,7 @@ final class ContactController extends AbstractController
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/messages', name: 'app_contact_no_user', methods: ['GET', 'POST'])]
-    public function new_message_no_user(Request $request, EntityManagerInterface $entityManager, ContactRepository $contacts): Response
+    public function newMessageNoUser(Request $request, EntityManagerInterface $entityManager, ContactRepository $contacts): Response
     {
         //method pour envoyer un message sans être connecté
         $contact = new Contact();

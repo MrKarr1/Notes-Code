@@ -20,6 +20,7 @@ final class MainController extends AbstractController
     #[Route('mentions', name: 'app_mentions')]
     public function mantions(): Response
     {
+        
         // method pour afficher les mentions légales
         return $this->render('mentions/mentions.html.twig');
     }

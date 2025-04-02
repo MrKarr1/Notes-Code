@@ -31,8 +31,17 @@ body {
 #note-code,
 #note-id,
 #div_folder,
-#div_note {
+#div_note,
+#admin_note {
   display: none;
+  animation-name: note_tab;
+  Animation-duration: 2s;
+}
+
+#div_favori,
+.note-table {
+  animation-name: note_tab;
+  Animation-duration: 2s;
 }
 
 a {
@@ -100,6 +109,8 @@ a {
   justify-content: space-around;
   padding: 10px;
   margin-top: 10%;
+  animation-name: note_tab;
+  Animation-duration: 1s;
 }
 .home .info,
 .home .action,
@@ -148,6 +159,8 @@ a {
   justify-content: space-around;
   padding: 1vh;
   margin-top: 10%;
+  animation-name: note_tab;
+  Animation-duration: 1s;
 }
 .login .logins,
 .login .registers,
@@ -332,7 +345,7 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 5px;
-  border: 1px solid var(--texte-secondaire);
+  border: 1px solid var(--fond-des-cartes);
 }
 .note-table table td.action {
   display: flex;
@@ -430,6 +443,8 @@ a {
   justify-content: center;
   margin-top: 1vh;
   margin-right: 5vh;
+  animation-name: note_tab;
+  Animation-duration: 1s;
 }
 .carte .img-carte {
   text-align: center;
@@ -704,6 +719,8 @@ header {
   z-index: 100;
   padding: 1px;
   background-color: var(--fond-des-cartes);
+  animation-name: note_tab;
+  Animation-duration: 1s;
 }
 header #btn-nav-none {
   padding: 1px;
@@ -795,7 +812,10 @@ footer img {
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (min-width: 760px) {
+@media (max-width: 760px) {
+  p {
+    font-size: 20px;
+  }
   .carte {
     margin-left: 5vh;
   }
@@ -816,7 +836,7 @@ footer img {
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (min-width: 900px) {
+@media (max-width: 900px) {
   .nav_menu {
     display: none;
   }
@@ -837,7 +857,7 @@ footer img {
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (min-width: 1024px) {
+@media (max-width: 1024px) {
   .nav_menu {
     display: none;
   }
@@ -883,6 +903,14 @@ footer img {
   .left-note {
     display: flex;
     flex-direction: row;
+  }
+}
+@keyframes note_tab {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

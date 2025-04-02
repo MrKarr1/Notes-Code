@@ -62,6 +62,9 @@
 						<button class="btn">
 							<a href="{{ path('app_contact_show') }}">Message de contact</a>
 						</button>
+						<button class="btn">
+							<a href="{{ path('app_admin_user') }}">Dashboard</a>
+						</button>
 					{% endif %}
 				</div>
 				<div class="div-research">
@@ -76,7 +79,7 @@
 					<button class="btn icone" id="folder">Dossier</button>
 					<button class="btn icone" id="note">Notes</button>
 				</div>
-				<div class="favori" id="div_favori">
+				<article class="favori" id="div_favori">
 					<p>
 						<strong>Favori</strong>
 					</p>
@@ -133,8 +136,8 @@
 							{% endfor %}
 						</tbody>
 					</table>
-				</div>
-				<div class="folder" id="div_folder">
+				</article>
+				<article class="folder" id="div_folder">
 					<p>
 						<strong>Dossiers</strong>
 					</p>
@@ -173,8 +176,8 @@
 							{% endfor %}
 						</tbody>
 					</table>
-				</div>
-				<div class="note" id="div_note">
+				</article>
+				<article class="note" id="div_note">
 					<p>
 						<strong>Notes</strong>
 					</p>
@@ -242,7 +245,7 @@
 							{% endfor %}
 						</tbody>
 					</table>
-				</div>
+				</article>
 			</div>
 		</div>
 	</main>

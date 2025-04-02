@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block title %}Notes-Code
+{% endblock %}
+
+{% block body %}
+{% if app.user and is_granted('ROLE_ADMIN') %}
+	<div class="account">
+		<main class="accounts">
+			<div class="flex-message">
+				{% for message in app.flashes('success') %}
+					<div class="flashes-message">{{ message }}</div>
+				{% endfor %}
+			</div>
+			<div class="action">
+				<div class="div-research">
+					<input type="text" id="research" name="research" placeholder="Recherche">
+					<i class=" icone fa-solid fa-magnifying-glass"></i>
+				</div>
+				<button class="btn">
+					<a href="{{ path('app_account') }}">Retour</a>
+				</button>
+			</div>
+			<div class="note-table">
+				<div class="btn-table">
+					<button class="btn icone" id="admin_btn_user">User</button>
+					<button class="btn icone" id="admin_btn_note">Note</button>
+				</div>
+				<div class="note" id="admin_user">
+					<p>
+						<strong>Dashboard Users</strong>
+					</p>
+					<table>
+						<thead>
+							<td>User</td>
+							<td>Mail</td>
+							<td>Action</td>
+						</thead>
+						<tbody id="research-user">
+							{% for user in users %}
+								<tr data-name="{{user.username|lower}}" data-mail="{{user.email|lower}}">
+									<td>{{user.username}}</td>
+									<td>{{user.email}}</td>
+									<td>{{ include('admin/delete_user.html.twig') }}</td>
+								</tr>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="note" id="admin_note">
+				<p>
+					<strong>Dashboard Notes</strong>
+				</p>
+				<table>
+					<thead>
+						<td>Nom Note</td>
+						<td>Langage</td>
+						<td>Date</td>
+						<td>Action</td>
+					</thead>
+					<tbody id="research-note">
+						{% for note in notes %}
+							<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+								<td>
+									<a href="{{ path('app_note_show', {'id': note.id}) }}">
+										<i class="fa-regular fa-file"></i>
+										{{note.name}}
+									</a>
+								</td>
+								<td>{{ note.langage.displayName }}</td>
+								<td>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+								<td class="action">
+									{{ include('note/_delete_form.html.twig') }}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</main></div><script src="{{ asset('admin_users.js') }}"></script><script>
+search('research', 'research-user');
+search('research', 'research-note');</script>{% endif %}{% endblock %}
