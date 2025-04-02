@@ -50,6 +50,7 @@ final class ContactController extends AbstractController
         ]);
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/messages', name: 'app_contact_no_user', methods: ['GET', 'POST'])]
     public function new_message_no_user(Request $request, EntityManagerInterface $entityManager, ContactRepository $contacts): Response
     {
@@ -75,7 +76,7 @@ final class ContactController extends AbstractController
     }
 
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route(name: 'app_contact_show', methods: ['GET'])]
     public function index(ContactRepository $contactRepository): Response
     {
@@ -102,13 +103,13 @@ final class ContactController extends AbstractController
         return $this->redirectToRoute('app_contact_show', [], Response::HTTP_SEE_OTHER);
     }
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/respond/{id}', name: 'app_respond', methods: ['GET', 'POST'])]
     public function respond(Request $request, EntityManagerInterface $entityManager, Contact $contact): Response
     {
         // method pour répondre à un message si l'utilisateur est admin
         if (!$this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('app_account');
-    
+
         // Créez un nouvel objet Contact pour la réponse
         $responseContact = new Contact();
         $responseContact->setUser($contact->getUser());
@@ -118,19 +119,19 @@ final class ContactController extends AbstractController
             $responseContact->setSentBy($user->getId());
         }
         $responseContact->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
-    
+
         // Créez le formulaire pour la réponse
         $form = $this->createForm(ContactType::class, $responseContact);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($responseContact);
             $entityManager->flush();
             $this->addFlash('success', 'Message envoyé avec succès');
-    
+
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
-    
+
         return $this->render('contact/respond.html.twig', [
             'contact' => $contact,
             'form' => $form,

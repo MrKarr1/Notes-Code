@@ -46,7 +46,7 @@ final class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte a bien été créé');
-            
+
             return $this->redirectToRoute('app_account');
         }
 
@@ -104,11 +104,17 @@ final class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/edit/password/{id}', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
     public function password(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         // méthode pour modifier le mots de passe de l' utilisateur
+
+
         $user = $this->getUser();
+        // on récupère l'utilisateur connecté
         if (!$this->getUser()) return $this->redirectToRoute('app_home');
         // si l'utilisateur n'est pas connecté, on le redirige vers home
         if ($this->getUser() !== $user) return $this->redirectToRoute('app_home');

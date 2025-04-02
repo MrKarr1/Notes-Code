@@ -42,10 +42,16 @@ final class FolderController extends AbstractController
         ]);
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/{id}', name: 'app_folder_delete', methods: ['POST'])]
     public function delete(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
     {
-        // metof pour supprimer un dossier
+        // metode pour supprimer un dossier
+        if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+        if ($folder->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        }
+        // si l'utilisateur n'est pas le propriétaire du dossier, il est redirigé vers la page du compte
         if ($this->isCsrfTokenValid('delete' . $folder->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($folder);
             $entityManager->flush();
@@ -54,11 +60,17 @@ final class FolderController extends AbstractController
 
         return $this->redirectToRoute('app_folder_add', [], Response::HTTP_SEE_OTHER);
     }
-    
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/edit/{id}', name: 'app_folder_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Folder $folder, EntityManagerInterface $entityManager): Response
     {
         // method pour modifier un dossier
+        if (!$this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_home');
+        if ($folder->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        }
+        // si l'utilisateur n'est pas le propriétaire du dossier, il est redirigé vers la page du compte
         $form = $this->createForm(FolderType::class, $folder);
         $form->handleRequest($request);
 

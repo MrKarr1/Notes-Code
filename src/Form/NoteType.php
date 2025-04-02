@@ -6,6 +6,9 @@ use App\Entity\Folder;
 use App\Entity\Langage;
 use App\Entity\Note;
 use App\Entity\Tag;
+use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -20,8 +23,17 @@ use Symfony\Component\Validator\Constraints\File;
 
 class NoteType extends AbstractType
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $this->security->getUser();
+        // On récupère l'utilisateur connecté
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Titre de la Note : ',
@@ -67,6 +79,16 @@ class NoteType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
+                'query_builder' => function (EntityRepository $tagrepository) use ($user) {
+                // query_builder permet de personnaliser la requête
+                // Définit une fonction anonyme avec en parametre le repository de l'entité Tag
+                    return $tagrepository->createQueryBuilder('tag')
+                // Crée un QueryBuilder pour l'entité Tag
+                        ->where('tag.user = :user')
+                        ->setParameter('user', $user);
+                // est egal a la requte slq SELECT * FROM tag t WHERE t.user = :user;
+                
+                },
             ])
             ->add('folder', EntityType::class, [
                 'label' => 'Dossier : ',
@@ -74,6 +96,12 @@ class NoteType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
+                'query_builder' => function (EntityRepository $folderrepository) use ($user) {
+                        return $folderrepository->createQueryBuilder('folder')
+                            ->where('folder.user = :user')
+                            ->setParameter('user', $user);
+                    
+                    },
             ])
         ;
     }

@@ -15,9 +15,9 @@ final class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // method pour se connecter
-        if($this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_account');
+        if ($this->isGranted('ROLE_USER')) return $this->redirectToRoute('app_account');
         // si l'utilisateur est connecté il est redirigé vers la page de son compte
-    
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -27,7 +27,7 @@ final class SecurityController extends AbstractController
         ]);
     }
 
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void {}
