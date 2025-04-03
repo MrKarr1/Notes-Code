@@ -7,8 +7,8 @@ const div_note = document.querySelector('#div_note');
 const div_langage = document.querySelector('#div-langage');
 
 document.querySelector('#favori').addEventListener('click', () => {
-    console.log('favori');
-    
+    // console.log('favori');
+
     div_favori.style.display = "flex";
     div_folder.style.display = "none";
     div_note.style.display = "none";
@@ -16,8 +16,8 @@ document.querySelector('#favori').addEventListener('click', () => {
 });
 
 document.querySelector('#folder').addEventListener('click', () => {
-    console.log('folder');
-    
+    // console.log('folder');
+
     div_favori.style.display = "none";
     div_folder.style.display = "flex";
     div_note.style.display = "none";
@@ -25,8 +25,8 @@ document.querySelector('#folder').addEventListener('click', () => {
 });
 
 document.querySelector('#note').addEventListener('click', () => {
-    console.log('note');
-    
+    // console.log('note');
+
     div_favori.style.display = "none";
     div_folder.style.display = "none";
     div_note.style.display = "flex";
@@ -53,7 +53,7 @@ function search(input, table) {
             const langage = row.getAttribute('data-langage') || '';
 
 
-            if (name.includes(researchValue) || tag.includes(researchValue) || folder.includes(researchValue) || description.includes(researchValue) || langage.includes(researchValue)) { 
+            if (name.includes(researchValue) || tag.includes(researchValue) || folder.includes(researchValue) || description.includes(researchValue) || langage.includes(researchValue)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';

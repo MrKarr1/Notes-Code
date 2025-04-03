@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+<div class="div-btn-mod">
+{{ include('include/mod.html.twig') }}
+</div>
 	<main class="mention">
 		<div class="mentions">
 			<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>

@@ -63,7 +63,7 @@ class UserType extends AbstractType
                         'autocomplete' => 'new-password',
                     ],
                     'row_attr' => [
-                        'class' => 'div-password', 
+                        'class' => 'div-password',
                     ],
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
@@ -91,9 +91,10 @@ class UserType extends AbstractType
                     new File([
                         'maxSize' => '5000k',
                         'mimeTypes' => [
-                            'image/*',
+                            'image/png',
+                            'image/jpg'
                         ],
-                        'mimeTypesMessage' => 'Image trop lourde',
+                        'mimeTypesMessage' => "L'image est trop lourde ou le format n'est pas correct, seuls les formats PNG et JPG sont autorisés.",
                     ])
                 ],
             ]);

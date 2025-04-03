@@ -33,6 +33,7 @@
 					<button class="btn">
 						<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
 					</button>
+					{{ include('include/mod.html.twig') }}
 				</div>
 			</div>
 			{% for message in app.flashes('success') %}

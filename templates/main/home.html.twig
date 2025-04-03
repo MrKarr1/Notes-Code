@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+	<div class="div-btn-mod">
+		{{ include('include/mod.html.twig') }}
+	</div>
 	<main class="home">
 		{% for message in app.flashes('success') %}
 			<div class="flashes-message">{{ message }}
@@ -13,6 +16,7 @@
 			<h1>Bienvenue sur Notes Code</h1>
 			<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
 			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement des snippets de code.</h3>
+			<p>Version 0.0.2</p>
 		</article>
 		<article class="research-note">
 			<button class="btn">

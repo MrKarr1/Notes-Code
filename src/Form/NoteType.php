@@ -67,6 +67,10 @@ class NoteType extends AbstractType
             ->add('is_favori', CheckboxType::class, [
                 'label' => 'Favori ?  ',
                 'required' => false,
+                'row_attr' => [
+                    'class' => 'checkbox-favorie',
+                ],
+
             ])
             ->add('langage', EntityType::class, [
                 'label' => 'Langage : ',
@@ -80,14 +84,14 @@ class NoteType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'query_builder' => function (EntityRepository $tagrepository) use ($user) {
-                // query_builder permet de personnaliser la requête
-                // Définit une fonction anonyme avec en parametre le repository de l'entité Tag
+                    // query_builder permet de personnaliser la requête
+                    // Définit une fonction anonyme avec en parametre le repository de l'entité Tag
                     return $tagrepository->createQueryBuilder('tag')
-                // Crée un QueryBuilder pour l'entité Tag
+                        // Crée un QueryBuilder pour l'entité Tag
                         ->where('tag.user = :user')
                         ->setParameter('user', $user);
-                // est egal a la requte slq SELECT * FROM tag t WHERE t.user = :user;
-                
+                    // est egal a la requte slq SELECT * FROM tag t WHERE t.user = :user;
+
                 },
             ])
             ->add('folder', EntityType::class, [
@@ -97,11 +101,10 @@ class NoteType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'query_builder' => function (EntityRepository $folderrepository) use ($user) {
-                        return $folderrepository->createQueryBuilder('folder')
-                            ->where('folder.user = :user')
-                            ->setParameter('user', $user);
-                    
-                    },
+                    return $folderrepository->createQueryBuilder('folder')
+                        ->where('folder.user = :user')
+                        ->setParameter('user', $user);
+                },
             ])
         ;
     }

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<meta charset="UTF-8">
-			{# {% block name %}desp de la page{% endblock %} #}
+		<meta
+		charset="UTF-8">
+		{# {% block name %}desp de la page{% endblock %} #}
 		<title>
 			{% block title %}Notes-Code
 			{% endblock %}
@@ -17,9 +18,14 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="main-content"> {% block body %}{% endblock %}
-			</div>
-			{% include "include/footer.html.twig" %}
-		</body>
+	
+		<div class="main-content">
+			{{ include('include/cookie.html.twig') }}
+			{% block body %}
+				<script src="{{ asset('note.js') }}"></script>
+			{% endblock %}
+		</div>
+		{% include "include/footer.html.twig" %}
 
-	</html>
+	</body>
+</html>

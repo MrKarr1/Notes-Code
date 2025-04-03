@@ -6,15 +6,12 @@
 	</div>
 	<div class="carte">
 		<main class="edit-note">
-			<div class="btn-EAS"></div>
 			<div class="flex-button">
 				<button class="btn">
 					<a href="{{ path('app_account') }}">Retour</a>
 				</button>
 			</div>
-			<div class="EAS-code-des">
-				<h2>Modifier :
-					{{note.name}}</h2>
+			<article class="EAS-code-des">
 				{{ form_start(form) }}
 				<div id="note-code">{{ form.code.vars.value|json_encode|raw }}</div>
 				<div id="note-language">{{ form.langage.vars.value }}</div>
@@ -37,15 +34,15 @@
 					<button class="btn">Valider</button>
 				</div>
 				{{ form_end(form) }}
-			</div>
-			<div class="div-img-description">
+			</article>
+			<article class="div-img-description">
 				<div class="div-img">
 					{% if note.img %}
 						<h3>Image Actuelle:</h3>
 						<img class="img-note" src="{{ asset('img/note/' ~ note.img) }}" alt="image de la note">
 					{% endif %}
 				</div>
-			</div>
+			</article>
 		</main>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>

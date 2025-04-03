@@ -4,6 +4,9 @@
 
 {% block body %}
 {% if app.user and is_granted('ROLE_ADMIN') %}
+	<div class="div-btn-mod">
+		{{ include('include/mod.html.twig') }}
+	</div>
 	<div class="account">
 		<main class="accounts">
 			<div class="flex-message">

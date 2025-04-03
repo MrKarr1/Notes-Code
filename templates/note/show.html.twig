@@ -10,31 +10,32 @@
 	<div class="carte">
 		<main class="show-note">
 			<div class="user-EAS">
-				<h1>Nom:
-					{{ note.name }}</h1>
-				{% if note.tag %}
-					{% for tag in note.tag %}
-						<h3>Tag:
-							{{tag.name}}</h3>
-					{% endfor %}
-				{% else %}
-					<h3>Pas de Tag</h3>
+				<h1>{{ note.name }}</h1>
+				{% if app.user %}
+					{% if note.tag %}
+						{% for tag in note.tag %}
+							<h3>Tag:
+								{{tag.name}}</h3>
+						{% endfor %}
+					{% else %}
+						<h3>Pas de Tag</h3>
+					{% endif %}
+					{% if note.folder %}
+						{% for folders in note.folder %}
+							<h3>Dossier:
+								{{folders.name}}</h3>
+						{% endfor %}
+					{% else %}
+						<h3>Pas de dossier</h3>
+					{% endif %}
 				{% endif %}
-				{% if note.folder %}
-					{% for folders in note.folder %}
-						<h3>Dossier:
-							{{folders.name}}</h3>
-					{% endfor %}
-				{% else %}
-					<h3>Pas de dossier</h3>
-				{% endif %}
-				<h3>Lanage:
+				<h3>Langage:
 					{{ note.langage.displayName }}</h3>
-				<h3>Date de creation:
+				<h3>Date de création:
 					{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</h3>
 			</div>
-				<div class="btn-EAS">
-					{% if app.user and app.user.id == note.user.id %}
+			<div class="btn-EAS">
+				{% if app.user and app.user.id == note.user.id %}
 					<button class="btn icone">
 						<a href="{{ path('app_account') }}">Retour</a>
 					</button>

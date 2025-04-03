@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --fond-principal: #010c1b;
   --fond-des-cartes: #1a2430;
@@ -8,10 +9,27 @@
   --color-text-bouton: #ffffff;
 }
 
+.light {
+  --fond-principal: #f5f5f5;
+  --fond-des-cartes: #ffffff;
+  --texte-principal: #222222;
+  --texte-secondaire: #555555;
+  --color-bouton: #007BFF;
+  --color-hover-bouton: #0056b3;
+  --color-text-bouton: #ffffff;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: clamp(10px, 6vw, 20px);
+}
+
+h1 {
+  font-size: clamp(15px, 6vw, 25px);
 }
 
 html,
@@ -34,14 +52,14 @@ body {
 #div_note,
 #admin_note {
   display: none;
-  animation-name: note_tab;
-  Animation-duration: 2s;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 
 #div_favori,
 .note-table {
-  animation-name: note_tab;
-  Animation-duration: 2s;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 
 a {
@@ -57,6 +75,7 @@ a {
   background-color: var(--color-bouton);
   color: var(--color-text-bouton);
   cursor: pointer;
+  transition: background-color 0.5s ease;
 }
 .btn a {
   color: var(--color-text-bouton);
@@ -102,15 +121,36 @@ a {
   margin-left: 15vh;
 }
 
+.cookie-banner {
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--fond-des-cartes);
+  color: var(--texte-principal);
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
+}
+
+.cookie-none {
+  display: none;
+}
+
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 .home {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-around;
   padding: 10px;
   margin-top: 10%;
-  animation-name: note_tab;
-  Animation-duration: 1s;
 }
 .home .info,
 .home .action,
@@ -118,14 +158,19 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   text-align: center;
+  align-items: center;
   background-color: var(--fond-des-cartes);
-  gap: 9vh;
+  gap: 8vh;
   padding: 1vh;
   border-radius: 1vh;
   height: 50vh;
   width: 50vh;
+}
+.home .info p,
+.home .action p,
+.home .research-note p {
+  opacity: 25%;
 }
 .home .info img,
 .home .action img,
@@ -133,9 +178,15 @@ a {
   max-height: 100px;
   border-radius: 10px;
 }
+.home .info {
+  animation-name: appearance_left;
+  Animation-duration: 2s;
+}
 .home .action {
   height: 50vh;
   width: 50vh;
+  animation-name: appearance_centre;
+  Animation-duration: 2s;
 }
 .home .action .btn {
   font-size: large;
@@ -143,10 +194,17 @@ a {
 }
 .home .research-note {
   margin: 1vh;
+  animation-name: appearance_centre;
+  Animation-duration: 3s;
 }
 .home .research-note .btn {
   font-size: large;
   padding: 1ch;
+}
+
+.div-btn-mod {
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -159,8 +217,8 @@ a {
   justify-content: space-around;
   padding: 1vh;
   margin-top: 10%;
-  animation-name: note_tab;
-  Animation-duration: 1s;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 .login .logins,
 .login .registers,
@@ -373,6 +431,8 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 1vh;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 
 .accounts {
@@ -443,8 +503,8 @@ a {
   justify-content: center;
   margin-top: 1vh;
   margin-right: 5vh;
-  animation-name: note_tab;
-  Animation-duration: 1s;
+  animation-name: appearance_centre;
+  Animation-duration: 0.5s;
 }
 .carte .img-carte {
   text-align: center;
@@ -579,21 +639,70 @@ a {
 .edit-note form .flex,
 .add-note form .flex {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 20vh;
 }
 .edit-note form .flex .right-note,
 .edit-note form .flex .left-note,
 .add-note form .flex .right-note,
 .add-note form .flex .left-note {
   display: flex;
-  align-items: center;
-  gap: 20vh;
+  justify-content: center;
+  gap: 1vh;
 }
+.edit-note form .flex .right-note label,
 .edit-note form .flex .left-note label,
+.add-note form .flex .right-note label,
 .add-note form .flex .left-note label {
   display: flex;
-  margin-bottom: 5px;
+  margin-bottom: 0.5vh;
+  font-size: 2vh;
+}
+.edit-note form .flex .checkbox-favorie,
+.add-note form .flex .checkbox-favorie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-note form .flex .checkbox-favorie label,
+.add-note form .flex .checkbox-favorie label {
+  display: flex;
+  margin-bottom: 15px;
+}
+.edit-note form .flex .checkbox-favorie input[type=checkbox],
+.add-note form .flex .checkbox-favorie input[type=checkbox] {
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--fond-principal);
+  border-radius: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+.edit-note form .flex .checkbox-favorie input[type=checkbox]:checked,
+.add-note form .flex .checkbox-favorie input[type=checkbox]:checked {
+  background-color: var(--fond-principal);
+}
+.edit-note form .flex .checkbox-favorie input[type=checkbox]::before,
+.add-note form .flex .checkbox-favorie input[type=checkbox]::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: background-color 0.2s ease-in-out;
+}
+.edit-note form .flex .checkbox-favorie input[type=checkbox]:checked::before,
+.add-note form .flex .checkbox-favorie input[type=checkbox]:checked::before {
+  content: "✔";
+  display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 200%;
+  color: var(--color-text-bouton);
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -719,8 +828,8 @@ header {
   z-index: 100;
   padding: 1px;
   background-color: var(--fond-des-cartes);
-  animation-name: note_tab;
-  Animation-duration: 1s;
+  animation-name: appearance_left;
+  Animation-duration: 0.5s;
 }
 header #btn-nav-none {
   padding: 1px;
@@ -814,7 +923,7 @@ footer img {
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 @media (max-width: 760px) {
   p {
-    font-size: 20px;
+    font-size: 30px;
   }
   .carte {
     margin-left: 5vh;
@@ -898,6 +1007,7 @@ footer img {
     flex-direction: column;
   }
 }
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 @media (min-width: 1500px) {
   .right-note,
   .left-note {
@@ -905,12 +1015,45 @@ footer img {
     flex-direction: row;
   }
 }
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 @keyframes note_tab {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+@keyframes appearance_left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes appearance_centre {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes appearance_right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
