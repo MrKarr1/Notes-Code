@@ -10,13 +10,13 @@
 }
 
 .light {
-  --fond-principal: #f5f5f5;
-  --fond-des-cartes: #ffffff;
-  --texte-principal: #222222;
-  --texte-secondaire: #555555;
-  --color-bouton: #007BFF;
-  --color-hover-bouton: #0056b3;
-  --color-text-bouton: #ffffff;
+  --fond-principal: #e0e0e0;
+  --fond-des-cartes: #d6d6d6;
+  --texte-principal: #1a1a1a;
+  --texte-secondaire: #3d3d3d;
+  --color-bouton: #0056b3;
+  --color-hover-bouton: #003f80;
+  --color-text-bouton: #e0e0e0;
   animation-name: appearance_centre;
   Animation-duration: 0.5s;
 }
@@ -25,11 +25,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: clamp(10px, 6vw, 20px);
-}
-
-h1 {
-  font-size: clamp(15px, 6vw, 25px);
 }
 
 html,
@@ -68,8 +63,8 @@ a {
 }
 
 .btn {
-  margin: 10px;
-  padding: 8px;
+  margin: 1vh;
+  padding: 0.8vh;
   border: none;
   border-radius: 5px;
   background-color: var(--color-bouton);
@@ -77,11 +72,11 @@ a {
   cursor: pointer;
   transition: background-color 0.5s ease;
 }
-.btn a {
-  color: var(--color-text-bouton);
-}
 .btn:hover {
   background-color: var(--color-hover-bouton);
+}
+.btn a {
+  color: var(--color-text-bouton);
 }
 
 .icone {
@@ -100,7 +95,7 @@ a {
   object-fit: cover;
   border-radius: 50%;
 }
-.img-account:hover {
+.img-account img:hover {
   border: 1px solid var(--fond-des-cartes);
 }
 
@@ -143,12 +138,41 @@ a {
   display: none;
 }
 
+/* Scrollbar*/
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--fond-principal);
+  border-radius: 5px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--color-bouton);
+  border-radius: 5px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-hover-bouton);
+}
+
+/*  pour Firefox */
+html,
+.scroll-container {
+  scrollbar-color: var(--color-bouton) var(--fond-principal);
+  scrollbar-width: thin;
+}
+
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 .home {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  flex-direction: row;
   justify-content: space-around;
+  align-content: center;
   padding: 10px;
   margin-top: 10%;
 }
@@ -164,8 +188,10 @@ a {
   gap: 8vh;
   padding: 1vh;
   border-radius: 1vh;
-  height: 50vh;
-  width: 50vh;
+  max-height: 50vh;
+  max-width: 50vh;
+  min-height: 50vh;
+  min-width: 50vh;
 }
 .home .info p,
 .home .action p,
@@ -189,7 +215,6 @@ a {
   Animation-duration: 2s;
 }
 .home .action .btn {
-  font-size: large;
   padding: 1ch;
 }
 .home .research-note {
@@ -198,7 +223,6 @@ a {
   Animation-duration: 3s;
 }
 .home .research-note .btn {
-  font-size: large;
   padding: 1ch;
 }
 
@@ -243,6 +267,7 @@ a {
   text-align: center;
   gap: 1vh;
   padding: 1vh;
+  padding-top: 5vh;
   border-radius: 1vh;
   background-color: var(--fond-des-cartes);
   width: 50vh;
@@ -284,7 +309,8 @@ a {
 .mention .mentions form {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
+  margin-top: 1vh;
+  gap: 2vh;
 }
 .login .logins form input,
 .login .logins form textarea,
@@ -369,18 +395,28 @@ a {
   margin-top: 1vh;
 }
 .mention .mentions {
-  text-align: start;
+  display: block;
+}
+.mention .mentions h3,
+.mention .mentions h4,
+.mention .mentions p {
+  margin-bottom: 1vh;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-.note-table p {
-  text-align: center;
-}
-.note-table .btn-table {
+.btn-table {
   display: flex;
   justify-self: start;
   background-color: var(--fond-principal);
   border-radius: 10px 10px 0px 0px;
+}
+
+.note-table {
+  max-height: 75vh;
+  overflow-y: scroll;
+}
+.note-table p {
+  text-align: center;
 }
 .note-table .nav-table {
   font-size: 13px;
@@ -391,7 +427,7 @@ a {
 .note-table table thead {
   background-color: var(--fond-des-cartes);
 }
-.note-table table a:hover {
+.note-table table .a-note:hover {
   color: var(--color-hover-bouton);
 }
 .note-table table .none {
@@ -401,13 +437,11 @@ a {
 .note-table table td {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   padding: 5px;
   border: 1px solid var(--fond-des-cartes);
 }
-.note-table table td.action {
+.note-table table td.action-td {
   display: flex;
-  flex-wrap: wrap;
   gap: 5px;
 }
 .note-table .favori,
@@ -437,10 +471,10 @@ a {
 
 .accounts {
   min-width: 85%;
+  max-width: 85%;
   padding: 10px;
   background-color: var(--fond-des-cartes);
   border-radius: 10px;
-  margin-bottom: 38vh;
 }
 .accounts .user-account {
   display: flex;
@@ -451,6 +485,7 @@ a {
 .accounts .user-account .users-account {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   gap: 10px;
 }
@@ -501,7 +536,6 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1vh;
   margin-right: 5vh;
   animation-name: appearance_centre;
   Animation-duration: 0.5s;
@@ -521,9 +555,8 @@ a {
   flex-direction: column;
   background-color: var(--fond-des-cartes);
   border-radius: 10px;
-  padding: 10px;
-  margin-top: 5vh;
   min-width: 100%;
+  margin: 1vh;
 }
 .show-note .user-EAS,
 .edit-note .user-EAS,
@@ -621,20 +654,23 @@ a {
 }
 .edit-note form input,
 .add-note form input {
-  padding: 10px;
-  border-radius: 5px;
+  padding: 1vh;
+  border-radius: 0.5vh;
   border: none;
   background-color: var(--fond-principal);
   color: var(--texte-principal);
+  gap: 1vh;
 }
 .edit-note form select,
 .add-note form select {
-  background-color: var(--fond-principal);
+  background-color: var(--fond-des-cartes);
   color: var(--texte-principal);
-  min-width: 100px;
-  padding: 10px;
+  min-width: 10vh;
+  padding: 1vh;
   font-size: large;
   border: none;
+  border-radius: 0.5vh;
+  gap: 1vh;
 }
 .edit-note form .flex,
 .add-note form .flex {
@@ -647,8 +683,12 @@ a {
 .add-note form .flex .right-note,
 .add-note form .flex .left-note {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   gap: 1vh;
+  background-color: var(--fond-principal);
+  padding: 1vh;
+  border-radius: 1vh;
 }
 .edit-note form .flex .right-note label,
 .edit-note form .flex .left-note label,
@@ -656,7 +696,6 @@ a {
 .add-note form .flex .left-note label {
   display: flex;
   margin-bottom: 0.5vh;
-  font-size: 2vh;
 }
 .edit-note form .flex .checkbox-favorie,
 .add-note form .flex .checkbox-favorie {
@@ -683,7 +722,7 @@ a {
 }
 .edit-note form .flex .checkbox-favorie input[type=checkbox]:checked,
 .add-note form .flex .checkbox-favorie input[type=checkbox]:checked {
-  background-color: var(--fond-principal);
+  background-color: var(--fond-des-cartes);
 }
 .edit-note form .flex .checkbox-favorie input[type=checkbox]::before,
 .add-note form .flex .checkbox-favorie input[type=checkbox]::before {
@@ -713,10 +752,10 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10vh;
+  padding: 1vh 10vh 1vh 10vh;
   background-color: var(--fond-des-cartes);
   border-radius: 10px;
-  margin-top: 5vh;
+  margin-bottom: 15vh;
 }
 .manage-tag h1,
 .manage-langage h1,
@@ -811,6 +850,13 @@ a {
 .manage-contact .message-hidden {
   display: none;
 }
+.manage-tag .div-delete-message,
+.manage-langage .div-delete-message,
+.manage-folder .div-delete-message,
+.manage-contact .div-delete-message {
+  display: flex;
+  justify-content: center;
+}
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 .main-content {
@@ -832,7 +878,6 @@ header {
   Animation-duration: 0.5s;
 }
 header #btn-nav-none {
-  padding: 1px;
   margin: 0;
 }
 header .menu {
@@ -860,11 +905,12 @@ header .nav-note {
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-width: 25vh;
-  gap: 25px;
+  gap: 5px;
   margin: 10px 0px 10px 0px;
 }
-header .nav-note input {
+header .div-research input {
   padding: 10px;
   border-radius: 5px;
   border: none;
@@ -899,7 +945,7 @@ footer {
   margin-top: 40vh;
 }
 footer a:hover {
-  color: var(--texte-secondaire);
+  color: var(--color-hover-bouton);
 }
 footer .left-footer,
 footer .right-footer {
@@ -921,75 +967,19 @@ footer img {
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (max-width: 760px) {
-  p {
-    font-size: 30px;
-  }
-  .carte {
-    margin-left: 5vh;
-  }
-  .monaco-editor {
-    max-width: 45vh;
-  }
-  .img-note {
-    max-height: 50vh;
-  }
-  .description {
-    max-width: 45vh;
-    height: 30vh;
-  }
+@media (min-width: 1500px) {
   .right-note,
   .left-note {
-    display: flex;
-    flex-direction: column;
-  }
-}
-/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (max-width: 900px) {
-  .nav_menu {
-    display: none;
-  }
-  .carte {
-    margin-left: 5vh;
-  }
-  .monaco-editor {
-    max-width: 65vh;
-  }
-  .description {
-    max-width: 65vh;
-    height: 30vh;
-  }
-  .right-note,
-  .left-note {
-    display: flex;
-    flex-direction: column;
-  }
-}
-/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (max-width: 1024px) {
-  .nav_menu {
-    display: none;
-  }
-  .carte {
-    margin-left: 5vh;
-  }
-  .monaco-editor {
-    max-width: 85vh;
-  }
-  .description {
-    max-width: 85vh;
-    height: 30vh;
-  }
-  .right-note,
-  .left-note {
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 @media (min-width: 1200px) {
   .nav_menu {
     display: block;
+  }
+  .margin-left {
+    margin-left: 30vh;
   }
   .carte {
     margin-left: 30vh;
@@ -1003,25 +993,111 @@ footer img {
   }
   .right-note,
   .left-note {
-    display: flex;
     flex-direction: column;
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (min-width: 1500px) {
-  .right-note,
-  .left-note {
-    display: flex;
-    flex-direction: row;
+@media (max-width: 1024px) {
+  .margin-left {
+    margin-left: 0vh;
+  }
+  .nav_menu {
+    display: none;
+  }
+  .carte {
+    margin-left: 5vh;
+  }
+  .monaco-editor {
+    max-width: 65vh;
+  }
+  .description {
+    max-width: 85vh;
+    height: 30vh;
+  }
+  .flex {
+    flex-direction: column;
+  }
+  .flex .right-note,
+  .flex .left-note {
+    flex-direction: column;
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@keyframes note_tab {
-  from {
-    opacity: 0;
+@media (max-width: 900px) {
+  .margin-left {
+    margin-left: 0vh;
   }
-  to {
-    opacity: 1;
+  .nav_menu {
+    display: none;
+  }
+  .carte {
+    margin-left: 0vh;
+    margin-right: 0vh;
+  }
+  .monaco-editor {
+    max-width: 65vh;
+  }
+  .description {
+    max-width: 65vh;
+    height: 30vh;
+  }
+  .right-note,
+  .left-note {
+    flex-direction: column;
+  }
+}
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+@media (max-width: 760px) {
+  .home {
+    justify-content: center;
+  }
+  .margin-left {
+    margin-left: 0vh;
+  }
+  .nav_menu {
+    display: none;
+  }
+  .carte {
+    margin-left: 0vh;
+    margin-right: 0vh;
+  }
+  .monaco-editor {
+    max-width: 45vh;
+  }
+  .img-note {
+    max-height: 50vh;
+  }
+  .description {
+    max-width: 45vh;
+    height: 30vh;
+  }
+  .edit-note form .flex,
+  .add-note form .flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .edit-note form .flex .right-note,
+  .edit-note form .flex .left-note,
+  .add-note form .flex .right-note,
+  .add-note form .flex .left-note {
+    flex-direction: column;
+  }
+  td.media-hidden {
+    display: none;
+  }
+  .media-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .note-table table td {
+    padding: 2px;
+  }
+  .manage-contact form textarea {
+    min-width: 40vh;
+    min-height: 35vh;
+    max-width: 40vh;
+    max-height: 35vh;
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

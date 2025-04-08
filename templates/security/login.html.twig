@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="div-btn-mod">
-		{{ include('include/mod.html.twig') }}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
 	</div>
 	<main class="login">
 		<div class="logins">
@@ -26,9 +26,7 @@
 				<button class="btn" type="submit">Valider</button>
 			</form>
 			<p>Pas encore inscrit ?</p>
-			<button class="btn">
-				<a href="{{ path('app_register') }}">S'inscrire</a>
-			</button>
+				<a class="btn" href="{{ path('app_register') }}">S'inscrire</a>
 		</div>
 	</main>
 {% endblock %}

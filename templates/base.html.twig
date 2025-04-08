@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<meta
-		charset="UTF-8">
-		{# {% block name %}desp de la page{% endblock %} #}
+		<!-- Required meta tags -->
+		<meta name="description" content="Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement des snippets de code.">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			{% block title %}Notes-Code
 			{% endblock %}
 		</title>
 		<link rel="icon" href="{{ asset('img/logo/logo-solo.ico') }}">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/> {% block stylesheets %}{% endblock %}
-
+		{% block stylesheets %}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		{% endblock %}
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
@@ -18,7 +19,7 @@
 		{% endblock %}
 	</head>
 	<body>
-	
+
 		<div class="main-content">
 			{{ include('include/cookie.html.twig') }}
 			{% block body %}
@@ -26,6 +27,5 @@
 			{% endblock %}
 		</div>
 		{% include "include/footer.html.twig" %}
-
 	</body>
 </html>

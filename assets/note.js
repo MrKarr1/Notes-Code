@@ -8,37 +8,24 @@ const div_langage = document.querySelector('#div-langage');
 
 document.querySelector('#favori').addEventListener('click', () => {
     // console.log('favori');
-
     div_favori.style.display = "flex";
     div_folder.style.display = "none";
     div_note.style.display = "none";
-    div_langage.style.display = "none";
 });
 
 document.querySelector('#folder').addEventListener('click', () => {
     // console.log('folder');
-
     div_favori.style.display = "none";
     div_folder.style.display = "flex";
     div_note.style.display = "none";
-    div_langage.style.display = "none";
 });
 
 document.querySelector('#note').addEventListener('click', () => {
     // console.log('note');
-
     div_favori.style.display = "none";
     div_folder.style.display = "none";
     div_note.style.display = "flex";
-    div_langage.style.display = "none";
 });
-document.querySelector('#langage').addEventListener('click', () => {
-    div_favori.style.display = "none";
-    div_folder.style.display = "none";
-    div_note.style.display = "none";
-    div_langage.style.display = "flex";
-});
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

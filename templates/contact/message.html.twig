@@ -4,14 +4,11 @@
 	<div class="div-btn-mod">
 		{{ include('include/mod.html.twig') }}
 	</div>
-	<div class="carte manage" id="carte-contact">
+	<div class="carte" id="carte-contact">
 		<main class="manage-contact">
-			<div class="img-carte">
-				<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
-			</div>
 			<div class="flex-button">
-				<button class="btn">
-					<a href="{{ path('app_account') }}">Retour</a>
+				<button class="btn" onclick="window.location.href='{{ path('app_account') }}'">
+					Retour
 				</button>
 			</div>
 			{% for message in app.flashes('success') %}
@@ -30,7 +27,7 @@
 					</div>
 					<table>
 						<thead>
-							<td>Date</td>
+							<td class="media-hidden">Date</td>
 							<td>Nom ou Mail</td>
 							<td>Message</td>
 							<td>Action</td>
@@ -39,7 +36,7 @@
 							{% if contact.sentby != app.user.id %}
 								<tbody>
 									<tr>
-										<td>
+										<td class="media-hidden">
 											<span>{{contact.createdAt|date('d/m/Y')}}</span>
 										</td>
 										<td>
@@ -48,17 +45,21 @@
 										<td>
 											<button class="btn btn-message" data-message="{{ contact.message }}">Voir le message</button>
 										</td>
-										<td>
-											<form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">
-												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
-												<button class="btn icone">
-													<i class="fa-solid fa-trash"></i>
-												</button>
-											</form>
+										<td class="">
+											<div class="action-td">
+												<div class="div-delete-message">
+													<form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">
+														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+														<button class="btn icone">
+															<i class="fa-solid fa-trash"></i>
+														</button>
+													</form>
 
-											<button class="btn icone">
-												<a href="{{ path('app_respond', {'id': contact.id}) }}">Répondre</a>
-											</button>
+													<button class="btn icone" onclick="window.location.href='{{ path('app_respond', {'id': contact.id}) }}'">
+														Répondre
+													</button>
+												</div>
+											</div>
 										</td>
 									</tr>
 								</tbody>

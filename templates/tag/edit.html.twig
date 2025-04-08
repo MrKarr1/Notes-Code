@@ -9,19 +9,18 @@
 	</div>
 	<div class="carte manage">
 		<main class="manage-tag">
-	<div class="flex-button">
-		<button class="btn">
-			<a href="{{ path('app_tag_add') }}">Retour</a>
-		</button>
-	</div>
-	<h1>{{ tag.name }}</h1>
-
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<div class="flex-button">
-		<button class="btn">{{ button_label|default('Valider') }}</button>	
-	</div>
-	{{ form_end(form) }}
+			<div class="flex-button">
+				<button class="btn" onclick="window.location.href='{{ path('app_tag_add') }}'">
+					Retour
+				</button>
+			</div>
+			<h1>{{ tag.name }}</h1>
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+			<div class="flex-button">
+				<button class="btn">{{ button_label|default('Valider') }}</button>
+			</div>
+			{{ form_end(form) }}
 		</main>
 	</div>
 {% endblock %}

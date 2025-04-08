@@ -9,9 +9,9 @@
 	<div class="carte manage">
 		<main class="manage-folder">
 			<div class="flex-button">
-				<button class="btn">
-					<a href="{{ path('app_langage_add') }}">Retour</a>
-				</button>
+<button class="btn" onclick="window.location.href='{{ path('app_langage_add') }}'">
+    Retour
+</button>
 			</div>
 			{{ form_start(form) }}
 			{{ form_widget(form) }}

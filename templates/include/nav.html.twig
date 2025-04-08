@@ -3,8 +3,9 @@
 		<i class="fa-solid fa-bars"></i>
 	</button>
 </div>
+
 <header class="nav_menu">
-	<button class="btn" id="btn-nav-none">
+	<button class="btn icone" id="btn-nav-none">
 		<i class="fa-solid fa-xmark"></i>
 	</button>
 	{% if app.user %}
@@ -18,13 +19,11 @@
 					{% endif %}
 				</a>
 			</div>
-			<p>
-				<strong>{{ app.user.username }}</strong>
-			</p>
+			<h2>{{ app.user.username }}</h2>
 		</div>
 		<div class="nav-note">
-			<button class="btn icone">
-				<a href="{{ path('app_note_add') }}">Ajouter une Note</a>
+			<button class="btn icone" onclick="window.location.href='{{ path('app_note_add') }}'">
+				Ajouter une Note
 			</button>
 			{{ include('include/mod.html.twig') }}
 			<div class="div-research">
@@ -32,6 +31,7 @@
 				<i class=" icone fa-solid fa-magnifying-glass"></i>
 			</div>
 		</div>
+
 		<nav>
 			<div class="note-table">
 				<div class="btn-table">
@@ -45,8 +45,6 @@
 					<table class="nav-table">
 						<thead>
 							<td>Nom</td>
-							<td>Tag</td>
-							<td>Dossier</td>
 						</thead>
 						<tbody id="research-favori">
 							{% for note in app.user.note|slice(0, 15) %}
@@ -55,56 +53,7 @@
 										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
 												<i class="fa-regular fa-file"></i>
-												{{note.name}}
-											</a>
-										</td>
-										<td>
-											{% if note.tag %}
-												{% for tag in note.tag %}
-													<span>{{tag.name}}</span>
-												{% endfor %}
-											{% else %}
-												<span>Pas de Tag</span>
-											{% endif %}
-										</td>
-										<td>
-											{% if note.folder %}
-												{% for folders in note.folder %}
-													<span>{{folders.name}}</span>
-												{% endfor %}
-											{% else %}
-												<span>Pas de dossier</span>
-											{% endif %}
-										</td>
-									</tr>
-								{% endif %}
-							{% endfor %}
-							{% for note in app.user.note|slice(15,500) %}
-								{% if note.favori %}
-									<tr class="none" data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
-										<td>
-											<a href="{{ path('app_note_show', {'id': note.id}) }}">
-												<i class="fa-regular fa-file"></i>
-												{{note.name}}
-											</a>
-										</td>
-										<td>
-											{% if note.tag %}
-												{% for tag in note.tag %}
-													<span>{{tag.name}}</span>
-												{% endfor %}
-											{% else %}
-												<span>Pas de Tag</span>
-											{% endif %}
-										</td>
-										<td>
-											{% if note.folder %}
-												{% for folders in note.folder %}
-													<span>{{folders.name}}</span>
-												{% endfor %}
-											{% else %}
-												<span>Pas de dossier</span>
-											{% endif %}
+												{{note.name}}</a>
 										</td>
 									</tr>
 								{% endif %}
@@ -127,8 +76,7 @@
 								<td>
 									<a href="{{ path('app_note_show', {'id': note.id}) }}">
 										<i class="fa-regular fa-file"></i>
-										{{note.name}}
-									</a>
+										{{note.name}}</a>
 								</td>
 							</tr>
 						{% endfor %}
@@ -136,18 +84,17 @@
 				</table>
 			</div>
 		</div>
+	</nav>
+	<script src="{{ asset('nav-research.js') }}"></script>
+	<script>
+		search('research', 'research-favori');
+search('research', 'research-note');
+	</script>
+{% else %}
+	{{ include('include/mod.html.twig') }}
+	<div class="action-user">
+		<button class="btn" onclick="window.location.href='{{ path('app_home') }}'">Accueil</button>
+		<button class="btn" onclick="window.location.href='{{ path('app_login') }}'">Connexion</button>
+		<button class="btn" onclick="window.location.href='{{ path('app_register') }}'">S'inscrire</button>
 	</div>
-</nav>{% else %}
-{{ include('include/mod.html.twig') }}
-<div class="action-user">
-	<button class="btn">
-		<a href="{{ path('app_home') }}">Home</a>
-	</button>
-	<button class="btn">
-		<a href="{{ path('app_login') }}">Connexion</a>
-	</button>
-	<button class="btn">
-		<a href="{{ path('app_register') }}">S'inscrire</a>
-	</button>
-</div>{% endif %}</header><script src="{{ asset('nav-research.js') }}"></script><script src="{{ asset('nav.js') }}"></script><script>search('research', 'research-favori');
-search('research', 'research-note');</script>
+{% endif %}</header><script src="{{ asset('nav.js') }}"></script>

@@ -16,22 +16,23 @@
 			<h1>Bienvenue sur Notes Code</h1>
 			<img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code">
 			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement des snippets de code.</h3>
-			<p>Version 0.0.2</p>
+			<p>Version 0.0.5</p>
 		</article>
 		<article class="research-note">
-			<button class="btn">
-				<a href="{{ path('app_research') }}">Recherche Une Note</a>
+			<button class="btn" onclick="window.location.href='{{ path('app_research') }}'">
+				Recherche Une Note
 			</button>
 		</article>
+
 		<article class="action">
-			<button class="btn">
-				<a href="{{ path('app_login') }}">Connexion</a>
+			<button class="btn" onclick="window.location.href='{{ path('app_login') }}'">
+				Connexion
 			</button>
-			<button class="btn">
-				<a href="{{ path('app_register') }}">S'inscrire</a>
+			<button class="btn" onclick="window.location.href='{{ path('app_register') }}'">
+				S'inscrire
 			</button>
-			<button class="btn">
-				<a href="{{ path('app_contact_no_user') }}">Contact</a>
+			<button class="btn" onclick="window.location.href='{{ path('app_contact_no_user') }}'">
+				Contact
 			</button>
 		</article>
 	</main>

@@ -22,7 +22,7 @@
 					<table>
 						<thead>
 							<td>Nom Note</td>
-							<td>Tag</td>
+							<td class="media-hidden">Tag</td>
 							<td>Langage</td>
 							<td>Date</td>
 						</thead>
@@ -35,7 +35,7 @@
 											{{note.name}}
 										</a>
 									</td>
-									<td>
+									<td class="media-hidden">
 										{% if note.tag %}
 											{% for tag in note.tag|slice(0, 5) %}
 												<span>{{tag.name}}</span>

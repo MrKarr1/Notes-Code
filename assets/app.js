@@ -1,4 +1,4 @@
-import './bootstrap.js';
+// import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -7,7 +7,6 @@ import './bootstrap.js';
  */
 
 import './styles/app.css';
-import './light-mode.js';
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+// console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

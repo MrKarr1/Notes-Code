@@ -7,13 +7,12 @@
 	<div class="carte manage">
 		<main class="manage-tag">
 			<div class="flex-button">
-				<button class="btn">
-					<a href="{{ path('app_account') }}">Retour</a>
+				<button class="btn" onclick="window.location.href='{{ path('app_account') }}'">
+					Retour
 				</button>
 			</div>
 			{% for message in app.flashes('success') %}
-				<div class="flashes-message">{{ message }}
-				</div>
+				<div class="flashes-message">{{ message }}</div>
 			{% endfor %}
 			<h1>Gérer les Tags</h1>
 			{{ form_start(form) }}
@@ -22,7 +21,6 @@
 				<button class="btn">{{ button_label|default('Valider') }}</button>
 			</div>
 			{{ form_end(form) }}
-
 			<div class="note-table">
 				<div class="tag tag-add" id="div-tag">
 					<p>
@@ -30,22 +28,22 @@
 					</p>
 					<table>
 						<thead>
-							<td>Nom du Tag</td>
-							<td>Action</td>
+							<tr>
+								<td>Nom du Tag</td>
+								<td>Action</td>
+							</tr>
 						</thead>
 						{% for tag in tags %}
 							{% if app.user.id == tag.user.id %}
 								<tbody>
 									<tr>
 										<td>
-											<span>{{tag.name}}</span>
+											<span>{{ tag.name }}</span>
 										</td>
 										<td class="action">
 											{{ include('tag/_delete_form.html.twig') }}
-											<button class="btn icone">
-												<a href="{{ path('app_tag_edit', {'id': tag.id}) }}">
-													<i class="fa-solid fa-arrows-rotate"></i>
-												</a>
+											<button class="btn icone" onclick="window.location.href='{{ path('app_tag_edit', {'id': tag.id}) }}'">
+												<i class="fa-solid fa-arrows-rotate"></i>
 											</button>
 										</td>
 									</tr>

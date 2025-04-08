@@ -5,7 +5,7 @@ const banner_cook = document.querySelector('#banner_cook')
 cookie();
 
 document.querySelector('#accepter-cookie').addEventListener('click', () => {
-    console.log('click');
+    // console.log('click');
     localStorage.setItem('consentement cookie', 'accepter')
     banner_cook.classList.add('cookie-none');
     cookie();

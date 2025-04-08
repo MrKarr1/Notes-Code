@@ -24,8 +24,8 @@ function search(input, table) {
         for (const row of document.getElementById(table).getElementsByTagName('tr')) {
             const name = row.getAttribute('data-name') || '';
             const email = row.getAttribute('data-email') || '';
-
-            if (name.includes(researchValue) || email.includes(researchValue)) {
+            const userName = row.getAttribute('data-user') || '';
+            if (name.includes(researchValue) || email.includes(researchValue) || userName.includes(researchValue)) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
