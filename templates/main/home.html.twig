@@ -18,13 +18,13 @@
 			<h3>Notes Code : le bloc-notes conçu pour les développeurs ! Stockez, organisez et retrouvez facilement des snippets de code.</h3>
 			<p>Version 0.0.5</p>
 		</article>
-		<article class="research-note">
+		<div class="research-note">
 			<button class="btn" onclick="window.location.href='{{ path('app_research') }}'">
 				Recherche Une Note
 			</button>
-		</article>
+		</div>
 
-		<article class="action">
+		<div class="action">
 			<button class="btn" onclick="window.location.href='{{ path('app_login') }}'">
 				Connexion
 			</button>
@@ -34,6 +34,6 @@
 			<button class="btn" onclick="window.location.href='{{ path('app_contact_no_user') }}'">
 				Contact
 			</button>
-		</article>
+		</div>
 	</main>
 {% endblock %}

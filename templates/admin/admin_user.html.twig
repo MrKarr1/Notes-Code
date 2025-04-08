@@ -34,9 +34,11 @@
 					</p>
 					<table>
 						<thead>
-							<td>User</td>
-							<td>Mail</td>
-							<td>Action</td>
+							<tr>
+								<th>User</th>
+								<th>Mail</th>
+								<th>Action</th>
+							</tr>
 						</thead>
 						<tbody id="research-user">
 							{% for user in users %}
@@ -56,11 +58,13 @@
 				</p>
 				<table>
 					<thead>
-						<td>Nom Note</td>
-						<td>User</td>
-						<td>Langage</td>
-						<td class="media-hidden">Date</td>
-						<td>Action</td>
+						<tr>
+							<th>Nom Note</th>
+							<th>User</th>
+							<th>Langage</th>
+							<th class="media-hidden">Date</th>
+							<th>Action</th>
+						</tr>
 					</thead>
 					<tbody id="research-note">
 						{% for note in notes %}

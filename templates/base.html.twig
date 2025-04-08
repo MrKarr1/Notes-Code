@@ -21,10 +21,10 @@
 	<body>
 
 		<div class="main-content">
-			{{ include('include/cookie.html.twig') }}
 			{% block body %}
 				<script src="{{ asset('note.js') }}"></script>
 			{% endblock %}
+			{{ include('include/cookie.html.twig') }}
 		</div>
 		{% include "include/footer.html.twig" %}
 	</body>

@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_folder_delete', {'id': folder.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer {{folder.name}} ?');">
 	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ folder.id) }}">
-	<button class="btn icone"><i class="fa-solid fa-trash"></i></button>
+	<button aria-label="Supprimer {{folder.name}}" class="btn icone"><i class="fa-solid fa-trash"></i></button>
 </form>

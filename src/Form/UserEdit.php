@@ -22,21 +22,20 @@ class UserEdit extends AbstractType
                 'label' => 'Adresse Email'
             ])
             ->add('avatar', FileType::class, [
-                'label' => 'Avatar',
+                'label' => 'Avatar (Optionnel)',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5000k',
+                        'maxSize' => '5M',
                         'mimeTypes' => [
                             'image/png',
-                            'image/jpg'
+                            'image/jpeg', 
                         ],
                         'mimeTypesMessage' => "L'image est trop lourde ou le format n'est pas correct, seuls les formats PNG et JPG sont autorisés.",
                     ])
                 ],
             ]);
-       
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -45,7 +44,4 @@ class UserEdit extends AbstractType
             'data_class' => User::class,
         ]);
     }
-    
 }
-
-

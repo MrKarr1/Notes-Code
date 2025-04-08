@@ -2,12 +2,14 @@
 
 
 {% block body %}
-	<div class="div-btn-mod">
-		{{ include('include/mod.html.twig') }}
+	<div class="nav-laterale">
+		{% include "include/nav.html.twig" %}
 	</div>
 	<main class="register">
 		<div class="registers">
-			<a href="{{path('app_home')}}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			<div class="logo-hover-div">
+				<a class="logo-hover" href="{{ path('app_home') }}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			</div>
 			{{ form_start(form) }}
 			{{ form_errors(form) }}
 			{{ form_label(form.username) }}

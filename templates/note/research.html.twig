@@ -21,10 +21,12 @@
 					</p>
 					<table>
 						<thead>
-							<td>Nom Note</td>
-							<td class="media-hidden">Tag</td>
-							<td>Langage</td>
-							<td>Date</td>
+							<tr>
+								<th>Nom Note</th>
+								<th class="media-hidden">Tag</th>
+								<th>Langage</th>
+								<th>Date</th>
+							</tr>
 						</thead>
 						<tbody id="research-note-user">
 							{% for note in notes %}
@@ -47,15 +49,15 @@
 									<td>{{ note.langage.displayName }}</td>
 									<td>{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
 								</tr>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-	</main>
-</div>
-<script src="{{ asset('research.js') }}"></script>
-<script>
-	search('research-user', 'research-note-user');
-</script>{% endblock %}
+		</main>
+	</div>
+	<script src="{{ asset('research.js') }}"></script>
+	<script>
+		search('research-user', 'research-note-user');
+	</script>
+{% endblock %}

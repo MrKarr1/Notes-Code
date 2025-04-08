@@ -159,6 +159,17 @@ a {
     display: none;
 }
 
+.logo-hover-div {
+    transform: scale(1);
+    transition: transform 0.5s ease-in-out;
+    transform-origin: center center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
 
 /* Scrollbar*/
 html::-webkit-scrollbar {
@@ -822,7 +833,7 @@ header {
 
 
     #btn-nav-none {
-       margin: 0;
+        margin: 0;
     }
 
     .menu {
@@ -1096,7 +1107,7 @@ footer {
         }
     }
 
-    td.media-hidden {
+    .media-hidden {
         display: none;
     }
 

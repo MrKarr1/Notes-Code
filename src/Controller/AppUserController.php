@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class AppUserController extends AbstractController
 {
-    public function AppUser(): Response
+    public function appUser(): Response
     {
         // méthode pour avoir le compte sur toute les pages
         $user = $this->getUser();

@@ -1,11 +1,11 @@
 <div class="menu">
-	<button class="btn icone" id="btn-nav-block">
+	<button aria-label="Affiche le menu de Navigation" class="btn icone" id="btn-nav-block">
 		<i class="fa-solid fa-bars"></i>
 	</button>
 </div>
 
 <header class="nav_menu">
-	<button class="btn icone" id="btn-nav-none">
+	<button aria-label="Cache le menu de Navigation" class="btn icone" id="btn-nav-none">
 		<i class="fa-solid fa-xmark"></i>
 	</button>
 	{% if app.user %}
@@ -31,7 +31,6 @@
 				<i class=" icone fa-solid fa-magnifying-glass"></i>
 			</div>
 		</div>
-
 		<nav>
 			<div class="note-table">
 				<div class="btn-table">
@@ -44,7 +43,9 @@
 					</p>
 					<table class="nav-table">
 						<thead>
-							<td>Nom</td>
+							<tr>
+								<th>Nom</th>
+							</tr>
 						</thead>
 						<tbody id="research-favori">
 							{% for note in app.user.note|slice(0, 15) %}
@@ -59,42 +60,45 @@
 								{% endif %}
 							{% endfor %}
 						</tbody>
-					</thead>
-				</table>
-			</div>
-			<div class="note" id="div_note">
-				<p>
-					<strong>Notes</strong>
-				</p>
-				<table class="nav-table">
-					<thead>
-						<td>Note</td>
-					</thead>
-					<tbody id="research-note">
-						{% for note in app.user.note|slice(0, 15) %}
-							<tr data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
-								<td>
-									<a href="{{ path('app_note_show', {'id': note.id}) }}">
-										<i class="fa-regular fa-file"></i>
-										{{note.name}}</a>
-								</td>
+					</table>
+				</div>
+				<div class="note" id="div_note">
+					<p>
+						<strong>Notes</strong>
+					</p>
+					<table class="nav-table">
+						<thead>
+							<tr>
+								<th>Note</th>
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody id="research-note">
+							{% for note in app.user.note|slice(0, 15) %}
+								<tr data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+									<td>
+										<a href="{{ path('app_note_show', {'id': note.id}) }}">
+											<i class="fa-regular fa-file"></i>
+											{{note.name}}</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-	</nav>
-	<script src="{{ asset('nav-research.js') }}"></script>
-	<script>
-		search('research', 'research-favori');
+		</nav>
+		<script src="{{ asset('nav-research.js') }}"></script>
+		<script>
+			search('research', 'research-favori');
 search('research', 'research-note');
-	</script>
-{% else %}
-	{{ include('include/mod.html.twig') }}
-	<div class="action-user">
-		<button class="btn" onclick="window.location.href='{{ path('app_home') }}'">Accueil</button>
-		<button class="btn" onclick="window.location.href='{{ path('app_login') }}'">Connexion</button>
-		<button class="btn" onclick="window.location.href='{{ path('app_register') }}'">S'inscrire</button>
-	</div>
-{% endif %}</header><script src="{{ asset('nav.js') }}"></script>
+		</script>
+	{% else %}
+		{{ include('include/mod.html.twig') }}
+		<div class="action-user">
+			<button class="btn" onclick="window.location.href='{{ path('app_home') }}'">Accueil</button>
+			<button class="btn" onclick="window.location.href='{{ path('app_login') }}'">Connexion</button>
+			<button class="btn" onclick="window.location.href='{{ path('app_register') }}'">S'inscrire</button>
+		</div>
+	{% endif %}
+</header>
+<script src="{{ asset('nav.js') }}"></script>

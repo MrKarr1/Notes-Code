@@ -7,7 +7,9 @@
 	<main class="login">
 		<div class="logins">
 			<h1>Notes-Code</h1>
-			<a href="{{ path('app_home') }}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			<div class="logo-hover-div">
+			<a class="logo-hover" href="{{ path('app_home') }}"><img src="{{ asset('img/logo/Notes-Code.png') }}" alt="logo Notes Code"></a>
+			</div>
 			<form method="post">
 				{% if error %}
 					<div class="error">
@@ -26,7 +28,7 @@
 				<button class="btn" type="submit">Valider</button>
 			</form>
 			<p>Pas encore inscrit ?</p>
-				<a class="btn" href="{{ path('app_register') }}">S'inscrire</a>
+			<a class="btn" href="{{ path('app_register') }}">S'inscrire</a>
 		</div>
 	</main>
 {% endblock %}

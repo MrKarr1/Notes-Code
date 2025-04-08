@@ -27,10 +27,12 @@
 					</div>
 					<table>
 						<thead>
-							<td class="media-hidden">Date</td>
-							<td>Nom ou Mail</td>
-							<td>Message</td>
-							<td>Action</td>
+							<tr>
+							<th class="media-hidden">Date</th>
+							<th>Nom ou Mail</th>
+							<th>Message</th>
+							<th>Action</th>
+							</tr>
 						</thead>
 						{% for contact in contacts %}
 							{% if contact.sentby != app.user.id %}
@@ -54,7 +56,6 @@
 															<i class="fa-solid fa-trash"></i>
 														</button>
 													</form>
-
 													<button class="btn icone" onclick="window.location.href='{{ path('app_respond', {'id': contact.id}) }}'">
 														Répondre
 													</button>
