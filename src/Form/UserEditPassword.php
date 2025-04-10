@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 class UserEditPassword extends AbstractType
@@ -52,6 +53,10 @@ class UserEditPassword extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                         'max' => 50,
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/',
+                        'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.',
                     ]),
                 ],
             ]);

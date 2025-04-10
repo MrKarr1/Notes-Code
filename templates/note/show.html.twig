@@ -51,8 +51,11 @@
 			</div>
 			<div class="EAS-code-des">
 				<div id="note-code">{{ note.code }}</div>
+				{# div pour stocker le code à afficher, récupéré depuis ta base de données via la variable #}
 				<div id="note-language">{{ note.langage.technicalName|lower }}</div>
+				{# div pour stocker le langage à afficher, récupéré depuis ta base de données via la variable #}
 				<div id="monaco-editor" class="monaco-editor"></div>
+				{# div pour afficher le code dans l'éditeur monaco #}
 			</div>
 			<div class="div-img-description">
 				<div class="div-description">

@@ -58,12 +58,6 @@
 				</button>
 				{% if app.user and is_granted('ROLE_ADMIN') %}
 					{# si l'utilisateur est connecté et a le rôle admin #}
-					<button class="btn" onclick="window.location.href='{{ path('app_langage_add') }}'">
-						Gérer les Langages
-					</button>
-					<button class="btn" onclick="window.location.href='{{ path('app_contact_show') }}'">
-						Message de contact
-					</button>
 					<button class="btn" onclick="window.location.href='{{ path('app_admin_user') }}'">
 						Dashboard
 					</button>
