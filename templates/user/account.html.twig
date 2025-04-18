@@ -1,254 +1,257 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<main class="account">
-	<div class="accounts">
-		<div class="user-account">
-			<div class="users-account">
-				<div class="img-account">
-					<a href="{{ path('app_account') }}">
-						{% if user.avatar %}
-							{# si le user a une immage on la affiche sinon image par defaut #}
-							<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
-						{% else %}
-							<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
-						{% endif %}
-					</a>
-				</div>
-				<div class="btn-account">
-					<button aria-label="Modifier votre compte" class="btn icone" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">
-						<i class="fa-solid fa-user-pen"></i>
-					</button>
-					<button aria-label="Se déconnecter" class="btn icone" onclick="window.location.href='{{ path('app_logout') }}'">
-						<i class="fa-solid fa-arrow-right-from-bracket"></i>
-					</button>
-					{{ include('include/mod.html.twig') }}
-				</div>
-				<div class="user-info-account">
-					<h3>{{ user.username }}</h3>
-				</div>
-				<div class="button">
-					<button class="btn" onclick="window.location.href='{{ path('app_note_add') }}'">
-						Ajouter une Note
-					</button>
-
+	<main class="account">
+		<div class="accounts">
+			<div class="user-account">
+				<div class="users-account">
+					<div class="img-account">
+						<a href="{{ path('app_account') }}">
+							{% if user.avatar %}
+								{# si le user a une immage on la affiche sinon image par defaut #}
+								<img src="{{ asset('img/avatar/'~ user.avatar) }}" alt="l'avatar de {{ user.username }}">
+							{% else %}
+								<img src="{{ asset('img/avatar/default.jpg') }}" alt="avatar par défaut">
+							{% endif %}
+						</a>
+					</div>
+					<div class="btn-account">
+						<button aria-label="Modifier votre compte" class="btn icone" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">
+							<i class="fa-solid fa-user-pen"></i>
+						</button>
+						{# button pour aller sur la page de modification du compte #}
+						<button aria-label="Se déconnecter" class="btn icone" onclick="window.location.href='{{ path('app_logout') }}'">
+							<i class="fa-solid fa-arrow-right-from-bracket"></i>
+						</button>
+						{# button pour se deconnecter #}
+						{{ include('include/mod.html.twig') }}
+						{# Inclut le bouton pour basculer entre le mode sombre et le mode clair #}
+					</div>
+					<div class="user-info-account">
+						<h3>{{ user.username }}</h3>
+						{# affiche le nom d'utilisateur #}
+					</div>
+					<div class="button">
+						<button class="btn" onclick="window.location.href='{{ path('app_note_add') }}'">
+							Ajouter une Note
+						</button>
+						{# button pour ajouter une note #}
+					</div>
 				</div>
 			</div>
-		</div>
-		{% for message in app.flashes('success') %}
-			<div class="flashes-message">
-				<p>{{ message }}</p>
-			</div>
-		{% endfor %}
-		{% for message in app.flashes('error') %}
-			<div class="flashes-message">
-				<p>{{ message }}</p>
-			</div>
-			{# pour les message de succès et erreure  #}
-		{% endfor %}
-		<div class="action">
-			<div class="div-action">
-				<button class="btn" onclick="window.location.href='{{ path('app_tag_add') }}'">
-					Gérer les Tags
-				</button>
-				<button class="btn" onclick="window.location.href='{{ path('app_folder_add') }}'">
-					Gérer les Dossiers
-				</button>
-				<button class="btn" onclick="window.location.href='{{ path('app_research') }}'">
-					Recherche Une Note
-				</button>
-				{% if app.user and is_granted('ROLE_ADMIN') %}
-					{# si l'utilisateur est connecté et a le rôle admin #}
-					<button class="btn" onclick="window.location.href='{{ path('app_admin_user') }}'">
-						Dashboard
+			{% for message in app.flashes('success') %}
+				<div class="flashes-message">
+					<p>{{ message }}</p>
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('error') %}
+				<div class="flashes-message">
+					<p>{{ message }}</p>
+				</div>
+				{# pour les message de succès et erreure  #}
+			{% endfor %}
+			<div class="action">
+				<div class="div-action">
+					<button class="btn" onclick="window.location.href='{{ path('app_tag_add') }}'">
+						Gérer les Tags
 					</button>
+					<button class="btn" onclick="window.location.href='{{ path('app_folder_add') }}'">
+						Gérer les Dossiers
+					</button>
+					<button class="btn" onclick="window.location.href='{{ path('app_research') }}'">
+						Recherche Une Note
+					</button>
+					{% if app.user and is_granted('ROLE_ADMIN') %}
+						{# si l'utilisateur est connecté et a le rôle admin #}
+						<button class="btn" onclick="window.location.href='{{ path('app_admin_user') }}'">
+							Dashboard
+						</button>
+					{% endif %}
+				</div>
+				<div class="div-research">
+					<input type="text" id="research" name="research" placeholder="Recherche">
+					<i class=" icone fa-solid fa-magnifying-glass"></i>
+				</div>
+			</div>
+			<div class="note-table">
+				<div class="btn-table">
+					<button class="btn icone" id="favori">Favori</button>
+					<button class="btn icone" id="note">Notes</button>
+					<button class="btn icone" id="folder">Dossier</button>
+				</div>
+				<div class="favori" id="div_favori">
+					<p>
+						<strong>Favori</strong>
+					</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Nom Note</th>
+								<th class="media-hidden">Tag</th>
+								<th class="media-hidden">Dossier</th>
+								<th class="media-hidden">Langage</th>
+								<th class="media-hidden">Date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody id="research-favori">
+							{% for note in user.note %}
+								{# recherche dans les note #}
+								{% if note.favori %}
+									{#  Si le booléen fav est à true, on l'affiche. #}
+									<tr  data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+										<td>
+											<a href="{{ path('app_note_show', {'id': note.id}) }}">
+												<i class="fa-regular fa-file"></i>
+												{{note.name}}
+											</a>
+										</td>
+										<td class="media-hidden">
+											{% if note.tag %}
+												{% for tag in note.tag|slice(0, 5) %}
+													{# limite a 5 tag #}
+													<span>{{tag.name}}</span>
+												{% endfor %}
+											{% endif %}
+										</td>
+										<td class="media-hidden">
+											{% if note.folder %}
+												{% for folders in note.folder|slice(0, 5) %}
+													{# limite a 5 folder #}
+													<span>{{folders.name}}</span>
+												{% endfor %}
+											{% endif %}
+										</td>
+										<td class="media-hidden">{{ note.langage.displayName }}</td>
+										<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+										<td class="action-td ">
+											{{ include('note/_delete_form.html.twig') }}
+											<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
+												<i class="fa-solid fa-arrows-rotate"></i>
+											</button>
+										</td>
+									</tr>
+								</a>
+							</td>
+						</tbody>
+					</tr>
 				{% endif %}
-			</div>
-			<div class="div-research">
-				<input type="text" id="research" name="research" placeholder="Recherche">
-				<i class=" icone fa-solid fa-magnifying-glass"></i>
-			</div>
-		</div>
-		<div class="note-table">
-			<div class="btn-table">
-				<button class="btn icone" id="favori">Favori</button>
-				<button class="btn icone" id="note">Notes</button>
-				<button class="btn icone" id="folder">Dossier</button>
-			</div>
-			<div class="favori" id="div_favori">
-				<p>
-					<strong>Favori</strong>
-				</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Nom Note</th>
-							<th class="media-hidden">Tag</th>
-							<th class="media-hidden">Dossier</th>
-							<th class="media-hidden">Langage</th>
-							<th class="media-hidden">Date</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody id="research-favori">
-						{% for note in user.note %}
-							{# recherche dans les note #}
-							{% if note.favori %}
-								{#  Si le booléen fav est à true, on l'affiche. #}
-								<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
-									<td>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div class="folder" id="div_folder">
+	<p>
+		<strong>Dossiers</strong>
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Dossier</th>
+				<th>Nom des notes</th>
+				<th class="media-hidden">Date</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id="research-folder">
+			{% for folder in user.folder %}
+				<tr data-name="{{folder.name|lower}}" data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
+					<td>
+						<span>{{folder.name}}</span>
+					</td>
+					<td>
+						<div class="media-column">
+							{% if folder.notes %}
+								{# si il y a une ou plusieurs notes dans le dossier. #}
+								{% for note in folder.notes|slice(0, 5) %}
+									{# Limiter l'affichage à 5 notes dans un dossier. #}
+									<span>
 										<a href="{{ path('app_note_show', {'id': note.id}) }}">
 											<i class="fa-regular fa-file"></i>
 											{{note.name}}
 										</a>
-									</td>
-									<td class="media-hidden">
-										{% if note.tag %}
-											{% for tag in note.tag|slice(0, 5) %}
-												{# limite a 5 tag #}
-												<span>{{tag.name}}</span>
-											{% endfor %}
-										{% endif %}
-									</td>
-									<td class="media-hidden">
-										{% if note.folder %}
-											{% for folders in note.folder|slice(0, 5) %}
-												{# limite a 5 folder #}
-												<span>{{folders.name}}</span>
-											{% endfor %}
-										{% endif %}
-									</td>
-									<td class="media-hidden">{{ note.langage.displayName }}</td>
-									<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
-									<td class="action-td ">
-										{{ include('note/_delete_form.html.twig') }}
-										<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
-											<i class="fa-solid fa-arrows-rotate"></i>
-										</button>
-									</td>
-								</tr>
-							</a>
-						</td>
-					</tbody>
+									</span>
+								{% endfor %}
+							{% else %}
+								<span>Pas de note</span>
+							{% endif %}
+						</div>
+					</td>
+					<td class="media-hidden">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
+					<td>
+						{{ include('folder/_delete_form.html.twig') }}
+					</td>
 				</tr>
-			{% endif %}
-		{% endfor %}
-	</tbody>
-</table></div><div class="folder" id="div_folder">
-<p>
-	<strong>Dossiers</strong>
-</p>
-<table>
-	<thead>
-		<tr>
-			<th>Dossier</th>
-			<th>Nom des notes</th>
-			<th class="media-hidden">Date</th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody id="research-folder">
-		{% for folder in user.folder %}
-			<tr data-name="{{folder.name|lower}}" data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
-				<td>
-					<span>{{folder.name}}</span>
-				</td>
-				<td>
-					<div class="media-column">
-						{% if folder.notes %}
-							{# si il y a une ou plusieurs notes dans le dossier. #}
-							{% for note in folder.notes|slice(0, 5) %}
-								{# Limiter l'affichage à 5 notes dans un dossier. #}
-								<span>
-									<a href="{{ path('app_note_show', {'id': note.id}) }}">
-										<i class="fa-regular fa-file"></i>
-										{{note.name}}
-									</a>
-								</span>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div class="note" id="div_note">
+	<p>
+		<strong>Notes</strong>
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Nom Note</th>
+				<th class="media-hidden">Tag</th>
+				<th class="media-hidden">Dossier</th>
+				<th class="media-hidden">Langage</th>
+				<th class="media-hidden">Date</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id="research-note">
+			{% for note in user.note %}
+				<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+					<td>
+						<a href="{{ path('app_note_show', {'id': note.id}) }}">
+							<i class="fa-regular fa-file"></i>
+							{{note.name}}
+						</a>
+					</td>
+					<td class="media-hidden">
+						{% if note.tag %}
+							{% for tag in note.tag|slice(0, 5) %}
+								<span>{{tag.name}}</span>
 							{% endfor %}
 						{% else %}
-							<span>Pas de note</span>
+							<span>Pas de Tag</span>
 						{% endif %}
-					</div>
-				</td>
-				<td class="media-hidden">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
-				<td>
-					{{ include('folder/_delete_form.html.twig') }}
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table></div><div class="note" id="div_note">
-<p>
-	<strong>Notes</strong>
-</p>
-<table>
-	<thead>
-		<tr>
-			<th>Nom Note</th>
-			<th class="media-hidden">Tag</th>
-			<th class="media-hidden">Dossier</th>
-			<th class="media-hidden">Langage</th>
-			<th class="media-hidden">Date</th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody id="research-note">
-		{% for note in user.note %}
-			<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
-				<td>
-					<a href="{{ path('app_note_show', {'id': note.id}) }}">
-						<i class="fa-regular fa-file"></i>
-						{{note.name}}
-					</a>
-				</td>
-				<td class="media-hidden">
-					{% if note.tag %}
-						{% for tag in note.tag|slice(0, 5) %}
-							<span>{{tag.name}}</span>
-						{% endfor %}
-					{% else %}
-						<span>Pas de Tag</span>
-					{% endif %}
-				</td>
-				<td class="media-hidden">
-					{% if note.folder %}
-						{% for folders in note.folder|slice(0, 5) %}
-							<span>{{folders.name}}</span>
-						{% endfor %}
-					{% else %}
-						<span>Pas de dossier</span>
-					{% endif %}
-				</td>
-				<td class="media-hidden">{{ note.langage.displayName }}</td>
-				<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
-				<td class="action-td">
-					{{ include('note/_delete_form.html.twig') }}
-					{% if note.favori %}
-						{# Si la note est en favori, on affiche un bouton pour la retirer ; sinon, un bouton pour l'ajouter. #}
-						<button aria-label="Supprimer des favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
-							<i class="fa-solid fa-star"></i>
+					</td>
+					<td class="media-hidden">
+						{% if note.folder %}
+							{% for folders in note.folder|slice(0, 5) %}
+								<span>{{folders.name}}</span>
+							{% endfor %}
+						{% else %}
+							<span>Pas de dossier</span>
+						{% endif %}
+					</td>
+					<td class="media-hidden">{{ note.langage.displayName }}</td>
+					<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+					<td class="action-td">
+						{{ include('note/_delete_form.html.twig') }}
+						{% if note.favori %}
+							{# Si la note est en favori, on affiche un bouton pour la retirer ; sinon, un bouton pour l'ajouter. #}
+							<button aria-label="Supprimer des favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
+								<i class="fa-solid fa-star"></i>
+							</button>
+						{% else %}
+							<button aria-label="Ajouter aux favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
+								<i class="fa-regular fa-star"></i>
+							</button>
+						{% endif %}
+						<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
+							<i class="fa-solid fa-arrows-rotate"></i>
 						</button>
-					{% else %}
-						<button aria-label="Ajouter aux favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
-							<i class="fa-regular fa-star"></i>
-						</button>
-					{% endif %}
-					<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
-						<i class="fa-solid fa-arrows-rotate"></i>
-					</button>
-				</td>
-			</tr>
-		</td>
-	</tbody>
-</tr>{% endfor %}</tbody>
-</table>
-</div>
-</div>
-</div>
-</main>
-<script src="{{ asset('note.js') }}"></script>
-<script>search('research', 'research-favori');
-		search('research', 'research-folder');
-		search('research', 'research-note');
-{# Appel de la fonction de recherche.#}
-</script>{% endblock %}
+					</td>
+				</tr>
+			</td>
+		</tbody>
+	</tr>
+{% endfor %}</tbody></table></div></div></div></main><script src="{{ asset('note.js') }}"></script><script src="{{ asset('research.js') }}"></script><script>search('research', 'research-favori');
+search('research', 'research-folder');
+search('research', 'research-note');
+{
+# Appel de la fonction de recherche.#
+}</script>{% endblock %}

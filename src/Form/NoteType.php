@@ -57,10 +57,16 @@ class NoteType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '5000k',
+                        // taille max de l'image
+                        'maxSizeMessage' => 'Image trop lourde 5mo max',
+                        // message d'erreur si l'image est trop lourde
                         'mimeTypes' => [
-                            'image/*',
+                            'image/png',
+                            'image/jpeg',
+                            // types d'images acceptés
                         ],
-                        'mimeTypesMessage' => 'Image trop lourde',
+                        'mimeTypesMessage' => 'Veuillez télécharger une image valide (png, jpeg)',
+                        // message d'erreur si le type l'image n'est pas valide
                     ])
                 ],
             ])

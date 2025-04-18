@@ -71,6 +71,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'class' => 'div-password',
+                    // double mot de passe poour la confirmation et les erreurs
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -80,10 +81,13 @@ class UserType extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                         'max' => 50,
+                        // limite pour le mot de passe compris entre 6 et 50 caractères
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/',
                         'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.',
+                        // ragex pour vérifier la présence d'au moins une minuscule, une majuscule, un chiffre et un caractère spécial
+
                     ]),
                 ],
             ])
@@ -93,12 +97,14 @@ class UserType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '3000k',
+                        'maxSizeMessage' => 'Image trop lourde 3mo max',
+                        
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg',
                         ],
-                        'mimeTypesMessage' => "L'image est trop lourde ou le format n'est pas correct, seuls les formats PNG et JPG sont autorisés.",
+                        'mimeTypesMessage' => 'Veuillez télécharger une image valide (png, jpeg)',
                     ])
                 ],
             ]);

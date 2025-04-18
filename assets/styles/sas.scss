@@ -329,7 +329,12 @@ html,
                 display: flex;
                 flex-direction: column;
                 gap: 1vh;
-                min-width: max-content;
+                max-width: 100%;
+
+                li {
+                    list-style: disc;
+                    margin-left: 1.5rem;
+                }
             }
         }
     }
@@ -381,7 +386,7 @@ html,
             background-color: var(--fond-des-cartes);
         }
 
-        .a-note:hover {
+        a:hover {
             color: var(--color-hover-bouton);
         }
 

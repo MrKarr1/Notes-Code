@@ -27,7 +27,7 @@ class UserEdit extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '3000k',
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg', 

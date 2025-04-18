@@ -15,10 +15,13 @@ if (localStorage.getItem("fontSize")) {
 function changeFontSize(change) {
     fontSize += change;
     document.body.style.fontSize = fontSize + "px";
+    // augmenter la taille de la police du corps
     document.querySelectorAll("button").forEach(button => {
         button.style.fontSize = fontSize + "px";
+        // augmenter la taille de la police des boutons
     });
     localStorage.setItem("fontSize", fontSize);
+    // sauvegarder la taille de la police dans le localStorage
 }
 
 // Événements des boutons

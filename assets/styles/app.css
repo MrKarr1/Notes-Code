@@ -398,7 +398,26 @@ html,
   display: flex;
   flex-direction: column;
   gap: 1vh;
-  min-width: max-content;
+  max-width: 100%;
+}
+.login .logins form .div-password li,
+.login .registers form .div-password li,
+.login .edits-users form .div-password li,
+.login .mentions form .div-password li,
+.register .logins form .div-password li,
+.register .registers form .div-password li,
+.register .edits-users form .div-password li,
+.register .mentions form .div-password li,
+.edit-user .logins form .div-password li,
+.edit-user .registers form .div-password li,
+.edit-user .edits-users form .div-password li,
+.edit-user .mentions form .div-password li,
+.mention .logins form .div-password li,
+.mention .registers form .div-password li,
+.mention .edits-users form .div-password li,
+.mention .mentions form .div-password li {
+  list-style: disc;
+  margin-left: 1.5rem;
 }
 
 .mention {
@@ -437,7 +456,7 @@ html,
 .note-table table thead {
   background-color: var(--fond-des-cartes);
 }
-.note-table table .a-note:hover {
+.note-table table a:hover {
   color: var(--color-hover-bouton);
 }
 .note-table table .none {

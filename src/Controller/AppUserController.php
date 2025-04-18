@@ -9,10 +9,10 @@ final class AppUserController extends AbstractController
 {
     public function appUser(): Response
     {
-        // méthode pour avoir le compte sur toute les pages
+        // methode pour recupérer l'utilisateur connecté
+        // on verifie si l'utilisateur est bien connecté pour eviter les erreurs
         $user = $this->getUser();
         if (!$user) return $this->redirectToRoute('app_login');
-        // si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
         return  ['user' => $user,];
     }
 }
