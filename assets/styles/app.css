@@ -686,7 +686,7 @@ html,
   padding: 1vh;
   border-radius: 0.5vh;
   border: none;
-  background-color: var(--fond-principal);
+  background-color: var(--fond-des-cartes);
   color: var(--texte-principal);
   gap: 1vh;
 }

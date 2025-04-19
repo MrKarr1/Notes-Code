@@ -98,7 +98,7 @@
 								{# recherche dans les note #}
 								{% if note.favori %}
 									{#  Si le booléen fav est à true, on l'affiche. #}
-									<tr  data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
+									<tr data-name="{{ note.name }}" data-tag="{% for tag in note.tag %}{{ tag.name }}{% endfor %}" data-folder="{% for folder in note.folder %}{{ folder.name }}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
 										<td>
 											<a href="{{ path('app_note_show', {'id': note.id}) }}">
 												<i class="fa-regular fa-file"></i>
@@ -130,128 +130,129 @@
 											</button>
 										</td>
 									</tr>
-								</a>
-							</td>
-						</tbody>
-					</tr>
-				{% endif %}
-			{% endfor %}
-		</tbody>
-	</table>
-</div>
-<div class="folder" id="div_folder">
-	<p>
-		<strong>Dossiers</strong>
-	</p>
-	<table>
-		<thead>
-			<tr>
-				<th>Dossier</th>
-				<th>Nom des notes</th>
-				<th class="media-hidden">Date</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody id="research-folder">
-			{% for folder in user.folder %}
-				<tr data-name="{{folder.name|lower}}" data-date="{{folder.createdAt ? folder.createdAt|date('d-m-Y') : ''}}" data-note="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
-					<td>
-						<span>{{folder.name}}</span>
-					</td>
-					<td>
-						<div class="media-column">
-							{% if folder.notes %}
-								{# si il y a une ou plusieurs notes dans le dossier. #}
-								{% for note in folder.notes|slice(0, 5) %}
-									{# Limiter l'affichage à 5 notes dans un dossier. #}
-									<span>
-										<a href="{{ path('app_note_show', {'id': note.id}) }}">
-											<i class="fa-regular fa-file"></i>
-											{{note.name}}
-										</a>
-									</span>
-								{% endfor %}
-							{% else %}
-								<span>Pas de note</span>
+								</tr>
 							{% endif %}
-						</div>
-					</td>
-					<td class="media-hidden">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
-					<td>
-						{{ include('folder/_delete_form.html.twig') }}
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-</div>
-<div class="note" id="div_note">
-	<p>
-		<strong>Notes</strong>
-	</p>
-	<table>
-		<thead>
-			<tr>
-				<th>Nom Note</th>
-				<th class="media-hidden">Tag</th>
-				<th class="media-hidden">Dossier</th>
-				<th class="media-hidden">Langage</th>
-				<th class="media-hidden">Date</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody id="research-note">
-			{% for note in user.note %}
-				<tr data-name="{{note.name|lower}}" data-description="{{note.description|lower}}" data-tag="{% for tag in note.tag %}{{tag.name|lower}}{% endfor %}" data-folder="{% for folders in note.folder %}{{folders.name|lower}}{% endfor %}" data-langage="{{note.langage.displayName|lower}}">
-					<td>
-						<a href="{{ path('app_note_show', {'id': note.id}) }}">
-							<i class="fa-regular fa-file"></i>
-							{{note.name}}
-						</a>
-					</td>
-					<td class="media-hidden">
-						{% if note.tag %}
-							{% for tag in note.tag|slice(0, 5) %}
-								<span>{{tag.name}}</span>
-							{% endfor %}
-						{% else %}
-							<span>Pas de Tag</span>
-						{% endif %}
-					</td>
-					<td class="media-hidden">
-						{% if note.folder %}
-							{% for folders in note.folder|slice(0, 5) %}
-								<span>{{folders.name}}</span>
-							{% endfor %}
-						{% else %}
-							<span>Pas de dossier</span>
-						{% endif %}
-					</td>
-					<td class="media-hidden">{{ note.langage.displayName }}</td>
-					<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
-					<td class="action-td">
-						{{ include('note/_delete_form.html.twig') }}
-						{% if note.favori %}
-							{# Si la note est en favori, on affiche un bouton pour la retirer ; sinon, un bouton pour l'ajouter. #}
-							<button aria-label="Supprimer des favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
-								<i class="fa-solid fa-star"></i>
-							</button>
-						{% else %}
-							<button aria-label="Ajouter aux favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
-								<i class="fa-regular fa-star"></i>
-							</button>
-						{% endif %}
-						<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
-							<i class="fa-solid fa-arrows-rotate"></i>
-						</button>
-					</td>
-				</tr>
-			</td>
-		</tbody>
-	</tr>
-{% endfor %}</tbody></table></div></div></div></main><script src="{{ asset('note.js') }}"></script><script src="{{ asset('research.js') }}"></script><script>search('research', 'research-favori');
-search('research', 'research-folder');
-search('research', 'research-note');
-{
-# Appel de la fonction de recherche.#
-}</script>{% endblock %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="folder" id="div_folder">
+				<p>
+					<strong>Dossiers</strong>
+				</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Dossier</th>
+							<th>Nom des notes</th>
+							<th class="media-hidden">Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="research-folder">
+						{% for folder in user.folder %}
+							<tr data-folder="{{folder.name|lower}}" data-name="{% for note in folder.notes %}{{note.name|lower}}{% endfor %}">
+								<td>
+									<span>{{folder.name}}</span>
+								</td>
+								<td>
+									<div class="media-column">
+										{% if folder.notes %}
+											{# si il y a une ou plusieurs notes dans le dossier. #}
+											{% for note in folder.notes|slice(0, 5) %}
+												{# Limiter l'affichage à 5 notes dans un dossier. #}
+												<span>
+													<a href="{{ path('app_note_show', {'id': note.id}) }}">
+														<i class="fa-regular fa-file"></i>
+														{{note.name}}
+													</a>
+												</span>
+											{% endfor %}
+										{% else %}
+											<span>Pas de note</span>
+										{% endif %}
+									</div>
+								</td>
+								<td class="media-hidden">{{ folder.createdAt ? folder.createdAt|date('d-m-Y') : '' }}</td>
+								<td>
+									{{ include('folder/_delete_form.html.twig') }}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="note" id="div_note">
+				<p>
+					<strong>Notes</strong>
+				</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Nom Note</th>
+							<th class="media-hidden">Tag</th>
+							<th class="media-hidden">Dossier</th>
+							<th class="media-hidden">Langage</th>
+							<th class="media-hidden">Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="research-note">
+						{% for note in user.note %}
+							<tr data-name="{{note.name|lower}}" data-langage="{{note.langage.displayName|lower}} data-tag=" {% for tag in note.tag %} {{tag.name|lower}} {% endfor %} " data-folder=" {% for folders in note.folder %} {{folders.name|lower}} {% endfor %} "">
+								<td>
+									<a href="{{ path('app_note_show', {'id': note.id}) }}">
+										<i class="fa-regular fa-file"></i>
+										{{note.name}}
+									</a>
+								</td>
+								<td class="media-hidden">
+									{% if note.tag %}
+										{% for tag in note.tag|slice(0, 5) %}
+											<span>{{tag.name}}</span>
+										{% endfor %}
+									{% else %}
+										<span>Pas de Tag</span>
+									{% endif %}
+								</td>
+								<td class="media-hidden">
+									{% if note.folder %}
+										{% for folders in note.folder|slice(0, 5) %}
+											<span>{{folders.name}}</span>
+										{% endfor %}
+									{% else %}
+										<span>Pas de dossier</span>
+									{% endif %}
+								</td>
+								<td class="media-hidden">{{ note.langage.displayName }}</td>
+								<td class="media-hidden">{{ note.createdAt ? note.createdAt|date('d-m-Y') : '' }}</td>
+								<td class="action-td">
+									{{ include('note/_delete_form.html.twig') }}
+									{% if note.favori %}
+										{# Si la note est en favori, on affiche un bouton pour la retirer ; sinon, un bouton pour l'ajouter. #}
+										<button aria-label="Supprimer des favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
+											<i class="fa-solid fa-star"></i>
+										</button>
+									{% else %}
+										<button aria-label="Ajouter aux favoris" class="btn icone" onclick="window.location.href='{{ path('app_note_favori', {'id': note.id}) }}'">
+											<i class="fa-regular fa-star"></i>
+										</button>
+									{% endif %}
+									<button aria-label="Modifer la note {{note.name}}" class="btn icone" onclick="window.location.href='{{ path('app_note_edit', {'id': note.id}) }}'">
+										<i class="fa-solid fa-arrows-rotate"></i>
+									</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</main>
+	</div>
+	<script src="{{ asset('note.js') }}"></script>
+	<script>
+		search('research', 'research-favori');
+		search('research', 'research-folder');
+		search('research', 'research-note');
+	</script>
+{% endblock %}
